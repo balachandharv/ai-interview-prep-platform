@@ -3,14 +3,38 @@ import CountUp from '../components/common/CountUp';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import { LineChart, Line, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { RADAR_CATEGORIES } from '../constants/enums';
+import EmptyState from '../components/common/EmptyState';
+import { BarChart3 } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
-const trendData = Array.from({ length: 15 }, (_, i) => ({ day: `Day ${i + 1}`, score: 5 + Math.random() * 4 }));
-const catData = [{ name: 'Technical', count: 45 }, { name: 'Behavioral', count: 32 }, { name: 'System Design', count: 18 }, { name: 'DSA', count: 28 }, { name: 'HR', count: 15 }];
-const pieData = [{ name: 'Mock', value: 60 }, { name: 'Roleplay', value: 40 }];
+// Mock data (Empty for demo to show Empty State)
+const trendData = [];
+const catData = [];
+const pieData = [];
 const COLORS = ['#6366F1', '#8B5CF6'];
-const radarNow = RADAR_CATEGORIES.map(c => ({ cat: c, now: 50 + Math.random() * 40, before: 30 + Math.random() * 30 }));
+const radarNow = [];
 
 export default function Analytics() {
+  const [hasData, setHasData] = useState(false); // Simulating empty backend
+
+  if (!hasData) {
+    return (
+      <div style={{ fontFamily: 'Inter, sans-serif', height: '100%', minHeight: '600px' }}>
+        <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
+          <h1 className="text-3xl font-extrabold text-[#0F172A] mb-1">Analytics 📈</h1>
+          <p className="text-[#475569]">Track your interview preparation progress</p>
+        </motion.div>
+        <EmptyState
+          icon={<BarChart3 className="w-8 h-8" />}
+          title="No analytics yet"
+          description="Complete some mock interviews or roleplay sessions to unlock detailed performance insights."
+          actionText="Start Mock Interview"
+          actionLink="/mock-interview"
+        />
+      </div>
+    );
+  }
+
   return (
     <div style={{ fontFamily: 'Inter, sans-serif' }}>
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
@@ -45,7 +69,7 @@ export default function Analytics() {
         </motion.div>
 
         {/* Score Trend */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="card-flat p-6 col-span-3">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="card-flat p-6 col-span-1 md:col-span-3">
           <h3 className="text-base font-bold text-[#0F172A] mb-4">Score Trend Over Time</h3>
           <ResponsiveContainer width="100%" height={200}>
             <LineChart data={trendData}>

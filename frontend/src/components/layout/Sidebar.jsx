@@ -1,21 +1,27 @@
 import { NavLink, useNavigate } from 'react-router-dom';
+import { BarChart3, Target, VenetianMask, Building, Trophy } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 import { logout } from '../../store/authSlice';
 import { toggleMobileSidebar } from '../../store/uiSlice';
 
 const navItems = [
-  { path: '/dashboard', label: 'Dashboard', icon: '📊' },
+  { path: '/dashboard', label: 'Dashboard', icon: <BarChart3 size={20} /> },
   { path: '/question-bank', label: 'Question Bank', icon: '📚' },
-  { path: '/mock-interview', label: 'Mock Interview', icon: '🎯' },
-  { path: '/roleplay', label: 'Roleplay Mode', icon: '🎭' },
+  { path: '/mock-interview', label: 'Mock Interview', icon: <Target size={20} /> },
+  { path: '/roleplay', label: 'Roleplay Mode', icon: <VenetianMask size={20} /> },
   { path: '/analytics', label: 'Analytics', icon: '📈' },
-  { path: '/company-prep', label: 'Company Prep', icon: '🏢' },
+  { path: '/company-prep', label: 'Company Prep', icon: <Building size={20} /> },
   { path: '/resume-interview', label: 'Resume Interview', icon: '📄' },
-  { path: '/leaderboard', label: 'Leaderboard', icon: '🏆' },
+  { path: '/leaderboard', label: 'Leaderboard', icon: <Trophy size={20} /> },
   { path: '/profile', label: 'Profile', icon: '👤' },
   { path: '/settings', label: 'Settings', icon: '⚙️' },
 ];
+
+const sidebarVariants = {
+  open: { x: 0, transition: { type: 'spring', stiffness: 300, damping: 30 } },
+  closed: { x: -280, transition: { type: 'spring', stiffness: 300, damping: 30 } },
+};
 
 export default function Sidebar() {
   const dispatch = useDispatch();
@@ -27,12 +33,16 @@ export default function Sidebar() {
     navigate('/login');
   };
 
+  const closeSidebar = () => {
+    if (mobileSidebarOpen) dispatch(toggleMobileSidebar());
+  };
+
   const sidebarContent = (
     <div className="sidebar" style={{ fontFamily: 'Inter, sans-serif' }}>
       {/* Logo */}
       <div className="px-5 mb-6">
-        <NavLink to="/dashboard" className="flex items-center gap-2 no-underline">
-          <div className="w-9 h-9 rounded-xl bg-[#6366F1] flex items-center justify-center">
+        <NavLink to="/dashboard" className="flex items-center gap-2 no-underline" onClick={closeSidebar}>
+          <div className="w-9 h-9 rounded-xl bg-[#6366F1] flex items-center justify-center flex-shrink-0">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 2L2 7l10 5 10-5-10-5z" />
               <path d="M2 17l10 5 10-5" />
@@ -53,20 +63,18 @@ export default function Sidebar() {
             <NavLink
               key={item.path}
               to={item.path}
-              className={({ isActive }) =>
-                `sidebar-link ${isActive ? 'active' : ''}`
-              }
-              onClick={() => dispatch(toggleMobileSidebar())}
+              className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
+              onClick={closeSidebar}
             >
-              <span className="text-lg">{item.icon}</span>
-              <span>{item.label}</span>
+              <span className="text-lg flex-shrink-0">{item.icon}</span>
+              <span className="min-w-0 truncate">{item.label}</span>
             </NavLink>
           ))}
         </div>
       </nav>
 
       {/* Bottom Section */}
-      <div className="px-3 pt-4 border-t border-[#E2E8F0] mt-auto">
+      <div className="px-3 pt-4 border-t border-[#E2E8F0] mt-auto flex-shrink-0">
         <motion.button
           whileTap={{ scale: 0.97 }}
           onClick={handleLogout}
@@ -82,10 +90,10 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Desktop Sidebar */}
+      {/* Desktop Sidebar — always visible on lg+ */}
       <div className="hidden lg:block">{sidebarContent}</div>
 
-      {/* Mobile Overlay */}
+      {/* Mobile/Tablet Overlay Sidebar */}
       <AnimatePresence>
         {mobileSidebarOpen && (
           <>
@@ -93,15 +101,15 @@ export default function Sidebar() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40 lg:hidden"
-              onClick={() => dispatch(toggleMobileSidebar())}
+              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden"
+              onClick={closeSidebar}
             />
             <motion.div
-              initial={{ x: -260 }}
-              animate={{ x: 0 }}
-              exit={{ x: -260 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="lg:hidden z-50"
+              variants={sidebarVariants}
+              initial="closed"
+              animate="open"
+              exit="closed"
+              className="lg:hidden z-50 fixed top-0 left-0"
             >
               {sidebarContent}
             </motion.div>

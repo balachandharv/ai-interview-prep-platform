@@ -23,7 +23,7 @@ export default function CompanyPrep() {
   return (
     <div style={{ fontFamily: 'Inter, sans-serif' }}>
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-        <h1 className="text-3xl font-extrabold text-[#0F172A] mb-1">Company Prep 🏢</h1>
+        <h1 className="text-3xl font-extrabold text-[#0F172A] mb-1">Company Prep</h1>
         <p className="text-[#475569] mb-8">Prepare for interviews at top tech companies</p>
       </motion.div>
 
@@ -82,7 +82,7 @@ export default function CompanyPrep() {
 
             <motion.button whileTap={{ scale: 0.97 }} onClick={() => navigate('/mock-interview', { state: { company: selectedCompany.id } })}
               className="btn btn-primary btn-lg w-full">
-              Start {selectedCompany.name} Mock Interview 🚀
+              Start {selectedCompany.name} Mock Interview
             </motion.button>
           </motion.div>
         )}

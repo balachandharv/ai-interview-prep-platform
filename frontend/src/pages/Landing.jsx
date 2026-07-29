@@ -1,4 +1,5 @@
 import { useEffect, useCallback, useMemo } from 'react';
+import { Target, VenetianMask, BarChart3, Building, Bot } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
@@ -12,11 +13,11 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 const features = [
-  { icon: '🎯', title: 'AI Mock Interviews', desc: 'Practice with AI-powered mock interviews tailored to your target role and company.' },
-  { icon: '🎭', title: 'Roleplay Mode', desc: 'Immersive interview simulation with AI personas from top tech companies.' },
-  { icon: '📊', title: 'Smart Analytics', desc: 'Track your progress with detailed scoring, radar charts, and performance trends.' },
+  { icon: <Target className="w-6 h-6 text-indigo-500" />, title: 'AI Mock Interviews', desc: 'Practice with AI-powered mock interviews tailored to your target role and company.' },
+  { icon: <VenetianMask className="w-6 h-6 text-indigo-500" />, title: 'Roleplay Mode', desc: 'Immersive interview simulation with AI personas from top tech companies.' },
+  { icon: <BarChart3 className="w-6 h-6 text-indigo-500" />, title: 'Smart Analytics', desc: 'Track your progress with detailed scoring, radar charts, and performance trends.' },
   { icon: '🧠', title: 'Adaptive Learning', desc: 'Questions adapt to your skill level automatically for optimal learning.' },
-  { icon: '🏢', title: 'Company Prep', desc: 'Company-specific preparation with real interview processes and round structures.' },
+  { icon: <Building className="w-6 h-6 text-indigo-500" />, title: 'Company Prep', desc: 'Company-specific preparation with real interview processes and round structures.' },
   { icon: '📄', title: 'Resume Analysis', desc: 'AI analyzes your resume and generates personalized interview questions.' },
 ];
 
@@ -80,16 +81,16 @@ export default function Landing() {
   }), []);
 
   return (
-    <div className="min-h-screen" style={{ background: '#F8FAFC', fontFamily: 'Inter, sans-serif' }}>
+    <div className="min-h-screen overflow-x-hidden" style={{ background: '#F8FAFC', fontFamily: 'Inter, sans-serif' }}>
       <Navbar />
 
       {/* ═══════════════ HERO SECTION ═══════════════ */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
+      <section className="relative pt-36 sm:pt-40 pb-16 sm:pb-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Particles id="hero-particles" init={particlesInit} options={particlesOptions} className="w-full h-full" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -100,7 +101,7 @@ export default function Landing() {
               AI-Powered Interview Prep
             </div>
 
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-[#0F172A] mb-6 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#0F172A] mb-4 sm:mb-6 leading-tight tracking-tight">
               Prepare to{' '}
               <span className="gradient-text">
                 <TypeAnimation
@@ -118,12 +119,12 @@ export default function Landing() {
               </span>
             </h1>
 
-            <p className="text-lg md:text-xl text-[#475569] max-w-2xl mx-auto mb-10">
+            <p className="text-base sm:text-lg md:text-xl text-[#475569] max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed px-2">
               Practice with AI interviewers from top tech companies. Get instant feedback, 
               track your progress, and build confidence for your next interview.
             </p>
 
-            <div className="flex items-center justify-center gap-4">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 px-4 sm:px-0">
               <motion.button
                 whileTap={{ scale: 0.97 }}
                 whileHover={{ scale: 1.02 }}
@@ -157,19 +158,19 @@ export default function Landing() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="mt-16 max-w-5xl mx-auto"
           >
-            <div className="bg-white rounded-2xl shadow-2xl shadow-[#6366F1]/10 border border-[#E2E8F0] p-6 md:p-8">
+            <div className="bg-white rounded-2xl shadow-2xl shadow-[#6366F1]/10 border border-[#E2E8F0] p-4 sm:p-6 md:p-8 overflow-hidden">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-3 h-3 rounded-full bg-[#EF4444]" />
                 <div className="w-3 h-3 rounded-full bg-[#F59E0B]" />
                 <div className="w-3 h-3 rounded-full bg-[#10B981]" />
               </div>
-              <div className="grid grid-cols-3 gap-4">
-                <div className="col-span-1 bg-[#F8FAFC] rounded-xl p-4 space-y-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="hidden sm:block col-span-1 bg-[#F8FAFC] rounded-xl p-4 space-y-3">
                   {['Dashboard', 'Mock Interview', 'Roleplay Mode', 'Analytics'].map((n, i) => (
                     <div key={n} className={`py-2 px-3 rounded-lg text-sm ${i === 0 ? 'bg-[#EEF2FF] text-[#6366F1] font-semibold' : 'text-[#94A3B8]'}`}>{n}</div>
                   ))}
                 </div>
-                <div className="col-span-2 space-y-3">
+                <div className="sm:col-span-2 space-y-3">
                   <div className="bg-[#EEF2FF] rounded-xl p-4 flex items-center justify-between">
                     <div>
                       <p className="text-sm text-[#6366F1] font-semibold">Readiness Score</p>
@@ -198,7 +199,7 @@ export default function Landing() {
 
       {/* ═══════════════ FEATURES ═══════════════ */}
       <section id="features" className="py-20" style={{ background: '#FFFFFF' }}>
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-extrabold text-[#0F172A] mb-4">
               Everything You Need to <span className="gradient-text">Ace Your Interview</span>
@@ -238,7 +239,7 @@ export default function Landing() {
       {/* ═══════════════ STATS BAR ═══════════════ */}
       <section ref={statsRef} className="py-16" style={{ background: '#F8FAFC' }}>
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8">
             {stats.map((stat) => (
               <div key={stat.label} className="text-center">
                 <div className="text-4xl md:text-5xl font-extrabold text-[#6366F1] mb-2">
@@ -264,8 +265,8 @@ export default function Landing() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { step: '01', title: 'Set Your Goals', desc: 'Choose your target role, company, and experience level to personalize your prep.', icon: '🎯' },
-              { step: '02', title: 'Practice with AI', desc: 'Take mock interviews or roleplay with AI personas from top companies.', icon: '🤖' },
+              { step: '01', title: 'Set Your Goals', desc: 'Choose your target role, company, and experience level to personalize your prep.', icon: <Target className="w-6 h-6 text-indigo-500" /> },
+              { step: '02', title: 'Practice with AI', desc: 'Take mock interviews or roleplay with AI personas from top companies.', icon: <Bot className="w-6 h-6 text-indigo-500" /> },
               { step: '03', title: 'Track & Improve', desc: 'Get instant AI feedback, track progress, and focus on weak areas.', icon: '📈' },
             ].map((s, i) => (
               <div key={s.step} className="text-center" data-aos="fade-up" data-aos-delay={i * 150}>
@@ -325,12 +326,12 @@ export default function Landing() {
 
       {/* ═══════════════ CTA ═══════════════ */}
       <section className="py-20" style={{ background: '#F8FAFC' }}>
-        <div className="max-w-4xl mx-auto px-6 text-center">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-br from-[#6366F1] to-[#8B5CF6] rounded-3xl p-12 md:p-16 text-white"
+            className="bg-gradient-to-br from-[#6366F1] to-[#8B5CF6] rounded-2xl sm:rounded-3xl p-8 sm:p-12 md:p-16 text-white"
           >
             <h2 className="text-3xl md:text-4xl font-extrabold mb-4" style={{ color: '#FFFFFF' }}>
               Ready to Land Your Dream Job?

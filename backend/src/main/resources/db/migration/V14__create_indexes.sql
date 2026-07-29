@@ -1,0 +1,11 @@
+CREATE INDEX idx_sessions_user_id ON sessions(user_id);
+CREATE INDEX idx_sessions_created_at ON sessions(created_at DESC);
+CREATE INDEX idx_session_questions_session_id ON session_questions(session_id);
+CREATE INDEX idx_questions_category ON questions(category);
+CREATE INDEX idx_questions_difficulty ON questions(difficulty);
+CREATE INDEX idx_questions_role_tag ON questions(role_tag);
+CREATE INDEX idx_bookmarks_user_id ON bookmarks(user_id);
+CREATE INDEX idx_achievements_user_id ON achievements(user_id);
+CREATE INDEX idx_roleplay_sessions_user_id ON roleplay_sessions(user_id);
+CREATE INDEX idx_refresh_tokens_token ON refresh_tokens(token);
+CREATE INDEX idx_refresh_tokens_user_id ON refresh_tokens(user_id);

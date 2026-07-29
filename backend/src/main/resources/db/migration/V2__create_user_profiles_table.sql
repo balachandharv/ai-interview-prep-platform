@@ -1,0 +1,22 @@
+CREATE TABLE user_profiles (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID NOT NULL UNIQUE REFERENCES users(id) ON DELETE CASCADE,
+    readiness_score INTEGER DEFAULT 0,
+    dsa_score DECIMAL(5,2) DEFAULT 0,
+    system_design_score DECIMAL(5,2) DEFAULT 0,
+    behavioral_score DECIMAL(5,2) DEFAULT 0,
+    communication_score DECIMAL(5,2) DEFAULT 0,
+    domain_knowledge_score DECIMAL(5,2) DEFAULT 0,
+    hr_score DECIMAL(5,2) DEFAULT 0,
+    total_sessions INTEGER DEFAULT 0,
+    total_questions_answered INTEGER DEFAULT 0,
+    average_score DECIMAL(5,2) DEFAULT 0,
+    streak_count INTEGER DEFAULT 0,
+    best_streak INTEGER DEFAULT 0,
+    streak_last_date DATE,
+    streak_freeze_available BOOLEAN DEFAULT TRUE,
+    streak_freeze_used_at DATE,
+    badges_earned TEXT[],
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);

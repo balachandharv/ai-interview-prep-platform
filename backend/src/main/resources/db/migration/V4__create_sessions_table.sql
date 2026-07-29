@@ -1,0 +1,22 @@
+CREATE TABLE sessions (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    mode VARCHAR(20) NOT NULL,
+    target_role VARCHAR(100),
+    difficulty VARCHAR(20),
+    category VARCHAR(50),
+    overall_score DECIMAL(5,2),
+    dsa_score DECIMAL(5,2),
+    behavioral_score DECIMAL(5,2),
+    communication_score DECIMAL(5,2),
+    technical_score DECIMAL(5,2),
+    question_count INTEGER DEFAULT 0,
+    completed_count INTEGER DEFAULT 0,
+    time_spent_seconds INTEGER DEFAULT 0,
+    is_completed BOOLEAN DEFAULT FALSE,
+    company_tag VARCHAR(100),
+    round_label VARCHAR(100),
+    started_at TIMESTAMP DEFAULT NOW(),
+    completed_at TIMESTAMP,
+    created_at TIMESTAMP DEFAULT NOW()
+);

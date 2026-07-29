@@ -1,60 +1,72 @@
-version: '3.8'
+version: '3.9'
 
 services:
-  db:
+  postgres:
     image: postgres:15-alpine
-    container_name: interviewai-db
+    container_name: interview_prep_db
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgrespassword
-      POSTGRES_DB: interviewai
+      POSTGRES_DB: interview_prep_db
+      POSTGRES_USER: ${DB_USERNAME:-interviewprep}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-interviewprep123}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U interviewprep"]
       interval: 10s
       timeout: 5s
       retries: 5
 
   redis:
     image: redis:7-alpine
-    container_name: interviewai-redis
+    container_name: interview_prep_redis
+    command: redis-server --requirepass ${REDIS_PASSWORD:-redis123}
     ports:
       - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: interviewai-backend
+    container_name: interview_prep_backend
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      DB_USERNAME: ${DB_USERNAME:-interviewprep}
+      DB_PASSWORD: ${DB_PASSWORD:-interviewprep123}
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-redis123}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      HUGGINGFACE_API_KEY: ${HUGGINGFACE_API_KEY}
+      JWT_SECRET: ${JWT_SECRET}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
     ports:
       - "8080:8080"
-    environment:
-      - DB_HOST=db
-      - DB_PORT=5432
-      - DB_NAME=interviewai
-      - DB_USER=postgres
-      - DB_PASS=postgrespassword
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - JWT_SECRET=8f7b3c2a9d1e4f6g8h0j2k4l6m8n0p2q4r6s8t0u2v4w6x8y0z_replace_in_prod
     depends_on:
-      db:
+      postgres:
         condition: service_healthy
       redis:
-        condition: service_started
+        condition: service_healthy
+    restart: unless-stopped
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: interviewai-frontend
+    container_name: interview_prep_frontend
     ports:
       - "3000:80"
     depends_on:
       - backend
+    restart: unless-stopped
 
 volumes:
   postgres_data:
+  redis_data:

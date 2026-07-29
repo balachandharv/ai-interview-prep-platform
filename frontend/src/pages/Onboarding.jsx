@@ -95,7 +95,7 @@ export default function Onboarding() {
               {/* Step 1: Target Role */}
               {step === 0 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0F172A] mb-2">What role are you targeting? 🎯</h2>
+                  <h2 className="text-2xl font-bold text-[#0F172A] mb-2">What role are you targeting?</h2>
                   <p className="text-[#475569] mb-6">Choose the role you're preparing for</p>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     {TARGET_ROLES.map((role) => (
@@ -120,7 +120,7 @@ export default function Onboarding() {
               {/* Step 2: Experience Level */}
               {step === 1 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0F172A] mb-2">What's your experience level? 📊</h2>
+                  <h2 className="text-2xl font-bold text-[#0F172A] mb-2">What's your experience level?</h2>
                   <p className="text-[#475569] mb-6">This helps us calibrate question difficulty</p>
                   <div className="space-y-3">
                     {EXPERIENCE_LEVELS.map((level) => (
@@ -144,7 +144,7 @@ export default function Onboarding() {
               {/* Step 3: Target Companies */}
               {step === 2 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0F172A] mb-2">Target companies? 🏢</h2>
+                  <h2 className="text-2xl font-bold text-[#0F172A] mb-2">Target companies?</h2>
                   <p className="text-[#475569] mb-6">Select all that apply</p>
                   <div className="flex flex-wrap gap-3">
                     {COMPANIES.map((company) => (
@@ -223,7 +223,7 @@ export default function Onboarding() {
               onClick={handleNext}
               className="btn btn-primary btn-lg"
             >
-              {step === steps.length - 1 ? 'Complete Setup 🚀' : 'Next →'}
+              {step === steps.length - 1 ? 'Complete Setup' : 'Next →'}
             </motion.button>
           </div>
         </div>

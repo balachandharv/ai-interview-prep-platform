@@ -1,0 +1,22 @@
+CREATE TABLE session_questions (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    session_id UUID NOT NULL REFERENCES sessions(id) ON DELETE CASCADE,
+    question_id UUID NOT NULL REFERENCES questions(id),
+    user_answer TEXT,
+    score DECIMAL(5,2),
+    correctness_score DECIMAL(5,2),
+    completeness_score DECIMAL(5,2),
+    clarity_score DECIMAL(5,2),
+    structure_score DECIMAL(5,2),
+    similarity_score DECIMAL(5,2),
+    time_spent_seconds INTEGER DEFAULT 0,
+    filler_word_count INTEGER DEFAULT 0,
+    points_covered JSONB DEFAULT '[]',
+    points_missed JSONB DEFAULT '[]',
+    sample_answer TEXT,
+    pro_tip TEXT,
+    is_flagged_short BOOLEAN DEFAULT FALSE,
+    is_flagged_fast BOOLEAN DEFAULT FALSE,
+    question_order INTEGER,
+    answered_at TIMESTAMP DEFAULT NOW()
+);

@@ -27,6 +27,6 @@ server:
 
 app:
   security:
-    jwtSecret: ${JWT_SECRET:8f7b3c2a9d1e4f6g8h0j2k4l6m8n0p2q4r6s8t0u2v4w6x8y0z}
+    jwtSecret: ${JWT_SECRET}
     jwtExpirationMs: 86400000 # 24 hours
     jwtRefreshExpirationMs: 604800000 # 7 days

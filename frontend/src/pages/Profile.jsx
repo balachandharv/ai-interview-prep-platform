@@ -10,20 +10,20 @@ export default function Profile() {
       {/* Cover + Avatar */}
       <div className="rounded-2xl overflow-hidden mb-6" style={{ background: 'linear-gradient(135deg, #EEF2FF 0%, #F5F3FF 100%)' }}>
         <div className="h-32" />
-        <div className="px-6 pb-6 -mt-12 flex items-end gap-4">
+        <div className="px-4 sm:px-6 pb-6 -mt-12 flex flex-col sm:flex-row items-start sm:items-end gap-4">
           <div className="relative">
             <div className="avatar avatar-xl border-4 border-white shadow-lg" style={{ background: '#6366F1', color: 'white', fontSize: '2rem' }}>B</div>
             <div className="absolute bottom-1 right-1 w-4 h-4 bg-[#10B981] rounded-full border-2 border-white" />
           </div>
-          <div className="mb-2">
+          <div className="mb-2 w-full sm:w-auto">
             <h1 className="text-2xl font-bold text-[#0F172A]">Balachandhar V</h1>
-            <div className="flex gap-2 mt-1">
+            <div className="flex flex-wrap gap-2 mt-2 sm:mt-1">
               <span className="badge badge-primary">Full Stack Engineer</span>
               <span className="badge badge-secondary">Mid (2-5 yrs)</span>
             </div>
           </div>
-          <div className="ml-auto mb-2">
-            <motion.button whileTap={{ scale: 0.97 }} className="btn btn-outline btn-sm">✏️ Edit Profile</motion.button>
+          <div className="mt-2 sm:mt-0 sm:ml-auto sm:mb-2">
+            <motion.button whileTap={{ scale: 0.97 }} className="btn btn-outline btn-sm w-full sm:w-auto">✏️ Edit Profile</motion.button>
           </div>
         </div>
       </div>

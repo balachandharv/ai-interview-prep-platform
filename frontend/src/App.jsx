@@ -6,6 +6,7 @@ import { store } from './store';
 
 // Layout
 import DashboardLayout from './components/layout/DashboardLayout';
+import ProtectedRoute from './components/common/ProtectedRoute';
 
 // Pages
 import Landing from './pages/Landing';
@@ -52,25 +53,27 @@ export default function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/onboarding" element={<Onboarding />} />
 
-            {/* Full-screen Pages (no sidebar) */}
-            <Route path="/interview-session" element={<InterviewSession />} />
-            <Route path="/roleplay-session" element={<RoleplaySession />} />
+            {/* Full-screen Pages (no sidebar) - Protected */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/interview-session" element={<InterviewSession />} />
+              <Route path="/roleplay-session" element={<RoleplaySession />} />
 
-            {/* Dashboard Pages (with sidebar layout) */}
-            <Route element={<DashboardLayout />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/question-bank" element={<QuestionBank />} />
-              <Route path="/mock-interview" element={<MockInterview />} />
-              <Route path="/session-results" element={<SessionResults />} />
-              <Route path="/session/:id/results" element={<SessionResults />} />
-              <Route path="/roleplay" element={<RoleplayMode />} />
-              <Route path="/roleplay-results" element={<RoleplayResults />} />
-              <Route path="/analytics" element={<Analytics />} />
-              <Route path="/company-prep" element={<CompanyPrep />} />
-              <Route path="/resume-interview" element={<ResumeInterview />} />
-              <Route path="/leaderboard" element={<Leaderboard />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/settings" element={<Settings />} />
+              {/* Dashboard Pages (with sidebar layout) */}
+              <Route element={<DashboardLayout />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/question-bank" element={<QuestionBank />} />
+                <Route path="/mock-interview" element={<MockInterview />} />
+                <Route path="/session-results" element={<SessionResults />} />
+                <Route path="/session/:id/results" element={<SessionResults />} />
+                <Route path="/roleplay" element={<RoleplayMode />} />
+                <Route path="/roleplay-results" element={<RoleplayResults />} />
+                <Route path="/analytics" element={<Analytics />} />
+                <Route path="/company-prep" element={<CompanyPrep />} />
+                <Route path="/resume-interview" element={<ResumeInterview />} />
+                <Route path="/leaderboard" element={<Leaderboard />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/settings" element={<Settings />} />
+              </Route>
             </Route>
           </Routes>
         </AnimatePresence>

@@ -56,7 +56,7 @@ export default function QuestionBank() {
         {CATEGORIES.map(c => (
           <button key={c} onClick={() => { setCategoryFilter(c); setCurrentPage(1); }} className={`chip ${categoryFilter === c ? 'chip-active' : ''}`}>{c}</button>
         ))}
-        <span className="mx-2 text-[#E2E8F0]">|</span>
+        <span className="hidden md:inline mx-2 text-[#E2E8F0]">|</span>
         {DIFFICULTIES.map(d => (
           <button key={d} onClick={() => { setDifficultyFilter(difficultyFilter === d ? '' : d); setCurrentPage(1); }} className={`chip ${difficultyFilter === d ? 'chip-active' : ''}`}>{d}</button>
         ))}
@@ -77,7 +77,7 @@ export default function QuestionBank() {
                   <span className="badge" style={{ background: diffColors[q.difficulty]?.bg, color: diffColors[q.difficulty]?.text }}>{q.difficulty}</span>
                   <span className="badge badge-primary">{q.category}</span>
                   {q.company && <span className="text-xs text-[#94A3B8]">• {q.company}</span>}
-                  {q.masteryCount >= 3 && <span className="badge" style={{ background: '#EEF2FF', color: '#6366F1' }}>⭐ Mastered</span>}
+                  {q.masteryCount >= 3 && <span className="badge" style={{ background: '#EEF2FF', color: '#6366F1' }}>Mastered</span>}
                 </div>
                 <p className="text-[#0F172A] font-medium">{q.text}</p>
               </div>

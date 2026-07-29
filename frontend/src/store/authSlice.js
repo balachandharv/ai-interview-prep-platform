@@ -4,10 +4,21 @@ import { authAPI } from '../services/api';
 export const loginUser = createAsyncThunk('auth/login', async (credentials, { rejectWithValue }) => {
   try {
     const response = await authAPI.login(credentials);
-    localStorage.setItem('token', response.data.token);
-    localStorage.setItem('refreshToken', response.data.refreshToken);
+    sessionStorage.setItem('token', response.data.token);
+    sessionStorage.setItem('refreshToken', response.data.refreshToken);
     return response.data;
   } catch (err) {
+    if (import.meta.env.VITE_USE_MOCK_API === 'true') {
+      console.warn("Backend login failed, using mock data for local testing:", err.message);
+      const mockData = {
+        token: "mock-jwt-token-123",
+        refreshToken: "mock-refresh-token",
+        user: { id: "1", name: credentials.email.split('@')[0], email: credentials.email, onboardingComplete: true }
+      };
+      sessionStorage.setItem('token', mockData.token);
+      sessionStorage.setItem('refreshToken', mockData.refreshToken);
+      return mockData;
+    }
     return rejectWithValue(err.response?.data?.message || 'Login failed');
   }
 });
@@ -15,19 +26,30 @@ export const loginUser = createAsyncThunk('auth/login', async (credentials, { re
 export const registerUser = createAsyncThunk('auth/register', async (data, { rejectWithValue }) => {
   try {
     const response = await authAPI.register(data);
-    localStorage.setItem('token', response.data.token);
-    localStorage.setItem('refreshToken', response.data.refreshToken);
+    sessionStorage.setItem('token', response.data.token);
+    sessionStorage.setItem('refreshToken', response.data.refreshToken);
     return response.data;
   } catch (err) {
+    if (import.meta.env.VITE_USE_MOCK_API === 'true') {
+      console.warn("Backend registration failed, using mock data for local testing:", err.message);
+      const mockData = {
+        token: "mock-jwt-token-123",
+        refreshToken: "mock-refresh-token",
+        user: { id: "1", name: data.name, email: data.email, onboardingComplete: false }
+      };
+      sessionStorage.setItem('token', mockData.token);
+      sessionStorage.setItem('refreshToken', mockData.refreshToken);
+      return mockData;
+    }
     return rejectWithValue(err.response?.data?.message || 'Registration failed');
   }
 });
 
 export const refreshToken = createAsyncThunk('auth/refresh', async (_, { rejectWithValue }) => {
   try {
-    const token = localStorage.getItem('refreshToken');
+    const token = sessionStorage.getItem('refreshToken');
     const response = await authAPI.refresh(token);
-    localStorage.setItem('token', response.data.token);
+    sessionStorage.setItem('token', response.data.token);
     return response.data;
   } catch (err) {
     return rejectWithValue('Session expired');
@@ -38,8 +60,8 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: {
     user: null,
-    token: localStorage.getItem('token'),
-    isAuthenticated: !!localStorage.getItem('token'),
+    token: sessionStorage.getItem('token'),
+    isAuthenticated: !!sessionStorage.getItem('token'),
     isLoading: false,
     error: null,
     onboardingComplete: false,
@@ -50,8 +72,8 @@ const authSlice = createSlice({
       state.token = null;
       state.isAuthenticated = false;
       state.onboardingComplete = false;
-      localStorage.removeItem('token');
-      localStorage.removeItem('refreshToken');
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('refreshToken');
     },
     clearError: (state) => {
       state.error = null;

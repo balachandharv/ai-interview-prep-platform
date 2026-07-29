@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import toast from 'react-hot-toast';
+import { Eye, EyeOff } from 'lucide-react';
 import { loginUser, clearError } from '../store/authSlice';
 
 const schema = z.object({
@@ -34,7 +35,7 @@ export default function Login() {
   const onSubmit = async (data) => {
     try {
       const result = await dispatch(loginUser(data)).unwrap();
-      toast.success('Welcome back! 🎉', { style: { background: '#ECFDF5', color: '#0F172A', border: '1px solid #10B981' } });
+      toast.success('Welcome back!', { style: { background: '#ECFDF5', color: '#0F172A', border: '1px solid #10B981' } });
       navigate(result.user?.onboardingComplete ? '/dashboard' : '/onboarding');
     } catch (err) {
       toast.error(err || 'Login failed', { style: { background: '#FEF2F2', color: '#EF4444', border: '1px solid #EF4444' } });
@@ -98,7 +99,7 @@ export default function Login() {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-[#94A3B8] hover:text-[#475569] bg-transparent border-none cursor-pointer"
                 >
-                  {showPassword ? '🙈' : '👁️'}
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
               {errors.password && <p className="text-[#EF4444] text-xs mt-1">{errors.password.message}</p>}

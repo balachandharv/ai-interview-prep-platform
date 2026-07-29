@@ -15,7 +15,7 @@ const api = axios.create({
 
 // Request interceptor - attach JWT token
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -32,7 +32,7 @@ api.interceptors.response.use(
       try {
         const { refreshToken } = await import('../store/authSlice');
         await store.dispatch(refreshToken()).unwrap();
-        const newToken = localStorage.getItem('token');
+        const newToken = sessionStorage.getItem('token');
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return api(originalRequest);
       } catch {

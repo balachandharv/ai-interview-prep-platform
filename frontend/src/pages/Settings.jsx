@@ -56,10 +56,10 @@ export default function Settings() {
               { key: 'weekly', label: 'Weekly Report', desc: 'Receive weekly progress summary' },
               { key: 'achievements', label: 'Achievement Alerts', desc: 'Notifications when you earn badges' },
             ].map(n => (
-              <div key={n.key} className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-semibold text-[#0F172A]">{n.label}</p>
-                  <p className="text-xs text-[#94A3B8]">{n.desc}</p>
+              <div key={n.key} className="flex items-center justify-between gap-4">
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-semibold text-[#0F172A] truncate">{n.label}</p>
+                  <p className="text-xs text-[#94A3B8] truncate">{n.desc}</p>
                 </div>
                 <div className={`toggle ${notifications[n.key] ? 'active' : ''}`}
                   onClick={() => setNotifications(prev => ({ ...prev, [n.key]: !prev[n.key] }))} />

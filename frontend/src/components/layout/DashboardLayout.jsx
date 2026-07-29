@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Topbar from './Topbar';
+import BottomNav from './BottomNav';
 import { motion } from 'framer-motion';
 
 export default function DashboardLayout() {
@@ -18,6 +19,7 @@ export default function DashboardLayout() {
           <Outlet />
         </motion.main>
       </div>
+      <BottomNav />
     </div>
   );
 }

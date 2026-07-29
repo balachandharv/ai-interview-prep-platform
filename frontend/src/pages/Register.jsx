@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import toast from 'react-hot-toast';
+import { Eye, EyeOff } from 'lucide-react';
 import { registerUser } from '../store/authSlice';
 
 const schema = z.object({
@@ -34,7 +35,7 @@ export default function Register() {
   const onSubmit = async (data) => {
     try {
       await dispatch(registerUser({ name: data.name, email: data.email, password: data.password })).unwrap();
-      toast.success('Account created successfully! 🎉', { style: { background: '#ECFDF5', color: '#0F172A', border: '1px solid #10B981' } });
+      toast.success('Account created successfully!', { style: { background: '#ECFDF5', color: '#0F172A', border: '1px solid #10B981' } });
       navigate('/onboarding');
     } catch (err) {
       toast.error(err || 'Registration failed', { style: { background: '#FEF2F2', color: '#EF4444', border: '1px solid #EF4444' } });
@@ -77,7 +78,7 @@ export default function Register() {
               <div className="relative">
                 <input {...register('password')} type={showPassword ? 'text' : 'password'} className={`input pr-12 ${errors.password ? 'input-error' : ''}`} placeholder="••••••••" />
                 <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#94A3B8] hover:text-[#475569] bg-transparent border-none cursor-pointer">
-                  {showPassword ? '🙈' : '👁️'}
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
               {errors.password && <p className="text-[#EF4444] text-xs mt-1">{errors.password.message}</p>}

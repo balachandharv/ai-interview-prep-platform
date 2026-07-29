@@ -20,7 +20,7 @@ export default function RoleplayMode() {
   return (
     <div style={{ fontFamily: 'Inter, sans-serif' }}>
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-        <h1 className="text-3xl font-extrabold text-[#0F172A] mb-1">Roleplay Mode 🎭</h1>
+        <h1 className="text-3xl font-extrabold text-[#0F172A] mb-1">Roleplay Mode</h1>
         <p className="text-[#475569] mb-8">Choose your AI interviewer and start a realistic interview experience</p>
       </motion.div>
 
@@ -29,7 +29,7 @@ export default function RoleplayMode() {
         className="flex items-center gap-3 mb-6 p-4 rounded-xl bg-[#F5F3FF] border border-[#8B5CF6]/20">
         <div className={`toggle ${companyMode ? 'active' : ''}`} onClick={() => setCompanyMode(!companyMode)} style={{ '--toggle-color': '#8B5CF6' }} />
         <div>
-          <p className="text-sm font-semibold text-[#0F172A]">🏢 Company Mode</p>
+          <p className="text-sm font-semibold text-[#0F172A]">Company Mode</p>
           <p className="text-xs text-[#94A3B8]">Simulate full multi-round interview process</p>
         </div>
       </motion.div>
@@ -42,7 +42,7 @@ export default function RoleplayMode() {
             variants={item}
             whileHover={{ y: -4 }}
             onClick={() => setSelected(persona)}
-            className={`p-5 rounded-2xl cursor-pointer transition-all border-2 bg-white ${
+            className={`relative p-5 rounded-2xl cursor-pointer transition-all border-2 bg-white ${
               selected?.id === persona.id
                 ? 'border-[#6366F1] shadow-lg shadow-[#6366F1]/10'
                 : 'border-[#E2E8F0] hover:border-[#6366F1]/50'
@@ -71,7 +71,7 @@ export default function RoleplayMode() {
         disabled={!selected}
         className="btn btn-primary btn-lg w-full max-w-md mx-auto block disabled:opacity-50"
       >
-        {selected ? `Start Interview with ${selected.name} 🚀` : 'Select an interviewer to begin'}
+        {selected ? `Start Interview with ${selected.name}` : 'Select an interviewer to begin'}
       </motion.button>
     </div>
   );

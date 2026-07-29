@@ -29,7 +29,7 @@ export default function MockInterview() {
   return (
     <div style={{ fontFamily: 'Inter, sans-serif' }}>
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-        <h1 className="text-3xl font-extrabold text-[#0F172A] mb-1">Mock Interview Setup 🎯</h1>
+        <h1 className="text-3xl font-extrabold text-[#0F172A] mb-1">Mock Interview Setup</h1>
         <p className="text-[#475569] mb-8">Customize your practice session</p>
       </motion.div>
 
@@ -54,7 +54,7 @@ export default function MockInterview() {
           {/* Difficulty */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="card-flat p-6">
             <h3 className="text-lg font-bold text-[#0F172A] mb-4">Difficulty Level</h3>
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-3">
               {DIFFICULTIES.map(d => (
                 <motion.button
                   key={d} whileTap={{ scale: 0.95 }}
@@ -92,7 +92,7 @@ export default function MockInterview() {
               />
             </div>
             {config.timerEnabled && (
-              <div className="flex items-center gap-4">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-4">
                 {[2, 3, 5, 7].map(m => (
                   <motion.button
                     key={m} whileTap={{ scale: 0.95 }}
@@ -148,7 +148,7 @@ export default function MockInterview() {
               onClick={handleStart}
               className="btn btn-primary w-full btn-lg"
             >
-              Start Interview 🚀
+              Start Interview
             </motion.button>
           </div>
         </motion.div>

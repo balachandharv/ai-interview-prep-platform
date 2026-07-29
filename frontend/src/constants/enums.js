@@ -5,13 +5,13 @@ export const EXPERIENCE_LEVELS = ['Fresher', 'Junior (0-2 yrs)', 'Mid (2-5 yrs)'
 export const TARGET_ROLES = [
   { id: 'sde1', label: 'SDE-1 / Junior Developer', icon: '💻' },
   { id: 'sde2', label: 'SDE-2 / Mid Developer', icon: '🖥️' },
-  { id: 'sde3', label: 'SDE-3 / Senior Developer', icon: '⚡' },
+  { id: 'sde3', label: 'SDE-3 / Senior Developer' },
   { id: 'frontend', label: 'Frontend Engineer', icon: '🎨' },
-  { id: 'backend', label: 'Backend Engineer', icon: '⚙️' },
+  { id: 'backend', label: 'Backend Engineer', icon: '️' },
   { id: 'fullstack', label: 'Full Stack Engineer', icon: '🔄' },
-  { id: 'devops', label: 'DevOps Engineer', icon: '🚀' },
-  { id: 'data', label: 'Data Engineer / Scientist', icon: '📊' },
-  { id: 'ml', label: 'ML Engineer', icon: '🤖' },
+  { id: 'devops', label: 'DevOps Engineer' },
+  { id: 'data', label: 'Data Engineer / Scientist' },
+  { id: 'ml', label: 'ML Engineer' },
   { id: 'pm', label: 'Product Manager', icon: '📋' },
   { id: 'qa', label: 'QA Engineer', icon: '🧪' },
   { id: 'mobile', label: 'Mobile Developer', icon: '📱' },
@@ -61,7 +61,6 @@ export const ROLEPLAY_PERSONAS = [
     difficulty: 'Hard',
     duration: '30 min',
     description: 'Combines leadership principles with technical depth. Tests decision-making and ownership.',
-    avatar: '👨‍💼',
     color: '#FF9900',
   },
   {
@@ -73,7 +72,6 @@ export const ROLEPLAY_PERSONAS = [
     difficulty: 'Medium',
     duration: '20 min',
     description: 'Expert in behavioral interviewing with STAR methodology. Tests culture fit and collaboration.',
-    avatar: '👩‍🏫',
     color: '#00A4EF',
   },
   {
@@ -85,7 +83,6 @@ export const ROLEPLAY_PERSONAS = [
     difficulty: 'Medium',
     duration: '25 min',
     description: 'Looks for product thinking, speed, and versatility. Values practical problem-solving over theory.',
-    avatar: '🧑‍💻',
     color: '#6366F1',
   },
   {
@@ -97,7 +94,6 @@ export const ROLEPLAY_PERSONAS = [
     difficulty: 'Medium',
     duration: '20 min',
     description: 'Screens for analytical thinking, attention to detail, and financial domain awareness.',
-    avatar: '👩‍⚖️',
     color: '#6D9EEB',
   },
   {
@@ -109,7 +105,6 @@ export const ROLEPLAY_PERSONAS = [
     difficulty: 'Hard',
     duration: '30 min',
     description: 'Deep dives into system design at scale. Tests distributed systems knowledge and trade-off analysis.',
-    avatar: '👨‍🔬',
     color: '#0668E1',
   },
   {
@@ -121,7 +116,6 @@ export const ROLEPLAY_PERSONAS = [
     difficulty: 'Medium',
     duration: '25 min',
     description: 'Evaluates product sense, user empathy, and technical communication skills.',
-    avatar: '👩‍💼',
     color: '#F7CB0A',
   },
   {
@@ -133,7 +127,6 @@ export const ROLEPLAY_PERSONAS = [
     difficulty: 'Hard',
     duration: '25 min',
     description: 'Tests structured thinking, case analysis, and executive communication.',
-    avatar: '🧑‍🏫',
     color: '#004B8D',
   },
 ];
@@ -150,18 +143,18 @@ export const MOTIVATIONAL_QUOTES = [
 ];
 
 export const BADGE_DEFINITIONS = [
-  { name: 'First Steps', description: 'Complete your first mock interview', icon: '🎯', requirement: 1 },
-  { name: 'Practice Makes Perfect', description: 'Complete 10 mock sessions', icon: '💪', requirement: 10 },
-  { name: 'Interview Marathon', description: 'Complete 50 mock sessions', icon: '🏃', requirement: 50 },
-  { name: 'Streak Master', description: 'Maintain a 7-day streak', icon: '🔥', requirement: 7 },
-  { name: 'Consistency King', description: 'Maintain a 30-day streak', icon: '👑', requirement: 30 },
-  { name: 'Roleplay Rookie', description: 'Complete first roleplay session', icon: '🎭', requirement: 1 },
-  { name: 'Roleplay Pro', description: 'Complete 10 roleplay sessions', icon: '🌟', requirement: 10 },
-  { name: 'Score Hunter', description: 'Score 9+ on any question', icon: '🎯', requirement: 9 },
-  { name: 'Perfect Round', description: 'Score 10/10 on all questions in a session', icon: '💎', requirement: 10 },
-  { name: 'Speed Demon', description: 'Complete a session in under 10 minutes', icon: '⚡', requirement: 1 },
-  { name: 'Streak Shield', description: 'Use a streak freeze', icon: '🛡️', requirement: 1 },
-  { name: 'Company Ready', description: 'Complete a company preparation module', icon: '🏢', requirement: 1 },
+  { name: 'First Steps', description: 'Complete your first mock interview', requirement: 1 },
+  { name: 'Practice Makes Perfect', description: 'Complete 10 mock sessions', requirement: 10 },
+  { name: 'Interview Marathon', description: 'Complete 50 mock sessions', requirement: 50 },
+  { name: 'Streak Master', description: 'Maintain a 7-day streak', requirement: 7 },
+  { name: 'Consistency King', description: 'Maintain a 30-day streak', requirement: 30 },
+  { name: 'Roleplay Rookie', description: 'Complete first roleplay session', requirement: 1 },
+  { name: 'Roleplay Pro', description: 'Complete 10 roleplay sessions', requirement: 10 },
+  { name: 'Score Hunter', description: 'Score 9+ on any question', requirement: 9 },
+  { name: 'Perfect Round', description: 'Score 10/10 on all questions in a session', requirement: 10 },
+  { name: 'Speed Demon', description: 'Complete a session in under 10 minutes', requirement: 1 },
+  { name: 'Streak Shield', description: 'Use a streak freeze', requirement: 1 },
+  { name: 'Company Ready', description: 'Complete a company preparation module', requirement: 1 },
 ];
 
 export const GRADE_COLORS = {

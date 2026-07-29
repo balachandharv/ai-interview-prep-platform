@@ -107,7 +107,7 @@ export default function InterviewSession() {
         const newDiff = difficulty === 'Hard' ? 'Medium' : 'Easy';
         setDifficulty(newDiff);
         setConsecutiveLow(0);
-        toast('💡 Adjusting difficulty to keep you in flow', { style: { background: '#FFFBEB', color: '#F59E0B', border: '1px solid #F59E0B' } });
+        toast('Adjusting difficulty to keep you in flow', { style: { background: '#FFFBEB', color: '#F59E0B', border: '1px solid #F59E0B' } });
       }
     } else {
       setConsecutiveHigh(0);
@@ -172,7 +172,7 @@ export default function InterviewSession() {
             exit={{ opacity: 0, y: -20 }}
             className="card-flat p-8 mb-6"
           >
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex flex-wrap items-center gap-2 mb-4">
               <span className="badge badge-primary">Q{currentIndex + 1}</span>
               <span className="badge badge-primary">{currentQ.category}</span>
               <span className="badge" style={{ background: diffColors[currentQ.difficulty] + '15', color: diffColors[currentQ.difficulty] }}>
@@ -276,7 +276,7 @@ export default function InterviewSession() {
 
               {/* Sample Answer */}
               <div className="p-4 rounded-xl" style={{ background: '#EEF2FF' }}>
-                <p className="text-sm font-semibold text-[#6366F1] mb-2">💡 Improved Sample Answer</p>
+                <p className="text-sm font-semibold text-[#6366F1] mb-2">Improved Sample Answer</p>
                 <p className="text-sm text-[#475569]">{feedback.sampleAnswer}</p>
               </div>
 
@@ -294,7 +294,7 @@ export default function InterviewSession() {
                 onClick={handleNext}
                 className="btn btn-primary btn-lg w-full"
               >
-                {currentIndex < questions.length - 1 ? 'Next Question →' : 'View Results 🎉'}
+                {currentIndex < questions.length - 1 ? 'Next Question →' : 'View Results'}
               </motion.button>
             </motion.div>
           )}

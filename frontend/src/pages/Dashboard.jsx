@@ -6,7 +6,9 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 import { generateMockDashboardData, formatDate, getGrade, generateStreakGrid } from '../utils/helpers';
+import { Flame, VenetianMask, FilePlus2 } from 'lucide-react';
 import { RADAR_CATEGORIES, MOTIVATIONAL_QUOTES, GRADE_COLORS } from '../constants/enums';
+import EmptyState from '../components/common/EmptyState';
 
 const container = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.1 } } };
 const cardItem = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } } };
@@ -41,7 +43,7 @@ export default function Dashboard() {
     <div style={{ fontFamily: 'Inter, sans-serif' }}>
       {/* Welcome Header */}
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-        <h1 className="text-3xl font-extrabold text-[#0F172A] mb-1">Welcome back! 👋</h1>
+        <h1 className="text-3xl font-extrabold text-[#0F172A] mb-1">Welcome back!</h1>
         <p className="text-[#475569]">Here's your interview prep overview</p>
       </motion.div>
 
@@ -50,7 +52,7 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Readiness Score */}
           <motion.div variants={cardItem} className="card-flat flex flex-col items-center justify-center p-6">
-            <div className="w-36 h-36 mb-4">
+            <div className="relative w-36 h-36 mb-4">
               <CircularProgressbar
                 value={data.readinessScore}
                 text=""
@@ -60,13 +62,13 @@ export default function Dashboard() {
                   pathTransitionDuration: 1.5,
                 })}
               />
-              <div className="relative -mt-[104px] flex items-center justify-center">
+              <div className="absolute inset-0 flex items-center justify-center">
                 <span className="text-4xl font-extrabold text-[#0F172A]">
                   <CountUp end={data.readinessScore} duration={2} />
                 </span>
               </div>
             </div>
-            <p className="text-sm font-semibold text-[#475569] mt-8">Your Readiness Score</p>
+            <p className="text-sm font-semibold text-[#475569] mt-2">Your Readiness Score</p>
             <span className="badge badge-primary mt-2">
               {data.readinessScore >= 80 ? 'Interview Ready' : data.readinessScore >= 50 ? 'Getting There' : 'Keep Practicing'}
             </span>
@@ -76,7 +78,7 @@ export default function Dashboard() {
           <motion.div variants={cardItem} className="card-flat p-6">
             <h3 className="text-base font-bold text-[#0F172A] mb-4">Skill Breakdown</h3>
             <ResponsiveContainer width="100%" height={220}>
-              <RadarChart data={radarData}>
+              <RadarChart data={radarData} outerRadius="75%">
                 <PolarGrid stroke="#E2E8F0" />
                 <PolarAngleAxis dataKey="category" tick={{ fontSize: 11, fill: '#475569' }} />
                 <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
@@ -97,7 +99,7 @@ export default function Dashboard() {
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-base font-bold text-[#0F172A]">Practice Streak</h3>
               <div className="flex items-center gap-1">
-                <span className="text-2xl">🔥</span>
+                <Flame className="text-orange-500 w-6 h-6" />
                 <span className="text-xl font-bold text-[#6366F1]">
                   <CountUp end={data.streak.current} duration={1.5} />
                 </span>
@@ -140,12 +142,12 @@ export default function Dashboard() {
             className="p-6 rounded-2xl cursor-pointer transition-shadow hover:shadow-lg"
             style={{ background: '#EEF2FF', border: '1px solid rgba(99,102,241,0.15)' }}
           >
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-lg font-bold text-[#0F172A] mb-1">Start Mock Interview</h3>
-                <p className="text-sm text-[#475569]">Practice with AI-powered questions</p>
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex-1 min-w-0">
+                <h3 className="text-lg font-bold text-[#0F172A] mb-1 truncate">Start Mock Interview</h3>
+                <p className="text-sm text-[#475569] line-clamp-2 leading-tight">Practice with AI-powered questions</p>
               </div>
-              <motion.div whileHover={{ x: 4 }} className="w-12 h-12 rounded-xl bg-[#6366F1] flex items-center justify-center">
+              <motion.div whileHover={{ x: 4 }} className="w-12 h-12 rounded-xl bg-[#6366F1] flex items-center justify-center flex-shrink-0">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </motion.div>
             </div>
@@ -158,13 +160,13 @@ export default function Dashboard() {
             className="p-6 rounded-2xl cursor-pointer transition-shadow hover:shadow-lg"
             style={{ background: '#F5F3FF', border: '1px solid rgba(139,92,246,0.15)' }}
           >
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-lg font-bold text-[#0F172A] mb-1">Enter Roleplay Mode</h3>
-                <p className="text-sm text-[#475569]">Practice with AI interviewers from top companies</p>
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex-1 min-w-0">
+                <h3 className="text-lg font-bold text-[#0F172A] mb-1 truncate">Enter Roleplay Mode</h3>
+                <p className="text-sm text-[#475569] line-clamp-2 leading-tight">Practice with AI interviewers from top companies</p>
               </div>
-              <motion.div whileHover={{ x: 4 }} className="w-12 h-12 rounded-xl bg-[#8B5CF6] flex items-center justify-center">
-                <span className="text-white text-xl">🎭</span>
+              <motion.div whileHover={{ x: 4 }} className="w-12 h-12 rounded-xl bg-[#8B5CF6] flex items-center justify-center flex-shrink-0">
+                <VenetianMask className="text-white w-6 h-6" />
               </motion.div>
             </div>
           </motion.div>
@@ -204,7 +206,7 @@ export default function Dashboard() {
 
           {/* Weekly Focus Plan */}
           <motion.div variants={cardItem} className="card-flat p-6">
-            <h3 className="text-base font-bold text-[#0F172A] mb-4">🎯 Weekly Focus Plan</h3>
+            <h3 className="text-base font-bold text-[#0F172A] mb-4">Weekly Focus Plan</h3>
             <div className="space-y-3">
               {data.weeklyFocusPlan.priorities.map((p, i) => (
                 <div key={p.category} className="flex items-start gap-3">
@@ -229,42 +231,54 @@ export default function Dashboard() {
               View All →
             </button>
           </div>
-          <div className="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Mode</th>
-                  <th>Questions</th>
-                  <th>Score</th>
-                  <th>Grade</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.recentSessions.map((session) => {
-                  const grade = getGrade(session.score);
-                  const gradeStyle = GRADE_COLORS[grade];
-                  return (
-                    <tr key={session.id} className="cursor-pointer" onClick={() => navigate(`/session/${session.id}/results`)}>
-                      <td className="font-medium">{formatDate(session.date)}</td>
-                      <td>
-                        <span className={`badge ${session.mode === 'Mock' ? 'badge-primary' : 'badge-secondary'}`}>
-                          {session.mode}
-                        </span>
-                      </td>
-                      <td>{session.questionCount}</td>
-                      <td className="font-semibold">{session.score.toFixed(1)}/10</td>
-                      <td>
-                        <span className="badge" style={{ background: gradeStyle.bg, color: gradeStyle.text }}>
-                          {grade}
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+          {data.recentSessions.length === 0 ? (
+            <div className="mt-4">
+              <EmptyState 
+                icon={<FilePlus2 className="w-8 h-8" />}
+                title="No recent sessions"
+                description="You haven't completed any mock interviews yet. Start one now to build your skills!"
+                actionText="Start Mock Interview"
+                actionLink="/mock-interview"
+              />
+            </div>
+          ) : (
+            <div className="table-container overflow-x-auto overflow-y-hidden custom-scrollbar">
+              <table className="w-full min-w-[600px]">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Mode</th>
+                    <th>Questions</th>
+                    <th>Score</th>
+                    <th>Grade</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.recentSessions.map((session) => {
+                    const grade = getGrade(session.score);
+                    const gradeStyle = GRADE_COLORS[grade];
+                    return (
+                      <tr key={session.id} className="cursor-pointer" onClick={() => navigate(`/session/${session.id}/results`)}>
+                        <td className="font-medium">{formatDate(session.date)}</td>
+                        <td>
+                          <span className={`badge ${session.mode === 'Mock' ? 'badge-primary' : 'badge-secondary'}`}>
+                            {session.mode}
+                          </span>
+                        </td>
+                        <td>{session.questionCount}</td>
+                        <td className="font-semibold">{session.score.toFixed(1)}/10</td>
+                        <td>
+                          <span className="badge" style={{ background: gradeStyle.bg, color: gradeStyle.text }}>
+                            {grade}
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
         </motion.div>
       </motion.div>
     </div>
