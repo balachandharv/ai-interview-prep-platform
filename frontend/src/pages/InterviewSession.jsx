@@ -31,6 +31,7 @@ export default function InterviewSession() {
       return true;
     });
     setQuestions(filtered.slice(0, config.questionCount || 5));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -42,6 +43,7 @@ export default function InterviewSession() {
         timer.start();
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex, questions.length]);
 
   useEffect(() => {
@@ -53,6 +55,7 @@ export default function InterviewSession() {
       toast('⏰ Time\'s up!', { style: { background: '#FFFBEB', color: '#F59E0B', border: '1px solid #F59E0B' } });
       handleSubmit();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timer.seconds]);
 
   const handleSubmit = useCallback(async () => {
@@ -115,6 +118,7 @@ export default function InterviewSession() {
     }
 
     setIsSubmitting(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [answer, answerTimer.seconds, consecutiveHigh, consecutiveLow, difficulty, isListening, config.timerEnabled, timer]);
 
   const handleNext = () => {

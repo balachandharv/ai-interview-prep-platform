@@ -43,7 +43,7 @@ public class AchievementService {
 
         checkBadge(user, BadgeName.HIGH_SCORER,
             completedSession.getOverallScore() != null
-            && completedSession.getOverallScore() >= 9.0, newBadges);
+            && completedSession.getOverallScore().compareTo(new java.math.BigDecimal("9.0")) >= 0, newBadges);
 
         checkBadge(user, BadgeName.CENTURY,
             profile.getTotalQuestionsAnswered() >= 100, newBadges);

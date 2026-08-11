@@ -2,6 +2,7 @@ package com.interviewprep.service;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
+import com.interviewprep.evaluation.service.OpenAiService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
@@ -16,7 +17,7 @@ public class ResumeParserService {
     }
 
     public String extractTextFromPdf(MultipartFile file) throws IOException {
-        try (PDDocument document = PDDocument.load(file.getInputStream())) {
+        try (PDDocument document = org.apache.pdfbox.Loader.loadPDF(file.getBytes())) {
             PDFTextStripper pdfStripper = new PDFTextStripper();
             return pdfStripper.getText(document);
         }
@@ -34,6 +35,6 @@ public class ResumeParserService {
                 "Then, generate 3 personalized technical interview questions based on those skills.\n\n" +
                 "Resume Text:\n" + resumeText;
 
-        return openAiService.generateRoleplayResponse(prompt, "You are an expert technical recruiter analyzing a resume.", "");
+        return openAiService.callOpenAiApi("You are an expert technical recruiter analyzing a resume.", prompt, 1000);
     }
 }

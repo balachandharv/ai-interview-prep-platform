@@ -168,7 +168,7 @@ public class OpenAiService {
             prompt, 1000);
     }
 
-    private String callOpenAiApi(String systemPrompt,
+    public String callOpenAiApi(String systemPrompt,
             String userPrompt, int maxTokens) {
         try {
             Map<String, Object> requestBody = Map.of(

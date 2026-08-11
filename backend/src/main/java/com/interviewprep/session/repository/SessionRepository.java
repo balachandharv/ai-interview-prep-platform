@@ -11,5 +11,6 @@ import java.util.UUID;
 public interface SessionRepository extends JpaRepository<Session, UUID> {
     Page<Session> findByUserIdOrderByCreatedAtDesc(UUID userId, Pageable pageable);
     List<Session> findByUserIdAndIsCompletedTrue(UUID userId);
+    List<Session> findByUserId(UUID userId);
     boolean existsByUserIdAndCompanyTagIsNotNullAndIsCompletedTrue(UUID userId);
 }

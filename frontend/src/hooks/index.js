@@ -113,18 +113,18 @@ export function useTimer(initialSeconds = 0, countDown = false) {
   return { seconds, isActive, start, stop, reset, formatTime };
 }
 
+const FILLER_WORDS = ['um', 'uh', 'like', 'you know', 'basically', 'actually', 'literally', 'sort of', 'kind of', 'i mean', 'right', 'so yeah'];
+
 /**
  * Filler word detection hook
  */
 export function useFillerDetection() {
-  const fillerWords = ['um', 'uh', 'like', 'you know', 'basically', 'actually', 'literally', 'sort of', 'kind of', 'i mean', 'right', 'so yeah'];
-
   const detectFillers = useCallback((text) => {
     const lowerText = text.toLowerCase();
     const results = {};
     let totalCount = 0;
 
-    fillerWords.forEach((filler) => {
+    FILLER_WORDS.forEach((filler) => {
       const regex = new RegExp(`\\b${filler}\\b`, 'gi');
       const matches = lowerText.match(regex);
       if (matches) {

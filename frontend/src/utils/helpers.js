@@ -154,7 +154,7 @@ export function generateMockDashboardData() {
         { category: 'Domain Knowledge', description: 'Review database internals and caching strategies.', color: '#10B981' },
       ],
     },
-    activeDates: Array.from({ length: 30 }, (_, i) => {
+    activeDates: Array.from({ length: 30 }, () => {
       const d = new Date();
       d.setDate(d.getDate() - Math.floor(Math.random() * 84));
       return d.toISOString();
@@ -163,8 +163,6 @@ export function generateMockDashboardData() {
 }
 
 export function generateMockQuestions() {
-  const categories = ['Technical', 'Behavioral', 'HR', 'System Design', 'DSA'];
-  const difficulties = ['Easy', 'Medium', 'Hard'];
   const questions = [
     { text: 'Explain the difference between REST and GraphQL APIs.', category: 'Technical', difficulty: 'Medium', company: 'Google' },
     { text: 'Tell me about a time you had to deal with a difficult team member.', category: 'Behavioral', difficulty: 'Medium', company: 'Amazon' },

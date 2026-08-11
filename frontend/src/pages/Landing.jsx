@@ -3,7 +3,6 @@ import { Target, VenetianMask, BarChart3, Building, Bot } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
-import CountUp from '../components/common/CountUp';
 import Particles from '@tsparticles/react';
 import { loadSlim } from 'tsparticles-slim';
 import Navbar from '../components/layout/Navbar';

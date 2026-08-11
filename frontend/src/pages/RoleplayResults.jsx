@@ -10,7 +10,6 @@ export default function RoleplayResults() {
   const navigate = useNavigate();
   const { persona, messages = [], questionCount = 0 } = location.state || {};
   const [showConfetti, setShowConfetti] = useState(false);
-  const [expandedIdx, setExpandedIdx] = useState(null);
 
   const overallScore = 6 + Math.random() * 3.5;
   const commScore = 6 + Math.random() * 3;
@@ -19,7 +18,7 @@ export default function RoleplayResults() {
 
   useEffect(() => {
     if (overallScore >= 8) { setShowConfetti(true); setTimeout(() => setShowConfetti(false), 3000); }
-  }, []);
+  }, [overallScore]);
 
   const barData = Array.from({ length: questionCount }, (_, i) => ({ name: `Q${i + 1}`, score: 5 + Math.random() * 5 }));
 

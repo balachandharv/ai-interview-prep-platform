@@ -1,7 +1,7 @@
 package com.interviewprep.controller;
 
-import com.interviewprep.entity.Company;
-import com.interviewprep.repository.CompanyRepository;
+import com.interviewprep.company.entity.Company;
+import com.interviewprep.company.repository.CompanyRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;

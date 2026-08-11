@@ -51,7 +51,7 @@ export const refreshToken = createAsyncThunk('auth/refresh', async (_, { rejectW
     const response = await authAPI.refresh(token);
     sessionStorage.setItem('token', response.data.token);
     return response.data;
-  } catch (err) {
+  } catch {
     return rejectWithValue('Session expired');
   }
 });

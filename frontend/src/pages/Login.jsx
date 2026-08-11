@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import toast from 'react-hot-toast';
 import { Eye, EyeOff } from 'lucide-react';
-import { loginUser, clearError } from '../store/authSlice';
+import { loginUser } from '../store/authSlice';
 
 const schema = z.object({
   email: z.string().email('Please enter a valid email'),
@@ -25,7 +25,7 @@ const fieldVariants = {
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading, error } = useSelector((state) => state.auth);
+  const { isLoading } = useSelector((state) => state.auth);
   const [showPassword, setShowPassword] = useState(false);
 
   const { register, handleSubmit, formState: { errors } } = useForm({

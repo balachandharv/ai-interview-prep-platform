@@ -2,10 +2,9 @@ import { motion } from 'framer-motion';
 import CountUp from '../components/common/CountUp';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import { LineChart, Line, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import { RADAR_CATEGORIES } from '../constants/enums';
 import EmptyState from '../components/common/EmptyState';
 import { BarChart3 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 // Mock data (Empty for demo to show Empty State)
 const trendData = [];
@@ -15,7 +14,7 @@ const COLORS = ['#6366F1', '#8B5CF6'];
 const radarNow = [];
 
 export default function Analytics() {
-  const [hasData, setHasData] = useState(false); // Simulating empty backend
+  const [hasData] = useState(false); // Simulating empty backend
 
   if (!hasData) {
     return (

@@ -5,7 +5,6 @@ import CountUp from '../components/common/CountUp';
 import Confetti from 'react-confetti';
 import { LineChart, Line, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts';
 import { getGrade } from '../utils/helpers';
-import { GRADE_COLORS } from '../constants/enums';
 
 export default function SessionResults() {
   const location = useLocation();
