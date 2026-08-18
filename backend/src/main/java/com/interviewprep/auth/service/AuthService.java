@@ -17,14 +17,16 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthService {
-    
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
@@ -47,6 +49,11 @@ public class AuthService {
 
         UserProfile profile = new UserProfile();
         profile.setUser(user);
+        profile.setReadinessScore(0);
+        profile.setTotalSessions(0);
+        profile.setTotalQuestionsAnswered(0);
+        profile.setStreakCount(0);
+        profile.setBestStreak(0);
         user.setProfile(profile);
 
         userRepository.save(user);
@@ -55,13 +62,7 @@ public class AuthService {
         String token = jwtUtil.generateToken(userDetails);
         String refreshToken = jwtUtil.generateRefreshToken(userDetails);
 
-        return AuthResponse.builder()
-                .accessToken(token)
-                .refreshToken(refreshToken)
-                .userId(user.getId())
-                .name(user.getName())
-                .email(user.getEmail())
-                .build();
+        return buildResponse(user, token, refreshToken, false);
     }
 
     public AuthResponse login(LoginRequest request) {
@@ -81,13 +82,8 @@ public class AuthService {
         String token = jwtUtil.generateToken(userDetails);
         String refreshToken = jwtUtil.generateRefreshToken(userDetails);
 
-        return AuthResponse.builder()
-                .accessToken(token)
-                .refreshToken(refreshToken)
-                .userId(user.getId())
-                .name(user.getName())
-                .email(user.getEmail())
-                .build();
+        boolean onboarded = user.getTargetRole() != null && !user.getTargetRole().isEmpty();
+        return buildResponse(user, token, refreshToken, onboarded);
     }
 
     public AuthResponse refreshToken(RefreshTokenRequest request) {
@@ -99,22 +95,32 @@ public class AuthService {
         if (jwtUtil.isTokenValid(request.getRefreshToken(), userDetails)) {
             String token = jwtUtil.generateToken(userDetails);
             User user = userRepository.findByEmail(username).orElseThrow();
-            return AuthResponse.builder()
-                .accessToken(token)
-                .refreshToken(request.getRefreshToken())
-                .userId(user.getId())
-                .name(user.getName())
-                .email(user.getEmail())
-                .build();
+            boolean onboarded = user.getTargetRole() != null && !user.getTargetRole().isEmpty();
+            return buildResponse(user, token, request.getRefreshToken(), onboarded);
         }
         throw new UnauthorizedException("Invalid refresh token");
     }
 
     public void logout(String token) {
-        // Implement token blacklisting using Redis here
+        // Token invalidation handled client-side by removing from storage.
+        // For production: implement Redis-based token blacklisting.
     }
 
     public void sendPasswordResetEmail(String email) {
-        // Implement email sending logic
+        // Mock implementation for password reset
+        log.info("Password reset email requested for: {}", email);
+    }
+
+    private AuthResponse buildResponse(User user, String token, String refreshToken, boolean onboarded) {
+        return AuthResponse.builder()
+                .token(token)
+                .refreshToken(refreshToken)
+                .user(AuthResponse.UserInfo.builder()
+                        .id(user.getId())
+                        .name(user.getName())
+                        .email(user.getEmail())
+                        .onboardingComplete(onboarded)
+                        .build())
+                .build();
     }
 }

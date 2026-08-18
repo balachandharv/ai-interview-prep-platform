@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { BarChart3, Target, VenetianMask, Building, Trophy } from 'lucide-react';
+import { BarChart3, Target, VenetianMask, Building, Trophy, Sparkles } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 import { logout } from '../../store/authSlice';
@@ -40,49 +40,59 @@ export default function Sidebar() {
   const sidebarContent = (
     <div className="sidebar" style={{ fontFamily: 'Inter, sans-serif' }}>
       {/* Logo */}
-      <div className="px-5 mb-6">
-        <NavLink to="/dashboard" className="flex items-center gap-2 no-underline" onClick={closeSidebar}>
-          <div className="w-9 h-9 rounded-xl bg-[#6366F1] flex items-center justify-center flex-shrink-0">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 2L2 7l10 5 10-5-10-5z" />
-              <path d="M2 17l10 5 10-5" />
-              <path d="M2 12l10 5 10-5" />
-            </svg>
-          </div>
-          <span className="text-lg font-bold text-[#0F172A]">
-            Interview<span className="text-[#6366F1]">AI</span>
+      <div className="px-5 mb-8 mt-2">
+        <NavLink to="/dashboard" className="flex items-center gap-3 no-underline" onClick={closeSidebar}>
+          <motion.div whileHover={{ rotate: 180 }} transition={{ duration: 0.4 }} className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg flex-shrink-0" style={{ background: 'linear-gradient(135deg, #818CF8, #6366F1)', boxShadow: '0 4px 12px rgba(129,140,248,0.3)' }}>
+            <Sparkles size={20} color="white" />
+          </motion.div>
+          <span className="text-xl font-bold text-[#F1F5F9]">
+            Interview<span style={{ color: '#818CF8' }}>AI</span>
           </span>
         </NavLink>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto">
+      <nav className="flex-1 overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
         <div className="px-3">
-          <p className="px-3 mb-2 text-xs font-semibold text-[#94A3B8] uppercase tracking-wider">Menu</p>
-          {navItems.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
-              onClick={closeSidebar}
-            >
-              <span className="text-lg flex-shrink-0">{item.icon}</span>
-              <span className="min-w-0 truncate">{item.label}</span>
-            </NavLink>
-          ))}
+          <p className="px-4 mb-3 text-xs font-bold text-[#64748B] uppercase tracking-widest">Menu</p>
+          <div className="space-y-1">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                className={({ isActive }) => `sidebar-link rounded-xl mx-2 ${isActive ? 'active' : ''}`}
+                onClick={closeSidebar}
+                style={{ borderLeft: 'none' }}
+              >
+                {({ isActive }) => (
+                  <>
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeNavIndicator"
+                        className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-[#818CF8] rounded-r-full shadow-[0_0_10px_rgba(129,140,248,0.8)]"
+                        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                      />
+                    )}
+                    <span className="text-lg flex-shrink-0 z-10" style={{ color: isActive ? '#818CF8' : '#94A3B8' }}>{item.icon}</span>
+                    <span className="min-w-0 truncate z-10" style={{ fontWeight: isActive ? 600 : 500 }}>{item.label}</span>
+                  </>
+                )}
+              </NavLink>
+            ))}
+          </div>
         </div>
       </nav>
 
       {/* Bottom Section */}
-      <div className="px-3 pt-4 border-t border-[#E2E8F0] mt-auto flex-shrink-0">
+      <div className="px-5 pt-6 pb-4 mt-auto">
         <motion.button
-          whileTap={{ scale: 0.97 }}
+          whileHover={{ scale: 1.02, background: 'rgba(251,113,133,0.15)' }}
+          whileTap={{ scale: 0.98 }}
           onClick={handleLogout}
-          className="sidebar-link w-full text-[#EF4444] hover:bg-[#FEF2F2]"
-          style={{ borderLeft: 'none' }}
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-[#FB7185] bg-[rgba(251,113,133,0.05)] border border-[rgba(251,113,133,0.1)] transition-all cursor-pointer"
         >
           <span className="text-lg">🚪</span>
-          <span>Log Out</span>
+          <span className="font-semibold">Log Out</span>
         </motion.button>
       </div>
     </div>
@@ -90,26 +100,21 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Desktop Sidebar — always visible on lg+ */}
-      <div className="hidden lg:block">{sidebarContent}</div>
+      {/* Desktop Sidebar */}
+      <div className="hidden lg:block relative z-40">{sidebarContent}</div>
 
-      {/* Mobile/Tablet Overlay Sidebar */}
+      {/* Mobile Sidebar */}
       <AnimatePresence>
         {mobileSidebarOpen && (
           <>
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black/60 backdrop-blur-md z-40 lg:hidden"
               onClick={closeSidebar}
             />
             <motion.div
-              variants={sidebarVariants}
-              initial="closed"
-              animate="open"
-              exit="closed"
-              className="lg:hidden z-50 fixed top-0 left-0"
+              variants={sidebarVariants} initial="closed" animate="open" exit="closed"
+              className="lg:hidden z-50 fixed top-0 left-0 shadow-2xl shadow-black/50"
             >
               {sidebarContent}
             </motion.div>

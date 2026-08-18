@@ -140,7 +140,39 @@ public class SessionService {
         User user = userRepository.findByEmail(username)
             .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         Page<Session> sessionPage = sessionRepository.findByUserIdOrderByCreatedAtDesc(user.getId(), PageRequest.of(page, size));
-        return new PagedResponse<>(); // Add mapping logic in production
+        
+        List<SessionDto> content = sessionPage.getContent().stream().map(s -> {
+            String grade = "D";
+            if (s.getOverallScore() != null) {
+                double score = s.getOverallScore().doubleValue();
+                if (score >= 8) grade = "A";
+                else if (score >= 6) grade = "B";
+                else if (score >= 4) grade = "C";
+            }
+            return SessionDto.builder()
+                .id(s.getId())
+                .mode(s.getMode())
+                .difficulty(s.getDifficulty())
+                .category(s.getCategory())
+                .questionCount(s.getQuestionCount())
+                .completedCount(s.getCompletedCount())
+                .overallScore(s.getOverallScore())
+                .isCompleted(s.getIsCompleted())
+                .startedAt(s.getStartedAt())
+                .completedAt(s.getCompletedAt())
+                .date(s.getCreatedAt() != null ? s.getCreatedAt().toString() : LocalDateTime.now().toString())
+                .grade(grade)
+                .build();
+        }).toList();
+        
+        return PagedResponse.<SessionDto>builder()
+                .content(content)
+                .page(sessionPage.getNumber())
+                .size(sessionPage.getSize())
+                .totalElements(sessionPage.getTotalElements())
+                .totalPages(sessionPage.getTotalPages())
+                .last(sessionPage.isLast())
+                .build();
     }
 
     public SessionResultsDto getSessionResults(UUID sessionId, String username) {

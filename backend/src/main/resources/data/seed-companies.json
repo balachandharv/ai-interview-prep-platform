@@ -1,0 +1,66 @@
+[
+  {
+    "name": "Google",
+    "description": "Leading technology company known for search, cloud computing, and AI innovation.",
+    "interviewOverview": "5 rounds: Phone Screen, 2 Technical Coding, System Design, Behavioral (Googleyness & Leadership). Focus on algorithms, data structures, and scalability.",
+    "difficulty": "Hard",
+    "averageRounds": 5,
+    "active": true
+  },
+  {
+    "name": "Amazon",
+    "description": "Global e-commerce and cloud computing giant with strong leadership principles culture.",
+    "interviewOverview": "5 rounds: Online Assessment, Phone Screen, 4 Loop Interviews (mix of coding and behavioral). Heavy emphasis on Leadership Principles (LP).",
+    "difficulty": "Hard",
+    "averageRounds": 5,
+    "active": true
+  },
+  {
+    "name": "Microsoft",
+    "description": "Technology corporation known for Windows, Azure, and enterprise software solutions.",
+    "interviewOverview": "4 rounds: Phone Screen, 2-3 Technical Interviews, As-Appropriate (final round with senior leader). Focus on coding, design, and collaboration.",
+    "difficulty": "Medium",
+    "averageRounds": 4,
+    "active": true
+  },
+  {
+    "name": "Meta",
+    "description": "Social technology company building products for connecting people globally.",
+    "interviewOverview": "4 rounds: Phone Screen, 2 Coding Interviews, System Design, Behavioral. Strong emphasis on move-fast culture and impact.",
+    "difficulty": "Hard",
+    "averageRounds": 4,
+    "active": true
+  },
+  {
+    "name": "Netflix",
+    "description": "Streaming entertainment service known for freedom and responsibility culture.",
+    "interviewOverview": "3 rounds: Phone Screen, Technical Deep Dive, Culture Fit. Values context over control, seeks senior-level judgment.",
+    "difficulty": "Hard",
+    "averageRounds": 3,
+    "active": true
+  },
+  {
+    "name": "Flipkart",
+    "description": "India's leading e-commerce marketplace and Walmart subsidiary.",
+    "interviewOverview": "4 rounds: Online Assessment, Machine Coding, System Design, HR/Managerial. Strong focus on problem-solving and scalable design.",
+    "difficulty": "Medium",
+    "averageRounds": 4,
+    "active": true
+  },
+  {
+    "name": "Goldman Sachs",
+    "description": "Global investment banking and financial services company.",
+    "interviewOverview": "4 rounds: Online Assessment (HackerRank), Technical Rounds (2), HR Round. Focus on DSA, OOP, and analytical thinking.",
+    "difficulty": "Medium",
+    "averageRounds": 4,
+    "active": true
+  },
+  {
+    "name": "Apple",
+    "description": "Consumer technology company known for hardware, software, and design excellence.",
+    "interviewOverview": "4 rounds: Phone Screen, Technical Coding, System Design, Team Match. Values attention to detail and user-centric thinking.",
+    "difficulty": "Hard",
+    "averageRounds": 4,
+    "active": true
+  }
+]

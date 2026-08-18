@@ -4,9 +4,10 @@ import { authAPI } from '../services/api';
 export const loginUser = createAsyncThunk('auth/login', async (credentials, { rejectWithValue }) => {
   try {
     const response = await authAPI.login(credentials);
-    sessionStorage.setItem('token', response.data.token);
-    sessionStorage.setItem('refreshToken', response.data.refreshToken);
-    return response.data;
+    const authData = response.data.data || response.data; // Handle ApiResponse wrapper
+    sessionStorage.setItem('token', authData.token);
+    sessionStorage.setItem('refreshToken', authData.refreshToken);
+    return authData;
   } catch (err) {
     if (import.meta.env.VITE_USE_MOCK_API === 'true') {
       console.warn("Backend login failed, using mock data for local testing:", err.message);
@@ -26,9 +27,10 @@ export const loginUser = createAsyncThunk('auth/login', async (credentials, { re
 export const registerUser = createAsyncThunk('auth/register', async (data, { rejectWithValue }) => {
   try {
     const response = await authAPI.register(data);
-    sessionStorage.setItem('token', response.data.token);
-    sessionStorage.setItem('refreshToken', response.data.refreshToken);
-    return response.data;
+    const authData = response.data.data || response.data;
+    sessionStorage.setItem('token', authData.token);
+    sessionStorage.setItem('refreshToken', authData.refreshToken);
+    return authData;
   } catch (err) {
     if (import.meta.env.VITE_USE_MOCK_API === 'true') {
       console.warn("Backend registration failed, using mock data for local testing:", err.message);
@@ -49,8 +51,9 @@ export const refreshToken = createAsyncThunk('auth/refresh', async (_, { rejectW
   try {
     const token = sessionStorage.getItem('refreshToken');
     const response = await authAPI.refresh(token);
-    sessionStorage.setItem('token', response.data.token);
-    return response.data;
+    const authData = response.data.data || response.data;
+    sessionStorage.setItem('token', authData.token);
+    return authData;
   } catch {
     return rejectWithValue('Session expired');
   }

@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/analytics")
+@RequestMapping("/analytics")
 @CrossOrigin(origins = "*")
 public class AnalyticsController {
 

@@ -1,0 +1,222 @@
+[
+  {
+    "questionText": "Explain the difference between REST and GraphQL APIs. When would you choose one over the other?",
+    "modelAnswer": "REST uses fixed endpoints with HTTP methods, while GraphQL provides a single endpoint with flexible queries. REST is simpler for CRUD operations and leverages HTTP caching. GraphQL excels when clients need specific data shapes, reducing over-fetching. Choose REST for simple APIs with stable requirements; GraphQL for complex UIs needing varied data from multiple resources.",
+    "keyPoints": ["Fixed endpoints vs single endpoint", "Over-fetching and under-fetching", "HTTP caching advantages of REST", "Query flexibility of GraphQL", "Use case comparison"],
+    "category": "Technical",
+    "difficulty": "Medium",
+    "roleTag": "Full Stack Engineer",
+    "companyTag": "Google",
+    "isAiGenerated": false,
+    "timesAnswered": 0
+  },
+  {
+    "questionText": "Tell me about a time you had to deal with a difficult team member. How did you handle the situation?",
+    "modelAnswer": "In my previous role, a senior developer consistently dismissed junior team members' ideas during code reviews. I scheduled a private 1-on-1, acknowledged their expertise, and shared specific examples of how their approach affected team morale. We agreed on constructive review guidelines. The team's PR turnaround improved 40% and satisfaction scores increased significantly.",
+    "keyPoints": ["Specific situation described", "Private vs public confrontation", "Empathy shown", "Actionable resolution", "Measurable outcome"],
+    "category": "Behavioral",
+    "difficulty": "Medium",
+    "roleTag": "SDE-2",
+    "companyTag": "Amazon",
+    "isAiGenerated": false,
+    "timesAnswered": 0
+  },
+  {
+    "questionText": "Design a URL shortening service like bit.ly. Discuss the system architecture.",
+    "modelAnswer": "Use a base62 encoding of an auto-incrementing ID or hash of the URL. Store mappings in a distributed key-value store. Use a load balancer, cache popular URLs in Redis, and replicate the database. Handle collisions with retry logic. For analytics, use a message queue to process click events asynchronously. Estimate storage at ~500 bytes per URL, supporting billions of entries.",
+    "keyPoints": ["Encoding strategy", "Database design", "Caching layer", "Collision handling", "Analytics pipeline", "Scalability estimation"],
+    "category": "System Design",
+    "difficulty": "Hard",
+    "roleTag": "SDE-2",
+    "companyTag": "Meta",
+    "isAiGenerated": false,
+    "timesAnswered": 0
+  },
+  {
+    "questionText": "Implement a LRU Cache with O(1) time complexity for both get and put operations.",
+    "modelAnswer": "Use a HashMap combined with a doubly-linked list. The HashMap provides O(1) lookup, while the linked list maintains access order. On get, move the node to the head. On put, add to head and if capacity exceeded, remove the tail node. Both operations are O(1) since we have direct node references via the HashMap.",
+    "keyPoints": ["HashMap + Doubly Linked List", "O(1) get operation", "O(1) put operation", "Eviction policy from tail", "Capacity management"],
+    "category": "DSA",
+    "difficulty": "Hard",
+    "roleTag": "SDE-1",
+    "companyTag": "Google",
+    "isAiGenerated": false,
+    "timesAnswered": 0
+  },
+  {
+    "questionText": "What is your greatest strength and how does it relate to this role?",
+    "modelAnswer": "My greatest strength is systematic problem-solving. I break complex problems into smaller, manageable components and tackle them iteratively. In my last role, this approach helped me reduce a legacy system migration timeline from 6 months to 3 months by identifying and prioritizing the critical path dependencies first.",
+    "keyPoints": ["Specific strength identified", "Relevance to role explained", "Concrete example provided", "Quantifiable impact shown"],
+    "category": "HR",
+    "difficulty": "Easy",
+    "roleTag": "SDE-1",
+    "companyTag": "Microsoft",
+    "isAiGenerated": false,
+    "timesAnswered": 0
+  },
+  {
+    "questionText": "Explain how a HashMap works internally in Java. What happens during a hash collision?",
+    "modelAnswer": "HashMap uses an array of buckets. The key's hashCode() determines the bucket index via modulo. When two keys hash to the same bucket (collision), Java 8+ uses a linked list that converts to a balanced tree (red-black tree) when the list exceeds 8 entries. Load factor (default 0.75) triggers resizing, which doubles the array and rehashes all entries.",
+    "keyPoints": ["Bucket array structure", "hashCode and equals contract", "Collision resolution", "Treeification threshold", "Load factor and resizing"],
+    "category": "Technical",
+    "difficulty": "Medium",
+    "roleTag": "SDE-1",
+    "companyTag": "Amazon",
+    "isAiGenerated": false,
+    "timesAnswered": 0
+  },
+  {
+    "questionText": "Describe a situation where you failed and what you learned from it.",
+    "modelAnswer": "I once deployed a feature without adequate load testing, causing a 2-hour outage during peak hours. I immediately took ownership, led the incident response, and rolled back the change. Post-mortem, I championed the adoption of automated load testing in our CI/CD pipeline and created a deployment checklist. We haven't had a similar incident since.",
+    "keyPoints": ["Honest about failure", "Took ownership", "Immediate response", "Root cause analysis", "Systemic improvement implemented"],
+    "category": "Behavioral",
+    "difficulty": "Medium",
+    "roleTag": "SDE-2",
+    "companyTag": "Meta",
+    "isAiGenerated": false,
+    "timesAnswered": 0
+  },
+  {
+    "questionText": "Design a notification system for a social media platform handling millions of users.",
+    "modelAnswer": "Use a fan-out-on-write approach for users with fewer followers and fan-out-on-read for celebrity accounts. Notifications are queued via Kafka, processed by consumer workers, and stored in Cassandra for high write throughput. Real-time delivery uses WebSockets. Batch non-urgent notifications. Use priority queues for time-sensitive alerts.",
+    "keyPoints": ["Fan-out strategies", "Message queue usage", "Storage selection", "Real-time delivery", "Batching strategy", "Priority handling"],
+    "category": "System Design",
+    "difficulty": "Hard",
+    "roleTag": "SDE-2",
+    "companyTag": "Meta",
+    "isAiGenerated": false,
+    "timesAnswered": 0
+  },
+  {
+    "questionText": "Find the longest palindromic substring in a given string. Explain your approach.",
+    "modelAnswer": "Use the expand-around-center approach. For each character (and each pair of adjacent characters), expand outward while characters match. Track the longest palindrome found. Time complexity is O(n^2), space O(1). Manacher's algorithm can solve this in O(n) but is more complex to implement.",
+    "keyPoints": ["Expand around center technique", "Handle odd and even length palindromes", "Time complexity O(n^2)", "Space complexity O(1)", "Manacher's algorithm mention"],
+    "category": "DSA",
+    "difficulty": "Medium",
+    "roleTag": "SDE-1",
+    "companyTag": "Microsoft",
+    "isAiGenerated": false,
+    "timesAnswered": 0
+  },
+  {
+    "questionText": "Why do you want to work at our company? What interests you about this role?",
+    "modelAnswer": "I'm drawn to your company's commitment to innovation and the scale of impact your products have. This role aligns with my expertise in building scalable systems and my passion for solving complex technical challenges. I'm particularly excited about contributing to your team's mission of making technology more accessible.",
+    "keyPoints": ["Company-specific knowledge shown", "Role alignment explained", "Personal passion connected", "Growth opportunity mentioned"],
+    "category": "HR",
+    "difficulty": "Easy",
+    "roleTag": "SDE-1",
+    "companyTag": "Google",
+    "isAiGenerated": false,
+    "timesAnswered": 0
+  },
+  {
+    "questionText": "Explain microservices architecture and its pros and cons compared to monolithic architecture.",
+    "modelAnswer": "Microservices decompose an application into small, independent services communicating via APIs. Pros: independent deployment, technology flexibility, fault isolation, scalability per service. Cons: distributed system complexity, data consistency challenges, network latency, operational overhead. Monoliths are simpler to develop and deploy initially but harder to scale and maintain long-term.",
+    "keyPoints": ["Service decomposition concept", "Independent deployment", "Technology flexibility", "Complexity tradeoffs", "Data consistency challenges", "When to use each"],
+    "category": "Technical",
+    "difficulty": "Medium",
+    "roleTag": "Full Stack Engineer",
+    "companyTag": "Netflix",
+    "isAiGenerated": false,
+    "timesAnswered": 0
+  },
+  {
+    "questionText": "Tell me about a time you showed leadership without having formal authority.",
+    "modelAnswer": "During a cross-team project with no clear owner, I noticed tasks falling through the cracks. I created a shared Kanban board, set up daily standups, and established clear communication channels. I facilitated decision-making by bringing stakeholders together. The project delivered on time and the approach was adopted as a template for future cross-team initiatives.",
+    "keyPoints": ["Initiative taken proactively", "Collaboration approach", "Communication systems established", "Results achieved", "Lasting impact created"],
+    "category": "Behavioral",
+    "difficulty": "Hard",
+    "roleTag": "SDE-2",
+    "companyTag": "Amazon",
+    "isAiGenerated": false,
+    "timesAnswered": 0
+  },
+  {
+    "questionText": "Explain the CAP theorem with real-world examples for each combination.",
+    "modelAnswer": "CAP theorem states a distributed system can guarantee at most two of: Consistency, Availability, Partition tolerance. CP: MongoDB (sacrifices availability during partitions). AP: Cassandra, DynamoDB (eventual consistency). CA: Traditional RDBMS (but not truly distributed). In practice, partition tolerance is non-negotiable, so the real choice is between C and A.",
+    "keyPoints": ["Three properties defined", "Only two guarantees possible", "CP example", "AP example", "Partition tolerance is mandatory", "Real-world tradeoff explanation"],
+    "category": "Technical",
+    "difficulty": "Hard",
+    "roleTag": "SDE-2",
+    "companyTag": "Google",
+    "isAiGenerated": false,
+    "timesAnswered": 0
+  },
+  {
+    "questionText": "Design a real-time chat application. How would you handle message delivery guarantees?",
+    "modelAnswer": "Use WebSockets for real-time communication with a message broker like RabbitMQ or Kafka for reliability. Store messages in a database with read receipts. Implement at-least-once delivery with client-side deduplication. Use message queues for offline users. Partition by conversation ID for scalability. Add end-to-end encryption for security.",
+    "keyPoints": ["WebSocket for real-time", "Message broker for reliability", "Delivery guarantees", "Offline message handling", "Partitioning strategy", "Security considerations"],
+    "category": "System Design",
+    "difficulty": "Medium",
+    "roleTag": "Full Stack Engineer",
+    "companyTag": "Flipkart",
+    "isAiGenerated": false,
+    "timesAnswered": 0
+  },
+  {
+    "questionText": "Implement binary search on a rotated sorted array. What is the time complexity?",
+    "modelAnswer": "Modified binary search: find mid, determine which half is sorted. If target is in the sorted half, search there; otherwise search the other half. Handle duplicates by linear scan when nums[low]==nums[mid]. Time: O(log n) average, O(n) worst case with duplicates. Space: O(1).",
+    "keyPoints": ["Modified binary search approach", "Identifying sorted half", "Handling the rotation point", "Time complexity O(log n)", "Edge cases with duplicates"],
+    "category": "DSA",
+    "difficulty": "Medium",
+    "roleTag": "SDE-1",
+    "companyTag": "Goldman Sachs",
+    "isAiGenerated": false,
+    "timesAnswered": 0
+  },
+  {
+    "questionText": "Describe a project you are most proud of. What was your specific contribution?",
+    "modelAnswer": "I built a real-time analytics dashboard that processed 10M events/day using Kafka, Flink, and React. I architected the data pipeline, implemented the streaming aggregations, and designed the frontend visualizations. The system reduced decision-making time from hours to minutes and was adopted by 3 other teams across the organization.",
+    "keyPoints": ["Specific project described", "Technical details included", "Personal contribution clear", "Scale mentioned", "Business impact quantified"],
+    "category": "Behavioral",
+    "difficulty": "Easy",
+    "roleTag": "SDE-1",
+    "companyTag": "Apple",
+    "isAiGenerated": false,
+    "timesAnswered": 0
+  },
+  {
+    "questionText": "Design an e-commerce recommendation engine. How would you personalize recommendations?",
+    "modelAnswer": "Combine collaborative filtering (user-user and item-item) with content-based filtering. Use user browsing history, purchase history, and item metadata. Implement A/B testing for recommendation algorithms. Use a feature store for real-time features. Cache popular recommendations. Use ML models (matrix factorization, deep learning) for prediction.",
+    "keyPoints": ["Collaborative filtering", "Content-based filtering", "Hybrid approach", "Feature engineering", "A/B testing", "Caching strategy"],
+    "category": "System Design",
+    "difficulty": "Hard",
+    "roleTag": "SDE-2",
+    "companyTag": "Amazon",
+    "isAiGenerated": false,
+    "timesAnswered": 0
+  },
+  {
+    "questionText": "Merge K sorted linked lists efficiently. Analyze the time and space complexity.",
+    "modelAnswer": "Use a min-heap (priority queue) of size K. Initialize with the head of each list. Extract min, add to result, and insert the next node from that list. Time: O(N log K) where N is total elements. Space: O(K) for the heap. Alternative: divide and conquer merge pairs, same complexity but different constant factors.",
+    "keyPoints": ["Min-heap approach", "Priority queue usage", "Time complexity O(N log K)", "Space complexity O(K)", "Alternative divide and conquer"],
+    "category": "DSA",
+    "difficulty": "Hard",
+    "roleTag": "SDE-2",
+    "companyTag": "Google",
+    "isAiGenerated": false,
+    "timesAnswered": 0
+  },
+  {
+    "questionText": "How do you handle work-life balance? What strategies do you use to stay productive?",
+    "modelAnswer": "I maintain boundaries by time-boxing focused work sessions using the Pomodoro technique and scheduling breaks. I prioritize tasks using the Eisenhower matrix. I avoid checking work messages after hours unless on-call. Regular exercise and side projects keep me energized. I've found that sustainable pace leads to better long-term output than constant overtime.",
+    "keyPoints": ["Specific strategies mentioned", "Boundary setting", "Prioritization framework", "Self-awareness shown", "Sustainable productivity focus"],
+    "category": "HR",
+    "difficulty": "Easy",
+    "roleTag": "SDE-1",
+    "companyTag": "Netflix",
+    "isAiGenerated": false,
+    "timesAnswered": 0
+  },
+  {
+    "questionText": "What are database indexes? How do B+ trees work and when would you use them?",
+    "modelAnswer": "Indexes are data structures that speed up query performance at the cost of write overhead and storage. B+ trees store keys in sorted order with leaf nodes linked for range queries. They maintain O(log n) search, insert, and delete. Use indexes on frequently queried columns, foreign keys, and WHERE clause columns. Avoid over-indexing to prevent write degradation.",
+    "keyPoints": ["Index purpose and tradeoffs", "B+ tree structure", "Leaf node linking for ranges", "O(log n) operations", "When to index", "Over-indexing warning"],
+    "category": "Technical",
+    "difficulty": "Medium",
+    "roleTag": "SDE-1",
+    "companyTag": "Microsoft",
+    "isAiGenerated": false,
+    "timesAnswered": 0
+  }
+]

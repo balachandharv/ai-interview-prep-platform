@@ -36,6 +36,7 @@ public class Company {
     @Column(name = "average_rounds")
     private Integer averageRounds;
 
+    @Builder.Default
     @Column(name = "is_active")
     private boolean active = true;
 
