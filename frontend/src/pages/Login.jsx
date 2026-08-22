@@ -75,8 +75,9 @@ export default function Login() {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             {/* Email */}
             <motion.div custom={0} variants={fieldVariants} initial="hidden" animate="visible">
-              <label className="block text-sm font-medium text-[#E2E8F0] mb-1.5">Email</label>
+              <label htmlFor="email" className="block text-sm font-medium text-[#E2E8F0] mb-1.5">Email</label>
               <input
+                id="email"
                 {...register('email')}
                 type="email"
                 className={`input ${errors.email ? 'input-error' : ''}`}
@@ -87,9 +88,10 @@ export default function Login() {
 
             {/* Password */}
             <motion.div custom={1} variants={fieldVariants} initial="hidden" animate="visible">
-              <label className="block text-sm font-medium text-[#E2E8F0] mb-1.5">Password</label>
+              <label htmlFor="password" className="block text-sm font-medium text-[#E2E8F0] mb-1.5">Password</label>
               <div className="relative">
                 <input
+                  id="password"
                   {...register('password')}
                   type={showPassword ? 'text' : 'password'}
                   className={`input pr-12 ${errors.password ? 'input-error' : ''}`}
@@ -108,7 +110,7 @@ export default function Login() {
 
             {/* Forgot Password */}
             <motion.div custom={2} variants={fieldVariants} initial="hidden" animate="visible" className="flex justify-end">
-              <a href="#" className="text-sm text-[#818CF8] font-medium hover:text-[#A78BFA] no-underline transition-colors">Forgot password?</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); toast('Password reset link sent (Mock)', { icon: '📧' }); }} className="text-sm text-[#818CF8] font-medium hover:text-[#A78BFA] no-underline transition-colors">Forgot password?</a>
             </motion.div>
 
             {/* Submit */}

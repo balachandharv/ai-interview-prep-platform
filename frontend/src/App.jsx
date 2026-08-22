@@ -27,6 +27,11 @@ import ResumeInterview from './pages/ResumeInterview';
 import Leaderboard from './pages/Leaderboard';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
+import NotFound from './pages/NotFound';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import Legal from './pages/Legal';
+import ComingSoon from './pages/ComingSoon';
 
 export default function App() {
   return (
@@ -52,6 +57,11 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/onboarding" element={<Onboarding />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/legal" element={<Legal />} />
+            <Route path="/blog" element={<ComingSoon />} />
+            <Route path="/careers" element={<ComingSoon />} />
 
             {/* Full-screen Pages (no sidebar) - Protected */}
             <Route element={<ProtectedRoute />}>
@@ -75,6 +85,9 @@ export default function App() {
                 <Route path="/settings" element={<Settings />} />
               </Route>
             </Route>
+
+            {/* 404 Not Found (Catch all) */}
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </AnimatePresence>
       </Router>

@@ -6,7 +6,8 @@ import org.hibernate.type.SqlTypes;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
@@ -17,7 +18,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "session_questions")
-@Data @Builder @NoArgsConstructor @AllArgsConstructor
+@Getter @Setter @Builder @NoArgsConstructor @AllArgsConstructor
 public class SessionQuestion {
     @Id @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -81,4 +82,16 @@ public class SessionQuestion {
 
     @Column(name = "answered_at")
     private LocalDateTime answeredAt;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SessionQuestion)) return false;
+        return id != null && id.equals(((SessionQuestion) o).getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

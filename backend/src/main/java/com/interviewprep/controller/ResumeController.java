@@ -1,16 +1,17 @@
 package com.interviewprep.controller;
 
 import com.interviewprep.service.ResumeParserService;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Map;
+import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequestMapping("/api/resume")
-@CrossOrigin(origins = "*")
+@PreAuthorize("isAuthenticated()")
 public class ResumeController {
 
     private final ResumeParserService resumeParserService;

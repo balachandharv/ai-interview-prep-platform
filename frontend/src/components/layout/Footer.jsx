@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function Footer() {
   const linkStyle = { color: '#64748B', fontSize: '0.875rem', textDecoration: 'none', display: 'block', padding: '4px 0', transition: 'color 0.3s' };
   return (
@@ -16,14 +18,31 @@ export default function Footer() {
             <p style={{ color: '#64748B', fontSize: '0.875rem', lineHeight: 1.7, margin: 0 }}>AI-powered interview preparation platform helping thousands land their dream jobs.</p>
           </div>
           {[
-            { title: 'Product', links: ['Mock Interviews', 'AI Roleplay', 'Question Bank', 'Company Prep', 'Analytics'] },
-            { title: 'Company', links: ['About Us', 'Blog', 'Careers', 'Contact'] },
-            { title: 'Legal', links: ['Privacy Policy', 'Terms of Service', 'Cookie Policy'] },
+            { title: 'Product', links: [
+                { name: 'Mock Interviews', path: '/mock-interview' },
+                { name: 'AI Roleplay', path: '/roleplay' },
+                { name: 'Question Bank', path: '/question-bank' },
+                { name: 'Company Prep', path: '/company-prep' },
+                { name: 'Analytics', path: '/analytics' }
+              ] },
+            { title: 'Company', links: [
+                { name: 'About Us', path: '/about' },
+                { name: 'Blog', path: '/blog' },
+                { name: 'Careers', path: '/careers' },
+                { name: 'Contact', path: '/contact' }
+              ] },
+            { title: 'Legal', links: [
+                { name: 'Privacy Policy', path: '/legal?tab=privacy' },
+                { name: 'Terms of Service', path: '/legal?tab=terms' },
+                { name: 'Cookie Policy', path: '/legal?tab=cookie' }
+              ] },
           ].map(col => (
             <div key={col.title}>
               <h4 style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#94A3B8', marginBottom: '16px' }}>{col.title}</h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {col.links.map(link => <a key={link} href="#" style={linkStyle}>{link}</a>)}
+                {col.links.map(link => (
+                  <Link key={link.name} to={link.path} style={linkStyle}>{link.name}</Link>
+                ))}
               </div>
             </div>
           ))}
@@ -32,7 +51,7 @@ export default function Footer() {
           <p style={{ color: '#475569', fontSize: '0.8125rem', margin: 0 }}>© 2026 InterviewAI. All rights reserved.</p>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             {['Twitter', 'GitHub', 'LinkedIn'].map(s => (
-              <a key={s} href="#" style={{ color: '#475569', transition: 'color 0.3s', padding: '4px' }} aria-label={s}>
+              <a key={s} href="#" onClick={(e) => e.preventDefault()} style={{ color: '#475569', transition: 'color 0.3s', padding: '4px' }} aria-label={s}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" opacity="0.15" /><circle cx="12" cy="12" r="4" /></svg>
               </a>
             ))}

@@ -5,7 +5,7 @@ import CountUp from '../components/common/CountUp';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
-import { generateMockDashboardData, formatDate, getGrade, generateStreakGrid } from '../utils/helpers';
+import { formatDate, getGrade, generateStreakGrid } from '../utils/helpers';
 import { Flame, VenetianMask, FilePlus2, Sparkles, ChevronRight } from 'lucide-react';
 import { RADAR_CATEGORIES, MOTIVATIONAL_QUOTES, GRADE_COLORS } from '../constants/enums';
 import EmptyState from '../components/common/EmptyState';
@@ -26,12 +26,28 @@ export default function Dashboard() {
         const backendStats = statsRes.data.data;
         const recentSessions = historyRes.data.data.content || [];
         setData({
-          ...generateMockDashboardData(),
-          ...backendStats,
-          recentSessions: recentSessions.length > 0 ? recentSessions : generateMockDashboardData().recentSessions
+          readinessScore: backendStats.readinessScore || 0,
+          radarScores: backendStats.radarScores || { DSA: 0, 'System Design': 0, Behavioral: 0, Communication: 0, 'Domain Knowledge': 0, HR: 0 },
+          streak: backendStats.streak || { current: 0, best: 0, lastDate: new Date().toISOString() },
+          totalSessions: backendStats.totalSessions || 0,
+          averageScore: backendStats.averageScore || 0,
+          questionsAnswered: backendStats.questionsAnswered || 0,
+          activeDates: backendStats.activeDates || [],
+          weeklyFocusPlan: backendStats.weeklyFocusPlan || { priorities: [] },
+          recentSessions: recentSessions
         });
       } catch (error) {
-        setData(generateMockDashboardData());
+        setData({
+          readinessScore: 0,
+          radarScores: { DSA: 0, 'System Design': 0, Behavioral: 0, Communication: 0, 'Domain Knowledge': 0, HR: 0 },
+          streak: { current: 0, best: 0, lastDate: new Date().toISOString() },
+          totalSessions: 0,
+          averageScore: 0,
+          questionsAnswered: 0,
+          activeDates: [],
+          weeklyFocusPlan: { priorities: [] },
+          recentSessions: []
+        });
       }
     };
     fetchData();
@@ -39,8 +55,17 @@ export default function Dashboard() {
 
   if (!data) {
     return (
-      <div className="space-y-6">
-        {[1,2,3].map(i => <div key={i} className="skeleton h-40 w-full rounded-2xl" />)}
+      <div className="space-y-6 p-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {[1, 2, 3].map(i => <div key={i} className="skeleton h-[280px] w-full rounded-2xl bg-[rgba(30,41,59,0.5)] border border-[rgba(148,163,184,0.1)]" />)}
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {[1, 2].map(i => <div key={i} className="skeleton h-[100px] w-full rounded-2xl bg-[rgba(30,41,59,0.5)] border border-[rgba(148,163,184,0.1)]" />)}
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {[1, 2, 3].map(i => <div key={i} className="skeleton h-[250px] w-full rounded-2xl bg-[rgba(30,41,59,0.5)] border border-[rgba(148,163,184,0.1)]" />)}
+        </div>
+        <div className="skeleton h-[300px] w-full rounded-2xl bg-[rgba(30,41,59,0.5)] border border-[rgba(148,163,184,0.1)]" />
       </div>
     );
   }
@@ -223,7 +248,7 @@ export default function Dashboard() {
           <motion.div variants={cardItem} className="card-flat p-6">
             <h3 className="text-base font-bold text-[#F1F5F9] mb-4">Weekly Focus Plan</h3>
             <div className="space-y-4">
-              {data.weeklyFocusPlan.priorities.map((p, i) => (
+              {data.weeklyFocusPlan.priorities && data.weeklyFocusPlan.priorities.map((p, i) => (
                 <div key={p.category} className="flex items-start gap-4">
                   <div className="w-7 h-7 rounded-lg flex items-center justify-center text-white text-xs font-bold flex-shrink-0 shadow-lg" style={{ background: p.color }}>
                     {i + 1}

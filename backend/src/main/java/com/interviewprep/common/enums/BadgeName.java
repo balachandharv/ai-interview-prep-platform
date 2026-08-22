@@ -8,11 +8,11 @@ import lombok.RequiredArgsConstructor;
 public enum BadgeName {
     FIRST_MOCK("First Steps", "Complete your first mock interview", "ğŸ¯"),
     STREAK_7("7-Day Streak", "Practice 7 days in a row", "ğŸ”¥"),
-    STREAK_30("30-Day Streak", "Practice 30 days in a row", "ğŸ†"),
-    HIGH_SCORER("High Scorer", "Score 9.0+ in an interview", "â­"),
+    STREAK_30("30-Day Streak", "Practice 30 days in a row", "ğŸ\ufffd†"),
+    HIGH_SCORER("High Scorer", "Score 9.0+ in an interview", "â­\ufffd"),
     CENTURY("Century", "Answer 100 questions", "ğŸ’¯"),
     ROLEPLAY_PRO("Roleplay Pro", "Complete 5 roleplay sessions", "ğŸ­"),
-    COMPANY_CRUSHER("Company Crusher", "Complete a company-specific mock", "ğŸ¢");
+    COMPANY_CRUSHER("Company Crusher", "Complete a company-specific mock", "ğŸ\ufffd¢");
 
     private final String title;
     private final String description;

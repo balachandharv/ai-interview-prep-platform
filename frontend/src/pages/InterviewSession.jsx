@@ -3,7 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { useSpeechRecognition, useTimer } from '../hooks';
-import { generateMockQuestions, checkAnswerQuality, wordCount } from '../utils/helpers';
+import { checkAnswerQuality, wordCount } from '../utils/helpers';
+import { questionAPI, sessionAPI } from '../services/api';
 import { Mic, Square, Check, ArrowRight, Lightbulb, Clock, Target, AlertTriangle } from 'lucide-react';
 
 export default function InterviewSession() {
@@ -13,6 +14,8 @@ export default function InterviewSession() {
 
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [sessionId, setSessionId] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [answer, setAnswer] = useState('');
   const [feedback, setFeedback] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -26,12 +29,35 @@ export default function InterviewSession() {
   const answerTimer = useTimer(0, false);
 
   useEffect(() => {
-    const allQ = generateMockQuestions();
-    const filtered = allQ.filter(q => {
-      if (config.categories?.length && !config.categories.includes(q.category)) return false;
-      return true;
-    });
-    setQuestions(filtered.slice(0, config.questionCount || 5));
+    const initSession = async () => {
+      try {
+        const category = config.categories?.[0] || 'Technical';
+        const diff = config.difficulty || 'Medium';
+        const qRes = await questionAPI.generate({ category, difficulty: diff });
+        const generatedQuestions = qRes.data.data;
+        
+        let categoryEnum = category.toUpperCase().replace(' ', '_');
+        if (!['TECHNICAL', 'BEHAVIORAL', 'SYSTEM_DESIGN', 'HR'].includes(categoryEnum)) {
+           categoryEnum = 'TECHNICAL';
+        }
+
+        const sRes = await sessionAPI.start({
+          mode: 'MOCK',
+          difficulty: diff.toUpperCase(),
+          category: categoryEnum,
+          questionCount: config.questionCount || 5
+        });
+        
+        setQuestions(generatedQuestions.slice(0, config.questionCount || 5));
+        setSessionId(sRes.data.data.id);
+      } catch (err) {
+        toast.error('Failed to initialize session');
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    initSession();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -71,26 +97,32 @@ export default function InterviewSession() {
     answerTimer.stop();
     if (isListening) stopListening();
 
-    // Simulate AI evaluation
-    await new Promise(r => setTimeout(r, 1500));
+    try {
+      const currentQ = questions[currentIndex];
+      const res = await sessionAPI.submitAnswer(sessionId, {
+        questionId: currentQ.id,
+        answer: answer,
+        timeSpentSeconds: answerTimer.seconds
+      });
+      
+      const evalData = res.data.data;
+      const score = evalData.score;
+      const mockFeedback = {
+        score: Math.round(score * 10) / 10,
+        correctness: Math.round((evalData.correctnessScore || score) * 10) / 10,
+        completeness: Math.round((evalData.completenessScore || score) * 10) / 10,
+        clarity: Math.round((evalData.clarityScore || score) * 10) / 10,
+        structure: Math.round((evalData.structureScore || score) * 10) / 10,
+        pointsCovered: evalData.pointsCovered || [],
+        pointsMissed: evalData.pointsMissed || [],
+        sampleAnswer: evalData.sampleAnswer || 'A comprehensive answer would cover the key concepts, provide examples, discuss trade-offs, and conclude with practical applications.',
+        tip: evalData.proTip || 'Try using the STAR method for behavioral questions.',
+        timeSpent: answerTimer.seconds,
+        timeFlagged: evalData.isFlaggedFast || answerTimer.seconds < 30,
+      };
 
-    const score = Math.min(10, Math.max(1, 4 + Math.random() * 6));
-    const mockFeedback = {
-      score: Math.round(score * 10) / 10,
-      correctness: Math.round((5 + Math.random() * 5) * 10) / 10,
-      completeness: Math.round((4 + Math.random() * 6) * 10) / 10,
-      clarity: Math.round((5 + Math.random() * 5) * 10) / 10,
-      structure: Math.round((4 + Math.random() * 6) * 10) / 10,
-      pointsCovered: ['Good understanding of core concepts', 'Mentioned key trade-offs'],
-      pointsMissed: ['Could elaborate on edge cases', 'Missing complexity analysis'],
-      sampleAnswer: 'A comprehensive answer would cover the key concepts, provide examples, discuss trade-offs, and conclude with practical applications.',
-      tip: 'Try using the STAR method for behavioral questions to structure your response better.',
-      timeSpent: answerTimer.seconds,
-      timeFlagged: answerTimer.seconds < 30,
-    };
-
-    setFeedback(mockFeedback);
-    setScores(prev => [...prev, score]);
+      setFeedback(mockFeedback);
+      setScores(prev => [...prev, score]);
 
     // Adaptive difficulty
     if (score >= 8) {
@@ -118,24 +150,34 @@ export default function InterviewSession() {
       setConsecutiveLow(0);
     }
 
-    setIsSubmitting(false);
+    } catch (error) {
+      toast.error('Failed to submit answer');
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [answer, answerTimer.seconds, consecutiveHigh, consecutiveLow, difficulty, isListening, config.timerEnabled, timer]);
+  }, [answer, answerTimer.seconds, consecutiveHigh, consecutiveLow, difficulty, isListening, config.timerEnabled, timer, sessionId, questions, currentIndex]);
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentIndex < questions.length - 1) {
       setCurrentIndex(prev => prev + 1);
       setAnswer('');
       setFeedback(null);
       resetTranscript();
     } else {
+      try {
+        await sessionAPI.complete(sessionId);
+      } catch (err) {
+        console.error('Failed to complete session', err);
+      }
       const avgScore = scores.reduce((a, b) => a + b, 0) / scores.length;
       navigate('/session-results', { state: { scores, avgScore, questions, difficulty } });
     }
   };
 
   const currentQ = questions[currentIndex];
-  if (!currentQ) return <div className="flex items-center justify-center h-[calc(100vh-140px)]"><div className="w-10 h-10 border-4 border-[#818CF8] border-t-transparent rounded-full animate-spin" /></div>;
+  if (isLoading || !currentQ) return <div className="flex items-center justify-center h-[calc(100vh-140px)]"><div className="w-10 h-10 border-4 border-[#818CF8] border-t-transparent rounded-full animate-spin" /></div>;
 
   const timerColor = timer.seconds > 30 ? '#34D399' : timer.seconds > 10 ? '#FBBF24' : '#FB7185';
   const diffColors = { Easy: '#34D399', Medium: '#FBBF24', Hard: '#FB7185' };

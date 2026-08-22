@@ -32,6 +32,7 @@ public class AuthService {
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
+    private final TokenBlacklistService tokenBlacklistService;
 
     public AuthResponse register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
@@ -102,8 +103,7 @@ public class AuthService {
     }
 
     public void logout(String token) {
-        // Token invalidation handled client-side by removing from storage.
-        // For production: implement Redis-based token blacklisting.
+        tokenBlacklistService.blacklistToken(token);
     }
 
     public void sendPasswordResetEmail(String email) {

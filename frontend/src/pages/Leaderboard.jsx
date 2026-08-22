@@ -1,17 +1,58 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import CountUp from '../components/common/CountUp';
-import { generateMockLeaderboard, getInitials } from '../utils/helpers';
+import { getInitials } from '../utils/helpers';
 import EmptyState from '../components/common/EmptyState';
 import { Trophy } from 'lucide-react';
+import api from '../services/api';
 
 export default function Leaderboard() {
   const [tab, setTab] = useState('weekly');
-  const leaderboard = generateMockLeaderboard();
+  const [leaderboard, setLeaderboard] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchLeaderboard = async () => {
+      try {
+        const response = await api.get('/leaderboard');
+        const data = response.data.map((user, i) => ({
+          rank: i + 1,
+          name: user.name,
+          totalSessions: user.totalSessions,
+          averageScore: user.readinessScore ? (user.readinessScore / 10).toFixed(1) : "0.0",
+          bestStreak: 0,
+          badges: user.badgesEarnedCount || 0,
+          change: 0
+        }));
+        setLeaderboard(data);
+      } catch (error) {
+        console.error("Failed to fetch leaderboard", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchLeaderboard();
+  }, [tab]);
+
   const top3 = leaderboard.slice(0, 3);
   const rest = leaderboard.slice(3);
   const medals = ['🥇', '🥈', '🥉'];
   const borderColors = ['#F59E0B', '#94A3B8', '#D97706'];
+
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <div className="skeleton h-10 w-48 mb-6 rounded-lg bg-[#F1F5F9]" />
+        <div className="flex gap-2 mb-8">
+          {[1, 2, 3].map(i => <div key={i} className="skeleton h-10 w-24 rounded-full bg-[#F1F5F9]" />)}
+        </div>
+        <div className="flex items-end justify-center gap-4 mb-10">
+          {[1, 0, 2].map(idx => <div key={idx} className={`skeleton rounded-2xl bg-[#F1F5F9] ${idx === 0 ? 'w-36 h-48 -mt-6' : 'w-28 h-40'}`} />)}
+        </div>
+        <div className="skeleton h-[400px] w-full rounded-2xl bg-[#F1F5F9]" />
+      </div>
+    );
+  }
 
   return (
     <div style={{ fontFamily: 'Inter, sans-serif' }}>

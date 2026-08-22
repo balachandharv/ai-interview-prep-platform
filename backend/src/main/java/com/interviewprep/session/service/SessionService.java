@@ -45,7 +45,7 @@ public class SessionService {
             .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         Session session = Session.builder()
-            .userId(user.getId())
+            .user(user)
             .mode(request.getMode().name())
             .targetRole(user.getTargetRole())
             .difficulty(request.getDifficulty().name())
@@ -65,6 +65,12 @@ public class SessionService {
     public SubmitAnswerResponse submitAnswer(UUID sessionId, SubmitAnswerRequest request, String username) {
         Session session = sessionRepository.findById(sessionId)
             .orElseThrow(() -> new ResourceNotFoundException("Session not found"));
+            
+        User user = userRepository.findByEmail(username)
+            .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        if (!session.getUser().getId().equals(user.getId())) {
+            throw new org.springframework.security.access.AccessDeniedException("Access denied");
+        }
             
         Question question = questionRepository.findById(request.getQuestionId())
             .orElseThrow(() -> new ResourceNotFoundException("Question not found"));
@@ -122,6 +128,12 @@ public class SessionService {
         Session session = sessionRepository.findById(sessionId)
             .orElseThrow(() -> new ResourceNotFoundException("Session not found"));
             
+        User user = userRepository.findByEmail(username)
+            .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        if (!session.getUser().getId().equals(user.getId())) {
+            throw new org.springframework.security.access.AccessDeniedException("Access denied");
+        }
+            
         List<SessionQuestion> answers = sessionQuestionRepository.findBySessionId(sessionId);
         double avgScore = answers.stream().mapToDouble(a -> a.getScore().doubleValue()).average().orElse(0.0);
         
@@ -178,6 +190,11 @@ public class SessionService {
     public SessionResultsDto getSessionResults(UUID sessionId, String username) {
         Session session = sessionRepository.findById(sessionId)
             .orElseThrow(() -> new ResourceNotFoundException("Session not found"));
+        User user = userRepository.findByEmail(username)
+            .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        if (!session.getUser().getId().equals(user.getId())) {
+            throw new org.springframework.security.access.AccessDeniedException("Access denied");
+        }
         return SessionResultsDto.builder()
             .sessionId(session.getId())
             .overallScore(session.getOverallScore() != null ? session.getOverallScore().doubleValue() : 0.0)

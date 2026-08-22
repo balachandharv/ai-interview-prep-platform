@@ -42,6 +42,7 @@ export const FILLER_WORDS = ['um', 'uh', 'like', 'you know', 'basically', 'actua
 export const ROLEPLAY_PERSONAS = [
   {
     id: 'priya',
+    backendId: 'd50c18d2-430b-4d43-9878-a5ecfbe62451',
     name: 'Priya Sharma',
     role: 'Senior Software Engineer',
     company: 'Google',
@@ -54,6 +55,7 @@ export const ROLEPLAY_PERSONAS = [
   },
   {
     id: 'david',
+    backendId: 'b69f64a5-1d48-4e31-8919-4cb34f2d5e3c',
     name: 'David Chen',
     role: 'Engineering Manager',
     company: 'Amazon',
@@ -65,6 +67,7 @@ export const ROLEPLAY_PERSONAS = [
   },
   {
     id: 'sarah',
+    backendId: 'f47ac10b-58cc-4372-a567-0e02b2c3d479',
     name: 'Sarah Johnson',
     role: 'HR Business Partner',
     company: 'Microsoft',
@@ -76,6 +79,7 @@ export const ROLEPLAY_PERSONAS = [
   },
   {
     id: 'rahul',
+    backendId: 'c0a80121-a3f8-4a6c-9c98-1e47f2a1b9d4',
     name: 'Rahul Gupta',
     role: 'CTO',
     company: 'TechStartup',
@@ -87,6 +91,7 @@ export const ROLEPLAY_PERSONAS = [
   },
   {
     id: 'jennifer',
+    backendId: 'e6b4c3b6-277d-411a-bd44-245780517861',
     name: 'Jennifer Lee',
     role: 'Technical Recruiter',
     company: 'Goldman Sachs',
@@ -98,6 +103,7 @@ export const ROLEPLAY_PERSONAS = [
   },
   {
     id: 'michael',
+    backendId: '8f1c8491-03a8-4c68-b7db-115f53096fa1',
     name: 'Michael Brown',
     role: 'Staff Engineer',
     company: 'Meta',
@@ -109,6 +115,7 @@ export const ROLEPLAY_PERSONAS = [
   },
   {
     id: 'anjali',
+    backendId: 'a78f2302-3b09-4e78-9047-97558661b12b',
     name: 'Anjali Verma',
     role: 'Product Manager',
     company: 'Flipkart',
@@ -120,6 +127,7 @@ export const ROLEPLAY_PERSONAS = [
   },
   {
     id: 'james',
+    backendId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
     name: 'James Wilson',
     role: 'Consultant',
     company: 'McKinsey',

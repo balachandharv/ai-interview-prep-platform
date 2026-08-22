@@ -67,21 +67,21 @@ export default function Register() {
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             <motion.div custom={0} variants={fieldVariants} initial="hidden" animate="visible">
-              <label className="block text-sm font-medium text-[#E2E8F0] mb-1.5">Full Name</label>
-              <input {...register('name')} className={`input ${errors.name ? 'input-error' : ''}`} placeholder="John Doe" />
+              <label htmlFor="name" className="block text-sm font-medium text-[#E2E8F0] mb-1.5">Full Name</label>
+              <input id="name" {...register('name')} className={`input ${errors.name ? 'input-error' : ''}`} placeholder="John Doe" />
               {errors.name && <p className="text-[#FB7185] text-xs mt-1">{errors.name.message}</p>}
             </motion.div>
 
             <motion.div custom={1} variants={fieldVariants} initial="hidden" animate="visible">
-              <label className="block text-sm font-medium text-[#E2E8F0] mb-1.5">Email</label>
-              <input {...register('email')} type="email" className={`input ${errors.email ? 'input-error' : ''}`} placeholder="you@example.com" />
+              <label htmlFor="email" className="block text-sm font-medium text-[#E2E8F0] mb-1.5">Email</label>
+              <input id="email" {...register('email')} type="email" className={`input ${errors.email ? 'input-error' : ''}`} placeholder="you@example.com" />
               {errors.email && <p className="text-[#FB7185] text-xs mt-1">{errors.email.message}</p>}
             </motion.div>
 
             <motion.div custom={2} variants={fieldVariants} initial="hidden" animate="visible">
-              <label className="block text-sm font-medium text-[#E2E8F0] mb-1.5">Password</label>
+              <label htmlFor="password" className="block text-sm font-medium text-[#E2E8F0] mb-1.5">Password</label>
               <div className="relative">
-                <input {...register('password')} type={showPassword ? 'text' : 'password'} className={`input pr-12 ${errors.password ? 'input-error' : ''}`} placeholder="••••••••" />
+                <input id="password" {...register('password')} type={showPassword ? 'text' : 'password'} className={`input pr-12 ${errors.password ? 'input-error' : ''}`} placeholder="••••••••" />
                 <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#64748B] hover:text-[#94A3B8] bg-transparent border-none cursor-pointer transition-colors">
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
@@ -90,8 +90,8 @@ export default function Register() {
             </motion.div>
 
             <motion.div custom={3} variants={fieldVariants} initial="hidden" animate="visible">
-              <label className="block text-sm font-medium text-[#E2E8F0] mb-1.5">Confirm Password</label>
-              <input {...register('confirmPassword')} type="password" className={`input ${errors.confirmPassword ? 'input-error' : ''}`} placeholder="••••••••" />
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-[#E2E8F0] mb-1.5">Confirm Password</label>
+              <input id="confirmPassword" {...register('confirmPassword')} type="password" className={`input ${errors.confirmPassword ? 'input-error' : ''}`} placeholder="••••••••" />
               {errors.confirmPassword && <p className="text-[#FB7185] text-xs mt-1">{errors.confirmPassword.message}</p>}
             </motion.div>
 

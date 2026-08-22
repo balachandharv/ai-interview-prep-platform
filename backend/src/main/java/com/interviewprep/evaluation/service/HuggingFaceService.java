@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -26,6 +28,11 @@ public class HuggingFaceService {
         .build();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    @Retryable(
+        retryFor = { RuntimeException.class },
+        maxAttempts = 3,
+        backoff = @Backoff(delay = 2000, multiplier = 2)
+    )
     public double computeSimilarity(String sourceSentence, String targetSentence) {
         try {
             Map<String, Object> body = Map.of(
@@ -49,10 +56,11 @@ public class HuggingFaceService {
                         return root.get(0).asDouble();
                     }
                 }
+                throw new RuntimeException("Invalid response from HuggingFace API");
             }
         } catch (Exception e) {
             log.error("Failed to call HuggingFace API", e);
+            throw new RuntimeException("AI Service Unavailable", e);
         }
-        return 0.5; // fallback
     }
 }

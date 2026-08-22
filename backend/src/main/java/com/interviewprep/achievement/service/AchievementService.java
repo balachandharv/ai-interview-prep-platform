@@ -65,7 +65,7 @@ public class AchievementService {
         if (condition && !achievementRepository
                 .existsByUserIdAndBadgeName(user.getId(), badge.name())) {
             Achievement achievement = Achievement.builder()
-                .userId(user.getId())
+                .user(user)
                 .badgeName(badge.name())
                 .badgeDescription(badge.getDescription())
                 .badgeIcon(badge.getIcon())
@@ -77,7 +77,7 @@ public class AchievementService {
     }
 
     private int countRoleplaySessions(User user) {
-        return roleplayRepository.countByUserIdAndIsCompletedTrue(user.getId());
+        return roleplayRepository.countByUser_IdAndIsCompletedTrue(user.getId());
     }
 
     private boolean hasCompletedCompanyMock(User user) {

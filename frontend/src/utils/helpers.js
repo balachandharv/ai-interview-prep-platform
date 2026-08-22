@@ -126,86 +126,14 @@ export function getInitials(name) {
 }
 
 /**
- * Generate mock data for demo purposes (used when backend is not connected)
+ * Generate mock questions
  */
-export function generateMockDashboardData() {
-  return {
-    readinessScore: 72,
-    radarScores: {
-      DSA: 75, 'System Design': 60, Behavioral: 85,
-      Communication: 78, 'Domain Knowledge': 65, HR: 80,
-    },
-    streak: { current: 5, best: 14, lastDate: new Date().toISOString() },
-    totalSessions: 24,
-    averageScore: 7.2,
-    questionsAnswered: 156,
-    recentSessions: [
-      { id: '1', date: new Date().toISOString(), mode: 'Mock', score: 7.8, grade: 'B', questionCount: 5 },
-      { id: '2', date: new Date(Date.now() - 86400000).toISOString(), mode: 'Roleplay', score: 8.5, grade: 'A', questionCount: 8 },
-      { id: '3', date: new Date(Date.now() - 172800000).toISOString(), mode: 'Mock', score: 6.2, grade: 'B', questionCount: 5 },
-      { id: '4', date: new Date(Date.now() - 259200000).toISOString(), mode: 'Mock', score: 5.5, grade: 'C', questionCount: 5 },
-      { id: '5', date: new Date(Date.now() - 345600000).toISOString(), mode: 'Roleplay', score: 7.0, grade: 'B', questionCount: 6 },
-    ],
-    badges: ['First Steps', 'Practice Makes Perfect', 'Streak Master'],
-    weeklyFocusPlan: {
-      priorities: [
-        { category: 'System Design', description: 'Focus on scalability patterns and distributed systems concepts.', color: '#6366F1' },
-        { category: 'DSA', description: 'Practice graph algorithms and dynamic programming problems.', color: '#8B5CF6' },
-        { category: 'Domain Knowledge', description: 'Review database internals and caching strategies.', color: '#10B981' },
-      ],
-    },
-    activeDates: Array.from({ length: 30 }, () => {
-      const d = new Date();
-      d.setDate(d.getDate() - Math.floor(Math.random() * 84));
-      return d.toISOString();
-    }),
-  };
-}
-
 export function generateMockQuestions() {
-  const questions = [
-    { text: 'Explain the difference between REST and GraphQL APIs.', category: 'Technical', difficulty: 'Medium', company: 'Google' },
-    { text: 'Tell me about a time you had to deal with a difficult team member.', category: 'Behavioral', difficulty: 'Medium', company: 'Amazon' },
-    { text: 'Design a URL shortening service like bit.ly.', category: 'System Design', difficulty: 'Hard', company: 'Meta' },
-    { text: 'Implement a LRU Cache with O(1) time complexity.', category: 'DSA', difficulty: 'Hard', company: 'Google' },
-    { text: 'What is your greatest strength and how does it relate to this role?', category: 'HR', difficulty: 'Easy', company: 'Microsoft' },
-    { text: 'Explain how a hash map works internally.', category: 'Technical', difficulty: 'Medium', company: 'Amazon' },
-    { text: 'Describe a situation where you failed and what you learned.', category: 'Behavioral', difficulty: 'Medium', company: 'Meta' },
-    { text: 'Design a notification system for a social media platform.', category: 'System Design', difficulty: 'Hard', company: 'Meta' },
-    { text: 'Find the longest palindromic substring in a given string.', category: 'DSA', difficulty: 'Medium', company: 'Microsoft' },
-    { text: 'Why do you want to work at our company?', category: 'HR', difficulty: 'Easy', company: 'Google' },
-    { text: 'Explain microservices architecture and its pros and cons.', category: 'Technical', difficulty: 'Medium', company: 'Netflix' },
-    { text: 'Tell me about a time you showed leadership without authority.', category: 'Behavioral', difficulty: 'Hard', company: 'Amazon' },
-    { text: 'Design a real-time chat application.', category: 'System Design', difficulty: 'Medium', company: 'Flipkart' },
-    { text: 'Implement binary search on a rotated sorted array.', category: 'DSA', difficulty: 'Medium', company: 'Goldman Sachs' },
-    { text: 'Where do you see yourself in 5 years?', category: 'HR', difficulty: 'Easy', company: 'Microsoft' },
-    { text: 'Explain the CAP theorem with real-world examples.', category: 'Technical', difficulty: 'Hard', company: 'Google' },
-    { text: 'Describe a project you are most proud of.', category: 'Behavioral', difficulty: 'Easy', company: 'Apple' },
-    { text: 'Design an e-commerce recommendation engine.', category: 'System Design', difficulty: 'Hard', company: 'Amazon' },
-    { text: 'Merge K sorted linked lists efficiently.', category: 'DSA', difficulty: 'Hard', company: 'Google' },
-    { text: 'How do you handle work-life balance?', category: 'HR', difficulty: 'Easy', company: 'Netflix' },
+  return [
+    { id: 1, text: "Can you tell me a little about yourself?", category: "Behavioral", difficulty: "Easy", bookmarked: false, company: "Amazon", masteryCount: 3, modelAnswer: "Focus on your professional journey, highlighting key achievements.", keyPoints: ["Keep it under 2 minutes", "Highlight relevant experience"] },
+    { id: 2, text: "How would you design a URL shortening service?", category: "System Design", difficulty: "Hard", bookmarked: true, company: "Google", masteryCount: 0, modelAnswer: "Discuss requirements, capacity estimation, and high-level design.", keyPoints: ["Database schema", "Hashing strategy", "Caching"] },
+    { id: 3, text: "Explain the difference between a process and a thread.", category: "DSA", difficulty: "Medium", bookmarked: false, company: "Microsoft", masteryCount: 1, modelAnswer: "A process is an executing instance of an application, while a thread is a path of execution within a process.", keyPoints: ["Memory sharing", "Context switching overhead"] },
+    { id: 4, text: "Describe a time you failed and what you learned.", category: "HR", difficulty: "Medium", bookmarked: false, company: null, masteryCount: 4, modelAnswer: "Use the STAR method to describe a genuine failure and emphasize the learning outcome.", keyPoints: ["Take accountability", "Show growth"] },
+    { id: 5, text: "Implement a binary search tree in Java.", category: "DSA", difficulty: "Medium", bookmarked: false, company: null, masteryCount: 0, modelAnswer: "Create Node class with left/right pointers, then implement insert and search methods.", keyPoints: ["O(log n) time complexity", "Handling edge cases"] },
   ];
-
-  return questions.map((q, i) => ({
-    id: `q${i + 1}`,
-    ...q,
-    modelAnswer: 'This is a sample model answer for demonstration purposes. The actual model answer would provide a comprehensive, structured response covering all key points.',
-    keyPoints: ['Key point 1', 'Key point 2', 'Key point 3'],
-    roleTag: 'SDE-1',
-    bookmarked: i % 5 === 0,
-    masteryCount: Math.floor(Math.random() * 5),
-  }));
-}
-
-export function generateMockLeaderboard() {
-  const names = ['Alice Chen', 'Bob Kumar', 'Charlie Wang', 'Diana Patel', 'Eva Singh', 'Frank Miller', 'Grace Lee', 'Henry Zhang', 'Ivy Sharma', 'Jack Wilson'];
-  return names.map((name, i) => ({
-    rank: i + 1,
-    name,
-    totalSessions: Math.floor(Math.random() * 50) + 10,
-    averageScore: (6 + Math.random() * 4).toFixed(1),
-    bestStreak: Math.floor(Math.random() * 30) + 5,
-    badges: Math.floor(Math.random() * 8) + 1,
-    rankChange: Math.floor(Math.random() * 5) - 2,
-  })).sort((a, b) => b.averageScore - a.averageScore).map((u, i) => ({ ...u, rank: i + 1 }));
 }

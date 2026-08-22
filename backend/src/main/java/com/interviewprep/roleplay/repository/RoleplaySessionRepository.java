@@ -7,6 +7,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface RoleplaySessionRepository extends JpaRepository<RoleplaySession, UUID> {
-    List<RoleplaySession> findByUserId(UUID userId);
-    int countByUserIdAndIsCompletedTrue(UUID userId);
+    List<RoleplaySession> findByUser_Id(UUID userId);
+    int countByUser_IdAndIsCompletedTrue(UUID userId);
 }

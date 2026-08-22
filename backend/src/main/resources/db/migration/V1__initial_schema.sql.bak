@@ -1,0 +1,279 @@
+﻿-- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)
+--
+-- Host: localhost    Database: interview_prep_db
+-- ------------------------------------------------------
+-- Server version	8.0.43
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `achievements`
+--
+
+DROP TABLE IF EXISTS `achievements`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `achievements` (
+  `id` binary(16) NOT NULL,
+  `badge_description` varchar(255) DEFAULT NULL,
+  `badge_icon` varchar(255) DEFAULT NULL,
+  `badge_name` varchar(255) NOT NULL,
+  `earned_at` datetime(6) DEFAULT NULL,
+  `user_id` binary(16) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `companies`
+--
+
+DROP TABLE IF EXISTS `companies`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `companies` (
+  `id` binary(16) NOT NULL,
+  `is_active` bit(1) DEFAULT NULL,
+  `average_rounds` int DEFAULT NULL,
+  `created_at` datetime(6) DEFAULT NULL,
+  `description` text,
+  `difficulty` varchar(255) DEFAULT NULL,
+  `interview_overview` text,
+  `logo_url` varchar(255) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_50ygfritln653mnfhxucoy8up` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `personas`
+--
+
+DROP TABLE IF EXISTS `personas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `personas` (
+  `id` binary(16) NOT NULL,
+  `is_active` bit(1) DEFAULT NULL,
+  `avatar_url` varchar(255) DEFAULT NULL,
+  `company` varchar(255) NOT NULL,
+  `created_at` datetime(6) DEFAULT NULL,
+  `description` text,
+  `difficulty` varchar(255) NOT NULL,
+  `estimated_duration_minutes` int DEFAULT NULL,
+  `interview_style` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `role` varchar(255) NOT NULL,
+  `system_prompt` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `questions`
+--
+
+DROP TABLE IF EXISTS `questions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `questions` (
+  `id` binary(16) NOT NULL,
+  `average_score` decimal(38,2) DEFAULT NULL,
+  `category` varchar(255) NOT NULL,
+  `company_tag` varchar(255) DEFAULT NULL,
+  `created_at` datetime(6) DEFAULT NULL,
+  `difficulty` varchar(255) NOT NULL,
+  `is_ai_generated` bit(1) DEFAULT NULL,
+  `key_points` json NOT NULL,
+  `model_answer` text NOT NULL,
+  `question_text` text NOT NULL,
+  `role_tag` varchar(255) DEFAULT NULL,
+  `times_answered` int DEFAULT NULL,
+  `updated_at` datetime(6) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `roleplay_sessions`
+--
+
+DROP TABLE IF EXISTS `roleplay_sessions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `roleplay_sessions` (
+  `id` binary(16) NOT NULL,
+  `action_plan` text,
+  `communication_score` decimal(38,2) DEFAULT NULL,
+  `company` varchar(255) DEFAULT NULL,
+  `completed_at` datetime(6) DEFAULT NULL,
+  `confidence_score` decimal(38,2) DEFAULT NULL,
+  `conversation_history` json DEFAULT NULL,
+  `created_at` datetime(6) DEFAULT NULL,
+  `filler_word_count` int DEFAULT NULL,
+  `improvements` json DEFAULT NULL,
+  `interview_type` varchar(255) DEFAULT NULL,
+  `is_completed` bit(1) DEFAULT NULL,
+  `overall_score` decimal(38,2) DEFAULT NULL,
+  `persona_id` binary(16) DEFAULT NULL,
+  `persona_name` varchar(255) DEFAULT NULL,
+  `round_label` varchar(255) DEFAULT NULL,
+  `started_at` datetime(6) DEFAULT NULL,
+  `strengths` json DEFAULT NULL,
+  `target_role` varchar(255) DEFAULT NULL,
+  `technical_depth_score` decimal(38,2) DEFAULT NULL,
+  `time_spent_seconds` int DEFAULT NULL,
+  `user_id` binary(16) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `session_questions`
+--
+
+DROP TABLE IF EXISTS `session_questions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `session_questions` (
+  `id` binary(16) NOT NULL,
+  `answered_at` datetime(6) DEFAULT NULL,
+  `clarity_score` decimal(38,2) DEFAULT NULL,
+  `completeness_score` decimal(38,2) DEFAULT NULL,
+  `correctness_score` decimal(38,2) DEFAULT NULL,
+  `filler_word_count` int DEFAULT NULL,
+  `is_flagged_fast` bit(1) DEFAULT NULL,
+  `is_flagged_short` bit(1) DEFAULT NULL,
+  `points_covered` json DEFAULT NULL,
+  `points_missed` json DEFAULT NULL,
+  `pro_tip` text,
+  `question_order` int DEFAULT NULL,
+  `sample_answer` text,
+  `score` decimal(38,2) DEFAULT NULL,
+  `similarity_score` decimal(38,2) DEFAULT NULL,
+  `structure_score` decimal(38,2) DEFAULT NULL,
+  `time_spent_seconds` int DEFAULT NULL,
+  `user_answer` text,
+  `question_id` binary(16) NOT NULL,
+  `session_id` binary(16) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKa37ctt7lwytd3n5jd83kh4eyk` (`question_id`),
+  KEY `FKotbnu2l69hnatk8t4krsbsxv8` (`session_id`),
+  CONSTRAINT `FKa37ctt7lwytd3n5jd83kh4eyk` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`),
+  CONSTRAINT `FKotbnu2l69hnatk8t4krsbsxv8` FOREIGN KEY (`session_id`) REFERENCES `sessions` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sessions`
+--
+
+DROP TABLE IF EXISTS `sessions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sessions` (
+  `id` binary(16) NOT NULL,
+  `behavioral_score` decimal(38,2) DEFAULT NULL,
+  `category` varchar(255) DEFAULT NULL,
+  `communication_score` decimal(38,2) DEFAULT NULL,
+  `company_tag` varchar(255) DEFAULT NULL,
+  `completed_at` datetime(6) DEFAULT NULL,
+  `completed_count` int DEFAULT NULL,
+  `created_at` datetime(6) DEFAULT NULL,
+  `difficulty` varchar(255) DEFAULT NULL,
+  `dsa_score` decimal(38,2) DEFAULT NULL,
+  `is_completed` bit(1) DEFAULT NULL,
+  `mode` varchar(255) NOT NULL,
+  `overall_score` decimal(38,2) DEFAULT NULL,
+  `question_count` int DEFAULT NULL,
+  `round_label` varchar(255) DEFAULT NULL,
+  `started_at` datetime(6) DEFAULT NULL,
+  `target_role` varchar(255) DEFAULT NULL,
+  `technical_score` decimal(38,2) DEFAULT NULL,
+  `time_spent_seconds` int DEFAULT NULL,
+  `user_id` binary(16) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `user_profiles`
+--
+
+DROP TABLE IF EXISTS `user_profiles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_profiles` (
+  `id` binary(16) NOT NULL,
+  `average_score` decimal(38,2) DEFAULT NULL,
+  `badges_earned` json DEFAULT NULL,
+  `behavioral_score` decimal(38,2) DEFAULT NULL,
+  `best_streak` int DEFAULT NULL,
+  `communication_score` decimal(38,2) DEFAULT NULL,
+  `created_at` datetime(6) DEFAULT NULL,
+  `domain_knowledge_score` decimal(38,2) DEFAULT NULL,
+  `dsa_score` decimal(38,2) DEFAULT NULL,
+  `hr_score` decimal(38,2) DEFAULT NULL,
+  `readiness_score` int DEFAULT NULL,
+  `streak_count` int DEFAULT NULL,
+  `streak_freeze_available` bit(1) DEFAULT NULL,
+  `streak_freeze_used_at` date DEFAULT NULL,
+  `streak_last_date` date DEFAULT NULL,
+  `system_design_score` decimal(38,2) DEFAULT NULL,
+  `total_questions_answered` int DEFAULT NULL,
+  `total_sessions` int DEFAULT NULL,
+  `updated_at` datetime(6) DEFAULT NULL,
+  `user_id` binary(16) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_e5h89rk3ijvdmaiig4srogdc6` (`user_id`),
+  CONSTRAINT `FKjcad5nfve11khsnpwj1mv8frj` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `users` (
+  `id` binary(16) NOT NULL,
+  `is_active` bit(1) DEFAULT NULL,
+  `created_at` datetime(6) DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
+  `is_email_verified` bit(1) DEFAULT NULL,
+  `experience_level` enum('ENTRY_LEVEL','MID_LEVEL','SENIOR','LEAD','PRINCIPAL') DEFAULT NULL,
+  `last_login_at` datetime(6) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `password_hash` varchar(255) DEFAULT NULL,
+  `role` enum('USER','ADMIN') NOT NULL,
+  `target_companies` json DEFAULT NULL,
+  `target_role` varchar(255) DEFAULT NULL,
+  `updated_at` datetime(6) DEFAULT NULL,
+  `weak_areas` json DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_6dotkott2kjsp8vw4d0m25fb7` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2026-08-19 11:35:42

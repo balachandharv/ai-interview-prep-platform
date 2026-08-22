@@ -1,19 +1,20 @@
 version: '3.9'
 
 services:
-  postgres:
-    image: postgres:15-alpine
+  mysql:
+    image: mysql:8.0
     container_name: interview_prep_db
     environment:
-      POSTGRES_DB: interview_prep_db
-      POSTGRES_USER: ${DB_USERNAME:-interviewprep}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-interviewprep123}
+      MYSQL_DATABASE: interview_prep_db
+      MYSQL_USER: ${DB_USERNAME:-balarama}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-BALARAMA007@}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-BALARAMA007@}
     ports:
-      - "5432:5432"
+      - "3306:3306"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - mysql_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U interviewprep"]
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -50,7 +51,7 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      postgres:
+      mysql:
         condition: service_healthy
       redis:
         condition: service_healthy
@@ -68,5 +69,5 @@ services:
     restart: unless-stopped
 
 volumes:
-  postgres_data:
+  mysql_data:
   redis_data:

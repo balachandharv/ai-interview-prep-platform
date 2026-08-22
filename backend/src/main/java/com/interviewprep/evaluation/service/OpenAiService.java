@@ -8,6 +8,8 @@ import com.interviewprep.evaluation.dto.OpenAiResponse;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -168,6 +170,11 @@ public class OpenAiService {
             prompt, 1000);
     }
 
+    @Retryable(
+        retryFor = { AIServiceException.class },
+        maxAttempts = 3,
+        backoff = @Backoff(delay = 2000, multiplier = 2)
+    )
     public String callOpenAiApi(String systemPrompt,
             String userPrompt, int maxTokens) {
         try {
