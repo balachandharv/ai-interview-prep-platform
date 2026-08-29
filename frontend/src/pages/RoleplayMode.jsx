@@ -1,21 +1,83 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { roleplayAPI } from '../services/api';
 import { ROLEPLAY_PERSONAS } from '../constants/enums';
+import { Loader } from 'lucide-react';
 
 const container = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.08 } } };
 const item = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } };
 const diffBadge = { Easy: '#10B981', Medium: '#F59E0B', Hard: '#EF4444' };
 
+// Default avatar mapping by persona name (backend doesn't store emojis)
+const AVATAR_MAP = {
+  'Priya Sharma': '👩‍💻',
+  'David Chen': '👨‍💼',
+  'Sarah Johnson': '👩‍💼',
+  'Rahul Gupta': '🧑‍💻',
+  'Jennifer Lee': '👩‍🏫',
+  'Michael Brown': '👨‍🔬',
+  'Anjali Verma': '👩‍🎓',
+  'James Wilson': '🕴️',
+};
+
+const COLOR_MAP = {
+  'Priya Sharma': '#4285F4',
+  'David Chen': '#FF9900',
+  'Sarah Johnson': '#00A4EF',
+  'Rahul Gupta': '#6366F1',
+  'Jennifer Lee': '#6D9EEB',
+  'Michael Brown': '#0668E1',
+  'Anjali Verma': '#F7CB0A',
+  'James Wilson': '#004B8D',
+};
+
 export default function RoleplayMode() {
   const navigate = useNavigate();
   const [selected, setSelected] = useState(null);
   const [companyMode, setCompanyMode] = useState(false);
+  const [personas, setPersonas] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch personas from backend to get real database UUIDs
+  useEffect(() => {
+    roleplayAPI.getPersonas()
+      .then((res) => {
+        const backendPersonas = res.data.map((p) => ({
+          id: p.id,               // Real DB UUID
+          backendId: p.id,        // Same — this IS the real ID now
+          name: p.name,
+          role: p.role,
+          company: p.company,
+          style: p.style,
+          difficulty: p.difficulty,
+          duration: p.duration,
+          avatar: AVATAR_MAP[p.name] || '🧑‍💻',
+          color: COLOR_MAP[p.name] || '#6366F1',
+          description: `${p.style} interview at ${p.company}. Difficulty: ${p.difficulty}.`,
+        }));
+        setPersonas(backendPersonas);
+      })
+      .catch((err) => {
+        console.warn('Failed to fetch personas from backend, using fallback:', err);
+        setPersonas(ROLEPLAY_PERSONAS);
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
   const handleStart = () => {
     if (!selected) return;
     navigate('/roleplay-session', { state: { persona: selected, companyMode } });
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader size={32} className="animate-spin text-[#6366F1]" />
+        <span className="ml-3 text-[#475569] font-medium">Loading interviewers...</span>
+      </div>
+    );
+  }
 
   return (
     <div style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -36,7 +98,7 @@ export default function RoleplayMode() {
 
       {/* Persona Grid */}
       <motion.div variants={container} initial="hidden" animate="show" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        {ROLEPLAY_PERSONAS.map((persona) => (
+        {personas.map((persona) => (
           <motion.div
             key={persona.id}
             variants={item}

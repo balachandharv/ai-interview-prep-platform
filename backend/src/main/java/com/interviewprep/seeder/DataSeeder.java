@@ -14,6 +14,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
+import com.interviewprep.user.entity.User;
+import com.interviewprep.user.entity.UserProfile;
+import com.interviewprep.user.repository.UserRepository;
+import com.interviewprep.common.enums.Role;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
@@ -25,6 +30,8 @@ public class DataSeeder implements CommandLineRunner {
     private final QuestionRepository questionRepository;
     private final PersonaRepository personaRepository;
     private final CompanyRepository companyRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
     private final ObjectMapper objectMapper;
 
     @Override
@@ -40,6 +47,10 @@ public class DataSeeder implements CommandLineRunner {
         if (companyRepository.count() == 0) {
             log.info("Seeding companies database...");
             seedCompanies();
+        }
+        if (!userRepository.existsByEmail("admin@test.com")) {
+            log.info("Seeding users database...");
+            seedUsers();
         }
         log.info("Database seeding complete.");
     }
@@ -121,5 +132,39 @@ public class DataSeeder implements CommandLineRunner {
         p.setSystemPrompt(prompt);
         p.setActive(true);
         return p;
+    }
+
+    private void seedUsers() {
+        String defaultPassword = passwordEncoder.encode("password123");
+
+        User admin = createUser("Admin User", "admin@test.com", defaultPassword, Role.ADMIN);
+        User user1 = createUser("Normal User 1", "user1@test.com", defaultPassword, Role.USER);
+        User user2 = createUser("Normal User 2", "user2@test.com", defaultPassword, Role.USER);
+        User user3 = createUser("Normal User 3", "user3@test.com", defaultPassword, Role.USER);
+
+        userRepository.saveAll(List.of(admin, user1, user2, user3));
+        log.info("Seeded 1 admin and 3 normal users.");
+    }
+
+    private User createUser(String name, String email, String encodedPassword, Role role) {
+        User user = User.builder()
+                .name(name)
+                .email(email)
+                .passwordHash(encodedPassword)
+                .role(role)
+                .active(true)
+                .emailVerified(true)
+                .build();
+
+        UserProfile profile = new UserProfile();
+        profile.setUser(user);
+        profile.setReadinessScore(0);
+        profile.setTotalSessions(0);
+        profile.setTotalQuestionsAnswered(0);
+        profile.setStreakCount(0);
+        profile.setBestStreak(0);
+        user.setProfile(profile);
+
+        return user;
     }
 }

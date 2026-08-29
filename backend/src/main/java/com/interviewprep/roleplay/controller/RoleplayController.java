@@ -3,7 +3,9 @@ package com.interviewprep.roleplay.controller;
 import com.interviewprep.roleplay.dto.RoleplayMessageRequest;
 import com.interviewprep.roleplay.dto.RoleplayMessageResponse;
 import com.interviewprep.roleplay.dto.StartRoleplayRequest;
+import com.interviewprep.roleplay.entity.Persona;
 import com.interviewprep.roleplay.entity.RoleplaySession;
+import com.interviewprep.roleplay.repository.PersonaRepository;
 import com.interviewprep.roleplay.service.RoleplayService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +15,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -23,6 +27,28 @@ import java.util.UUID;
 public class RoleplayController {
 
     private final RoleplayService roleplayService;
+    private final PersonaRepository personaRepository;
+
+    /**
+     * Returns all active personas with their real DB-generated UUIDs.
+     * The frontend MUST call this to get correct persona IDs before starting a session.
+     */
+    @GetMapping("/personas")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<List<Map<String, Object>>> getPersonas() {
+        List<Map<String, Object>> personas = personaRepository.findByActiveTrue().stream()
+            .map(p -> Map.<String, Object>of(
+                "id", p.getId().toString(),
+                "name", p.getName(),
+                "role", p.getRole(),
+                "company", p.getCompany(),
+                "style", p.getInterviewStyle(),
+                "difficulty", p.getDifficulty(),
+                "duration", p.getEstimatedDurationMinutes() != null ? p.getEstimatedDurationMinutes() + " min" : "30 min"
+            ))
+            .collect(Collectors.toList());
+        return ResponseEntity.ok(personas);
+    }
 
     /**
      * Step 1: Frontend calls this via HTTP POST to create the session in DB.

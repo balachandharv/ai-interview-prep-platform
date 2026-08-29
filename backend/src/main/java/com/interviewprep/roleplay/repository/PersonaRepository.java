@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface PersonaRepository extends JpaRepository<Persona, UUID> {
     List<Persona> findByActiveTrue();
+    java.util.Optional<Persona> findByName(String name);
 }

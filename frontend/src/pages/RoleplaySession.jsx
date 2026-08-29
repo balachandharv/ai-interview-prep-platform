@@ -91,6 +91,18 @@ export default function RoleplaySession() {
         const aiMsg = { role: 'ai', text: response.message, timestamp: new Date().toISOString() };
         setMessages(prev => [...prev, aiMsg]);
         setIsAIThinking(false);
+
+        // Web Speech API for Text-to-Speech
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(response.message);
+            utterance.rate = 1.0;
+            utterance.pitch = 1.0;
+            const voices = window.speechSynthesis.getVoices();
+            const preferredVoice = voices.find(v => v.lang.includes('en-US'));
+            if (preferredVoice) utterance.voice = preferredVoice;
+            window.speechSynthesis.speak(utterance);
+        }
       });
 
       client.subscribe(`/topic/roleplay/${sessionId}/typing`, (message) => {

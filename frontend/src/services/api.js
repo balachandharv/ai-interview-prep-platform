@@ -92,6 +92,7 @@ export const sessionAPI = {
 // ROLEPLAY API
 // ═══════════════════════════════════════
 export const roleplayAPI = {
+  getPersonas: () => api.get('/roleplay/personas'),
   start: (config) => api.post('/roleplay/start', config),
   sendMessage: (id, message) => api.post(`/roleplay/${id}/message`, { message }),
   complete: (id) => api.post(`/roleplay/${id}/complete`),

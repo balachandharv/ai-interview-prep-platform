@@ -7,6 +7,10 @@ import { store } from './store';
 // Layout
 import DashboardLayout from './components/layout/DashboardLayout';
 import ProtectedRoute from './components/common/ProtectedRoute';
+import AdminRoute from './components/admin/AdminRoute';
+
+// Admin Pages
+import AdminDashboard from './pages/admin/AdminDashboard';
 
 // Pages
 import Landing from './pages/Landing';
@@ -84,6 +88,12 @@ export default function App() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/settings" element={<Settings />} />
               </Route>
+            </Route>
+
+            {/* Admin Route Tree (Fully separated from User Dash) */}
+            <Route path="/admin" element={<AdminRoute />}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="dashboard" element={<AdminDashboard />} />
             </Route>
 
             {/* 404 Not Found (Catch all) */}
