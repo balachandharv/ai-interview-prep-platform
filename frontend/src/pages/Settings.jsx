@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import toast from 'react-hot-toast';
+import { Settings as SettingsIcon, AlertTriangle } from 'lucide-react';
 
 const profileSchema = z.object({ name: z.string().min(2), email: z.string().email() });
 
@@ -21,7 +22,7 @@ export default function Settings() {
   return (
     <div style={{ fontFamily: 'Inter, sans-serif' }}>
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-        <h1 className="text-3xl font-extrabold text-[#0F172A] mb-1">Settings ⚙️</h1>
+        <h1 className="text-3xl font-extrabold text-[#F0F4F8] mb-1 flex items-center gap-2">Settings <SettingsIcon size={24} className="text-[#3B82F6]" /></h1>
         <p className="text-[#475569] mb-8">Manage your account and preferences</p>
       </motion.div>
 
@@ -90,7 +91,7 @@ export default function Settings() {
         {/* Danger Zone */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
           className="p-6 rounded-2xl border-2 border-[#EF4444]/20" style={{ background: '#FEF2F2' }}>
-          <h3 className="text-lg font-bold text-[#EF4444] mb-2">⚠️ Danger Zone</h3>
+          <h3 className="text-lg font-bold text-[#EF4444] mb-2 flex items-center gap-2"><AlertTriangle size={18} /> Danger Zone</h3>
           <p className="text-sm text-[#475569] mb-4">Once you delete your account, there is no going back.</p>
           <motion.button whileTap={{ scale: 0.97 }} onClick={() => setShowDeleteConfirm(true)}
             className="btn btn-danger">Delete Account</motion.button>

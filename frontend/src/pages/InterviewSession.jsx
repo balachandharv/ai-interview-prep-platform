@@ -133,7 +133,7 @@ export default function InterviewSession() {
         const newDiff = difficulty === 'Easy' ? 'Medium' : 'Hard';
         setDifficulty(newDiff);
         setConsecutiveHigh(0);
-        toast('🔥 You\'re on a roll! Difficulty increased to ' + newDiff, { style: { background: 'rgba(30,41,59,0.9)', color: '#818CF8', border: '1px solid rgba(129,140,248,0.3)' } });
+        toast('You\'re on a roll! Difficulty increased to ' + newDiff, { style: { background: 'rgba(30,41,59,0.9)', color: '#818CF8', border: '1px solid rgba(129,140,248,0.3)' } });
       }
     } else if (score <= 5) {
       const newLow = consecutiveLow + 1;

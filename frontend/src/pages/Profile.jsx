@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import CountUp from '../components/common/CountUp';
 import { BADGE_DEFINITIONS } from '../constants/enums';
+import { Pencil } from 'lucide-react';
 
 const earnedBadges = ['First Steps', 'Practice Makes Perfect', 'Streak Master', 'Roleplay Rookie', 'Score Hunter'];
 
@@ -23,7 +24,7 @@ export default function Profile() {
             </div>
           </div>
           <div className="mt-2 sm:mt-0 sm:ml-auto sm:mb-2">
-            <motion.button whileTap={{ scale: 0.97 }} className="btn btn-outline btn-sm w-full sm:w-auto">✏️ Edit Profile</motion.button>
+            <motion.button whileTap={{ scale: 0.97 }} className="btn btn-outline btn-sm w-full sm:w-auto"><Pencil size={14} /> Edit Profile</motion.button>
           </div>
         </div>
       </div>
@@ -47,7 +48,7 @@ export default function Profile() {
 
       {/* Badges */}
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="card-flat p-6 mb-8">
-        <h3 className="text-lg font-bold text-[#0F172A] mb-4">🏅 Achievements</h3>
+        <h3 className="text-lg font-bold text-[#0F172A] mb-4">Achievements</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {BADGE_DEFINITIONS.map(badge => {
             const earned = earnedBadges.includes(badge.name);
@@ -56,7 +57,7 @@ export default function Profile() {
                 className={`text-center p-4 rounded-xl border transition-all ${
                   earned ? 'border-[#6366F1]/20 bg-white' : 'border-[#E2E8F0] bg-[#F8FAFC] opacity-50'
                 }`}>
-                <span className={`text-3xl block mb-2 ${earned ? '' : 'grayscale'}`}>{earned ? badge.icon : '🔒'}</span>
+                <span className={`text-3xl block mb-2 ${earned ? '' : 'grayscale'}`}>{earned ? '★' : '○'}</span>
                 <p className="text-xs font-semibold text-[#0F172A]">{badge.name}</p>
                 <p className="text-[10px] text-[#94A3B8] mt-1">{badge.description}</p>
               </motion.div>
@@ -67,7 +68,7 @@ export default function Profile() {
 
       {/* Recent Sessions */}
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="card-flat p-6">
-        <h3 className="text-base font-bold text-[#0F172A] mb-4">📋 Recent Activity</h3>
+        <h3 className="text-base font-bold text-[#0F172A] mb-4">Recent Activity</h3>
         <div className="space-y-3">
           {[
             { date: 'Today', mode: 'Mock', score: 7.8 },

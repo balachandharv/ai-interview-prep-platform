@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import CountUp from '../components/common/CountUp';
 import Confetti from 'react-confetti';
 import { useState, useEffect } from 'react';
-import { Loader } from 'lucide-react';
+import { Loader, AlertTriangle } from 'lucide-react';
 import { roleplayAPI } from '../services/api';
 
 export default function RoleplayResults() {
@@ -65,12 +65,12 @@ export default function RoleplayResults() {
       {showConfetti && <Confetti recycle={false} numberOfPieces={200} />}
 
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8">
-        <h1 className="text-3xl font-extrabold text-[#0F172A] mb-2">Interview Complete! 🎉</h1>
+        <h1 className="text-3xl font-extrabold text-[#0F172A] mb-2">Interview Complete!</h1>
         <p className="text-[#475569]">Here's your performance breakdown with {persona?.name || 'the interviewer'}</p>
 
         {fetchError && (
           <p className="text-sm text-[#F59E0B] mt-2 px-4 py-2 bg-[#FEF3C7] rounded-lg inline-block">
-            ⚠️ Could not load scores from server — scores shown are unavailable. Your transcript is preserved below.
+            <AlertTriangle size={16} className="inline mr-1" /> Could not load scores from server — scores shown are unavailable. Your transcript is preserved below.
           </p>
         )}
 
@@ -87,9 +87,9 @@ export default function RoleplayResults() {
       {!fetchError && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           {[
-            { label: 'Communication', value: commScore, color: '#6366F1', icon: '💬' },
-            { label: 'Technical Depth', value: techScore, color: '#8B5CF6', icon: '🧠' },
-            { label: 'Confidence', value: confScore, color: '#10B981', icon: '💪' },
+            { label: 'Communication', value: commScore, color: '#6366F1', icon: 'comm' },
+            { label: 'Technical Depth', value: techScore, color: '#8B5CF6', icon: 'tech' },
+            { label: 'Confidence', value: confScore, color: '#10B981', icon: 'conf' },
           ].map(s => (
             <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="card-flat p-5 text-center">
               <span className="text-3xl mb-2 block">{s.icon}</span>
@@ -105,7 +105,7 @@ export default function RoleplayResults() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}>
             <div className="p-5 rounded-2xl" style={{ background: '#ECFDF5' }}>
-              <h3 className="text-base font-bold text-[#10B981] mb-3">💪 Key Strengths</h3>
+              <h3 className="text-base font-bold text-[#10B981] mb-3">Key Strengths</h3>
               {(strengths.length > 0 ? strengths : ['Good effort — keep practicing!']).map((s, i) => (
                 <p key={i} className="text-sm text-[#475569] flex items-center gap-2 mb-1"><span className="text-[#10B981]">✓</span> {s}</p>
               ))}
@@ -113,7 +113,7 @@ export default function RoleplayResults() {
           </motion.div>
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}>
             <div className="p-5 rounded-2xl" style={{ background: '#FEF2F2' }}>
-              <h3 className="text-base font-bold text-[#EF4444] mb-3">📝 Areas to Improve</h3>
+              <h3 className="text-base font-bold text-[#EF4444] mb-3">Areas to Improve</h3>
               {(improvements.length > 0 ? improvements : ['Keep working on your responses!']).map((s, i) => (
                 <p key={i} className="text-sm text-[#475569] flex items-center gap-2 mb-1"><span className="text-[#EF4444]">→</span> {s}</p>
               ))}
@@ -125,14 +125,14 @@ export default function RoleplayResults() {
       {/* Action Plan — from API if available */}
       {actionPlan && (
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="card-flat p-6 mb-6">
-          <h3 className="text-base font-bold text-[#0F172A] mb-4">🎯 Personalized Action Plan</h3>
+          <h3 className="text-base font-bold text-[#0F172A] mb-4">Personalized Action Plan</h3>
           <p className="text-sm text-[#475569] leading-relaxed whitespace-pre-wrap">{actionPlan}</p>
         </motion.div>
       )}
 
       {/* Transcript */}
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="card-flat p-6 mb-6">
-        <h3 className="text-base font-bold text-[#0F172A] mb-4">📜 Full Transcript</h3>
+        <h3 className="text-base font-bold text-[#0F172A] mb-4">Full Transcript</h3>
         <div className="space-y-2 max-h-64 overflow-y-auto">
           {messages.map((msg, i) => (
             <div key={i} className={`p-3 rounded-xl text-sm ${msg.role === 'ai' ? 'bg-[#EEF2FF]' : 'bg-[#F5F3FF]'}`}>

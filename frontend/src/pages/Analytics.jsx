@@ -20,7 +20,7 @@ export default function Analytics() {
     return (
       <div style={{ fontFamily: 'Inter, sans-serif', height: '100%', minHeight: '600px' }}>
         <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
-          <h1 className="text-3xl font-extrabold text-[#0F172A] mb-1">Analytics 📈</h1>
+          <h1 className="text-3xl font-extrabold text-[#0F172A] mb-1">Analytics</h1>
           <p className="text-[#475569]">Track your interview preparation progress</p>
         </motion.div>
         <EmptyState
@@ -37,7 +37,7 @@ export default function Analytics() {
   return (
     <div style={{ fontFamily: 'Inter, sans-serif' }}>
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-        <h1 className="text-3xl font-extrabold text-[#0F172A] mb-1">Analytics 📈</h1>
+        <h1 className="text-3xl font-extrabold text-[#0F172A] mb-1">Analytics</h1>
         <p className="text-[#475569] mb-8">Track your interview preparation progress</p>
       </motion.div>
 
@@ -122,7 +122,7 @@ export default function Analytics() {
       {/* Category Performance */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="card-flat p-6">
-          <h3 className="text-base font-bold text-[#10B981] mb-4">💪 Top Categories</h3>
+          <h3 className="text-base font-bold text-[#10B981] mb-4">Top Categories</h3>
           {[{ name: 'Behavioral', pct: 85 }, { name: 'HR', pct: 78 }, { name: 'Communication', pct: 75 }].map(c => (
             <div key={c.name} className="mb-3">
               <div className="flex justify-between text-sm mb-1"><span className="text-[#0F172A] font-medium">{c.name}</span><span className="text-[#10B981] font-semibold">{c.pct}%</span></div>
@@ -131,7 +131,7 @@ export default function Analytics() {
           ))}
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="card-flat p-6">
-          <h3 className="text-base font-bold text-[#EF4444] mb-4">📝 Needs Improvement</h3>
+          <h3 className="text-base font-bold text-[#EF4444] mb-4">Needs Improvement</h3>
           {[{ name: 'System Design', pct: 52 }, { name: 'DSA', pct: 48 }, { name: 'Domain Knowledge', pct: 45 }].map(c => (
             <div key={c.name} className="mb-3">
               <div className="flex justify-between text-sm mb-1"><span className="text-[#0F172A] font-medium">{c.name}</span><span className="text-[#EF4444] font-semibold">{c.pct}%</span></div>

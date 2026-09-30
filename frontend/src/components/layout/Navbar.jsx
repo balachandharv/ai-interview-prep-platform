@@ -32,19 +32,19 @@ export default function Navbar() {
       position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
       transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
       fontFamily: 'Inter, sans-serif',
-      background: scrolled || menuOpen ? 'rgba(11,15,26,0.85)' : 'transparent',
+      background: scrolled || menuOpen ? 'rgba(8,12,24,0.88)' : 'transparent',
       backdropFilter: scrolled || menuOpen ? 'blur(20px)' : 'none',
-      borderBottom: scrolled ? '1px solid rgba(148,163,184,0.08)' : '1px solid transparent',
+      borderBottom: scrolled ? '1px solid rgba(138,157,184,0.06)' : '1px solid transparent',
     }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px', height: '72px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', flexShrink: 0 }}>
-          <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'linear-gradient(135deg, #818CF8, #6366F1)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(129,140,248,0.3)' }}>
+          <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'linear-gradient(135deg, #3B82F6, #2563EB)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(59,130,246,0.2)' }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" />
             </svg>
           </div>
-          <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#F1F5F9' }}>
-            Interview<span style={{ color: '#818CF8' }}>AI</span>
+          <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#F0F4F8' }}>
+            Interview<span style={{ color: '#3B82F6' }}>AI</span>
           </span>
         </Link>
 

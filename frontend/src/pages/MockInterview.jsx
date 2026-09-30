@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { CATEGORIES, DIFFICULTIES } from '../constants/enums';
 import { Settings, Play, Sliders, Clock, Hash, Zap } from 'lucide-react';
 

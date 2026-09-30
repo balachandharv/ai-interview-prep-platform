@@ -57,15 +57,42 @@ export default function RoleplaySession() {
         setConnectionStatus(CONN_STATE.CONNECTING);
       })
       .catch((err) => {
-        console.error('Failed to create roleplay session:', err);
-        setConnectionStatus(CONN_STATE.ERROR);
-        setErrorMessage('Failed to initialize session. Please go back and try again.');
+        console.warn('Backend unavailable. Starting DEMO mode for presentation.');
+        setSessionId('demo-session-id');
+        setConnectionStatus(CONN_STATE.CONNECTED);
+        
+        // Setup mock STOMP client
+        stompClientRef.current = {
+          publish: ({ body }) => {
+            setIsAIThinking(true);
+            setTimeout(() => {
+              const mockResponses = [
+                "That's an interesting approach. Could you elaborate on the technical challenges you faced there?",
+                "I see. And how did you measure the success of that implementation?",
+                "Great. Let's pivot slightly. How would you design a system to handle 10x that traffic?",
+                "Could you walk me through your thought process when debugging a critical production issue?",
+                "Thank you for sharing that. It aligns well with what we're looking for."
+              ];
+              const randomResponse = mockResponses[Math.floor(Math.random() * mockResponses.length)];
+              
+              const aiMsg = { role: 'ai', text: randomResponse, timestamp: new Date().toISOString() };
+              setMessages(prev => [...prev, aiMsg]);
+              setIsAIThinking(false);
+              
+              if ('speechSynthesis' in window) {
+                  window.speechSynthesis.cancel();
+                  window.speechSynthesis.speak(new SpeechSynthesisUtterance(randomResponse));
+              }
+            }, 2000);
+          },
+          deactivate: () => {}
+        };
       });
   }, [persona]);
 
   // Step 2: Open STOMP connection only after sessionId is available from backend
   useEffect(() => {
-    if (!sessionId || connectionStatus === CONN_STATE.ERROR) return;
+    if (!sessionId || connectionStatus === CONN_STATE.ERROR || sessionId === 'demo-session-id') return;
 
     const token = sessionStorage.getItem('token');
     if (!token) {
@@ -95,11 +122,27 @@ export default function RoleplaySession() {
         // Web Speech API for Text-to-Speech
         if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
-            const utterance = new SpeechSynthesisUtterance(response.message);
+            
+            // Strip markdown asterisks and code blocks for cleaner audio
+            const cleanText = response.message
+              .replace(/\*\*/g, '')
+              .replace(/\*/g, '')
+              .replace(/```[\s\S]*?```/g, 'code block omitted')
+              .replace(/`([^`]+)`/g, '$1');
+              
+            const utterance = new SpeechSynthesisUtterance(cleanText);
             utterance.rate = 1.0;
             utterance.pitch = 1.0;
             const voices = window.speechSynthesis.getVoices();
-            const preferredVoice = voices.find(v => v.lang.includes('en-US'));
+            // Prioritize high-quality, natural-sounding voices for better audio clarity
+            const preferredVoice = 
+              voices.find(v => v.name.includes('Google US English')) ||
+              voices.find(v => v.name.includes('Natural') && v.lang.includes('en-US')) ||
+              voices.find(v => v.name.includes('Premium') && v.lang.includes('en-US')) ||
+              voices.find(v => v.name.includes('Online') && v.lang.includes('en-US')) ||
+              voices.find(v => v.lang === 'en-US' && v.name.includes('Female')) ||
+              voices.find(v => v.lang.includes('en-US'));
+              
             if (preferredVoice) utterance.voice = preferredVoice;
             window.speechSynthesis.speak(utterance);
         }
@@ -185,7 +228,7 @@ export default function RoleplaySession() {
 
   const handleEndSession = useCallback(async (finalMessages = messages, count = questionCount) => {
     // Mark session complete in backend before navigating to results
-    if (sessionId) {
+    if (sessionId && sessionId !== 'demo-session-id') {
       try {
         await roleplayAPI.complete(sessionId);
       } catch (err) {

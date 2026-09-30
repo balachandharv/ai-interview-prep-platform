@@ -81,12 +81,12 @@ export default function Topbar() {
             className="flex items-center gap-3 cursor-pointer bg-[rgba(30,41,59,0.3)] border border-[rgba(148,163,184,0.1)] p-1.5 pr-3 rounded-2xl hover:bg-[rgba(30,41,59,0.6)] hover:border-[rgba(129,140,248,0.2)] transition-all"
             onClick={() => setShowDropdown(!showDropdown)}
           >
-            <div className="avatar" style={{ background: 'linear-gradient(135deg, #818CF8, #6366F1)', color: '#FFF', boxShadow: '0 2px 10px rgba(129,140,248,0.3)' }}>
+            <div className="avatar" style={{ background: 'linear-gradient(135deg, #3B82F6, #2563EB)', color: '#FFF', boxShadow: '0 2px 10px rgba(59,130,246,0.2)' }}>
               {user?.name ? getInitials(user.name) : '?'}
             </div>
             <div className="hidden md:block text-left min-w-0">
               <p className="text-sm font-bold text-[#F1F5F9] leading-none truncate max-w-[120px]">{user?.name || 'User'}</p>
-              <p className="text-[11px] font-medium text-[#818CF8] truncate max-w-[120px] mt-1">{user?.targetRole || 'Developer'}</p>
+              <p className="text-[11px] font-medium text-[#3B82F6] truncate max-w-[120px] mt-1">{user?.targetRole || 'Developer'}</p>
             </div>
             <ChevronDown size={16} className={`hidden sm:block text-[#64748B] transition-transform duration-300 ${showDropdown ? 'rotate-180' : ''}`} />
           </motion.button>

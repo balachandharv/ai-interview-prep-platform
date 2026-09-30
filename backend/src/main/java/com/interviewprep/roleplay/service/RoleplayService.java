@@ -130,6 +130,30 @@ public class RoleplayService {
             long seconds = java.time.Duration.between(session.getStartedAt(), session.getCompletedAt()).getSeconds();
             session.setTimeSpentSeconds((int) seconds);
         }
+        
+        // Evaluate session with AI
+        try {
+            java.util.Map<String, Object> results = openAiService.evaluateRoleplaySession(session.getConversationHistory());
+            if (results.get("overallScore") instanceof Number) {
+                session.setOverallScore(java.math.BigDecimal.valueOf(((Number) results.get("overallScore")).doubleValue()));
+                session.setCommunicationScore(java.math.BigDecimal.valueOf(((Number) results.get("communicationScore")).doubleValue()));
+                session.setTechnicalDepthScore(java.math.BigDecimal.valueOf(((Number) results.get("technicalDepthScore")).doubleValue()));
+                session.setConfidenceScore(java.math.BigDecimal.valueOf(((Number) results.get("confidenceScore")).doubleValue()));
+                session.setFillerWordCount(((Number) results.get("fillerWordCount")).intValue());
+                
+                if (results.get("strengths") instanceof java.util.List) {
+                    session.setStrengths((java.util.List<String>) results.get("strengths"));
+                }
+                if (results.get("improvements") instanceof java.util.List) {
+                    session.setImprovements((java.util.List<String>) results.get("improvements"));
+                }
+                if (results.get("actionPlan") instanceof String) {
+                    session.setActionPlan((String) results.get("actionPlan"));
+                }
+            }
+        } catch (Exception e) {
+            log.error("Error setting session evaluation results: {}", e.getMessage());
+        }
 
         RoleplaySession completed = roleplaySessionRepository.save(session);
         log.info("Roleplay session completed: sessionId={}, timeSpentSeconds={}", sessionId, completed.getTimeSpentSeconds());
@@ -154,8 +178,10 @@ public class RoleplayService {
         return String.format(
             "You are %s, %s at %s. Your interview style is: %s. " +
             "Conduct a realistic job interview for the role of %s. " +
+            "CRITICAL INSTRUCTION: You MUST talk exactly like a real human. Use a natural, conversational, and engaging tone. " +
+            "Avoid robotic or overly formal AI phrasing. Keep your responses concise as if speaking in a real-time conversation. " +
             "Ask one focused question at a time. Be professional and constructive. " +
-            "Evaluate the candidate's communication clarity, technical depth, and confidence.",
+            "Evaluate the candidate's communication clarity, technical depth, and confidence subtly.",
             session.getPersonaName(),
             session.getTargetRole(),
             session.getCompany(),

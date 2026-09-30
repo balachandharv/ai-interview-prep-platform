@@ -102,7 +102,7 @@ export default function ResumeInterview() {
 
             {/* Gap Analysis */}
             <div className="card-flat p-6">
-              <h3 className="text-base font-bold text-[#F1F5F9] mb-6">📊 Skill Gap Analysis</h3>
+              <h3 className="text-base font-bold text-[#F1F5F9] mb-6">Skill Gap Analysis</h3>
               <ResponsiveContainer width="100%" height={250}>
                 <BarChart data={gapData} layout="vertical">
                   <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 10, fill: '#94A3B8' }} />
@@ -121,7 +121,7 @@ export default function ResumeInterview() {
 
           {/* Generated Questions */}
           <div className="card-flat p-6">
-            <h3 className="text-base font-bold text-[#F1F5F9] mb-6">💬 Personalized Questions ({questions.length})</h3>
+            <h3 className="text-base font-bold text-[#F1F5F9] mb-6">Personalized Questions ({questions.length})</h3>
             <div className="space-y-4">
               {questions.map((q, i) => (
                 <motion.div key={i} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}

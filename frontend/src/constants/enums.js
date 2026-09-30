@@ -3,29 +3,29 @@ export const DIFFICULTIES = ['Easy', 'Medium', 'Hard'];
 export const EXPERIENCE_LEVELS = ['Fresher', 'Junior (0-2 yrs)', 'Mid (2-5 yrs)', 'Senior (5-8 yrs)', 'Staff (8+ yrs)'];
 
 export const TARGET_ROLES = [
-  { id: 'sde1', label: 'SDE-1 / Junior Developer', icon: '💻' },
-  { id: 'sde2', label: 'SDE-2 / Mid Developer', icon: '🖥️' },
+  { id: 'sde1', label: 'SDE-1 / Junior Developer' },
+  { id: 'sde2', label: 'SDE-2 / Mid Developer' },
   { id: 'sde3', label: 'SDE-3 / Senior Developer' },
-  { id: 'frontend', label: 'Frontend Engineer', icon: '🎨' },
-  { id: 'backend', label: 'Backend Engineer', icon: '️' },
-  { id: 'fullstack', label: 'Full Stack Engineer', icon: '🔄' },
+  { id: 'frontend', label: 'Frontend Engineer' },
+  { id: 'backend', label: 'Backend Engineer' },
+  { id: 'fullstack', label: 'Full Stack Engineer' },
   { id: 'devops', label: 'DevOps Engineer' },
   { id: 'data', label: 'Data Engineer / Scientist' },
   { id: 'ml', label: 'ML Engineer' },
-  { id: 'pm', label: 'Product Manager', icon: '📋' },
-  { id: 'qa', label: 'QA Engineer', icon: '🧪' },
-  { id: 'mobile', label: 'Mobile Developer', icon: '📱' },
+  { id: 'pm', label: 'Product Manager' },
+  { id: 'qa', label: 'QA Engineer' },
+  { id: 'mobile', label: 'Mobile Developer' },
 ];
 
 export const COMPANIES = [
-  { id: 'google', name: 'Google', logo: '🔍', rounds: 5 },
-  { id: 'amazon', name: 'Amazon', logo: '📦', rounds: 5 },
-  { id: 'microsoft', name: 'Microsoft', logo: '🪟', rounds: 4 },
-  { id: 'meta', name: 'Meta', logo: '👤', rounds: 4 },
-  { id: 'apple', name: 'Apple', logo: '🍎', rounds: 4 },
-  { id: 'netflix', name: 'Netflix', logo: '🎬', rounds: 3 },
-  { id: 'flipkart', name: 'Flipkart', logo: '🛒', rounds: 4 },
-  { id: 'goldman', name: 'Goldman Sachs', logo: '🏦', rounds: 4 },
+  { id: 'google', name: 'Google', logo: 'G', color: '#EA4335', rounds: 5 },
+  { id: 'amazon', name: 'Amazon', logo: 'a', color: '#FF9900', rounds: 5 },
+  { id: 'microsoft', name: 'Microsoft', logo: 'M', color: '#00A4EF', rounds: 4 },
+  { id: 'meta', name: 'Meta', logo: '∞', color: '#0668E1', rounds: 4 },
+  { id: 'apple', name: 'Apple', logo: '', color: '#A2AAAD', rounds: 4 },
+  { id: 'netflix', name: 'Netflix', logo: 'N', color: '#E50914', rounds: 3 },
+  { id: 'flipkart', name: 'Flipkart', logo: 'f', color: '#2874F0', rounds: 4 },
+  { id: 'goldman', name: 'Goldman Sachs', logo: 'GS', color: '#7399C6', rounds: 4 },
 ];
 
 export const WEAK_AREAS = [
@@ -50,7 +50,7 @@ export const ROLEPLAY_PERSONAS = [
     difficulty: 'Hard',
     duration: '25 min',
     description: 'Focuses on algorithms, data structures, and system design. Expects clean code and optimal solutions.',
-    avatar: '👩‍💻',
+    avatar: 'PS',
     color: '#4285F4',
   },
   {
@@ -167,7 +167,7 @@ export const BADGE_DEFINITIONS = [
 
 export const GRADE_COLORS = {
   A: { bg: '#ECFDF5', text: '#10B981' },
-  B: { bg: '#EEF2FF', text: '#6366F1' },
-  C: { bg: '#FFFBEB', text: '#F59E0B' },
+  B: { bg: '#EFF6FF', text: '#3B82F6' },
+  C: { bg: '#FFF7ED', text: '#F59E42' },
   D: { bg: '#FEF2F2', text: '#EF4444' }
 };

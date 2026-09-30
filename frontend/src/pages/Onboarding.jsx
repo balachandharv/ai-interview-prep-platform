@@ -6,6 +6,18 @@ import toast from 'react-hot-toast';
 import { setOnboardingComplete } from '../store/authSlice';
 import { updateProfile } from '../store/userSlice';
 import { TARGET_ROLES, EXPERIENCE_LEVELS, COMPANIES, WEAK_AREAS } from '../constants/enums';
+import { FaGoogle, FaAmazon, FaMicrosoft, FaFacebook, FaApple, FaPlay, FaShoppingCart, FaBuilding } from 'react-icons/fa';
+
+const companyIcons = {
+  google: <FaGoogle size={18} />,
+  amazon: <FaAmazon size={18} />,
+  microsoft: <FaMicrosoft size={18} />,
+  meta: <FaFacebook size={18} />,
+  apple: <FaApple size={18} />,
+  netflix: <FaPlay size={18} />,
+  flipkart: <FaShoppingCart size={18} />,
+  goldman: <FaBuilding size={18} />
+};
 
 const steps = ['Target Role', 'Experience Level', 'Target Companies', 'Weak Areas'];
 
@@ -33,7 +45,7 @@ export default function Onboarding() {
     try {
       await dispatch(updateProfile(formData));
       dispatch(setOnboardingComplete());
-      toast.success('Setup complete! Let\'s go! 🚀', { style: { background: '#ECFDF5', color: '#0F172A', border: '1px solid #10B981' } });
+      toast.success('Setup complete! Let\'s go!', { style: { background: '#ECFDF5', color: '#0F172A', border: '1px solid #10B981' } });
       navigate('/dashboard');
     } catch {
       toast.error('Failed to save preferences');
@@ -153,15 +165,17 @@ export default function Onboarding() {
                         whileTap={{ scale: 0.95 }}
                         layout
                         onClick={() => toggleCompany(company.id)}
-                        className={`px-4 py-2 rounded-full border-2 cursor-pointer transition-all flex items-center gap-2 ${
+                        className={`px-3 py-2 rounded-xl border-2 cursor-pointer transition-all flex items-center gap-3 ${
                           formData.targetCompanies.includes(company.id)
-                            ? 'border-[#6366F1] bg-[#6366F1] text-white'
-                            : 'border-[#E2E8F0] bg-white text-[#475569] hover:border-[#6366F1]'
+                            ? 'border-[#3B82F6] bg-[#3B82F6]/5'
+                            : 'border-[#E2E8F0] bg-white text-[#475569] hover:border-[#3B82F6]/50'
                         }`}
                       >
-                        <span>{company.logo}</span>
-                        <span className="font-medium text-sm">{company.name}</span>
-                        {formData.targetCompanies.includes(company.id) && <span>✓</span>}
+                        <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold" style={{ background: company.color }}>
+                          {companyIcons[company.id] || company.logo}
+                        </div>
+                        <span className="font-semibold text-sm text-[#0F172A]">{company.name}</span>
+                        {formData.targetCompanies.includes(company.id) && <span className="text-[#3B82F6] ml-1">✓</span>}
                       </motion.button>
                     ))}
                   </div>
@@ -171,7 +185,7 @@ export default function Onboarding() {
               {/* Step 4: Weak Areas */}
               {step === 3 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0F172A] mb-2">Areas to improve? 📝</h2>
+                  <h2 className="text-2xl font-bold text-[#0F172A] mb-2">Areas to improve?</h2>
                   <p className="text-[#475569] mb-6">We'll focus your practice on these topics</p>
                   <div className="grid grid-cols-2 gap-3">
                     {WEAK_AREAS.map((area) => (

@@ -11,7 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 
 @RestController
-@RequestMapping("/api/leaderboard")
+@RequestMapping("/leaderboard")
 @PreAuthorize("isAuthenticated()")
 public class LeaderboardController {
 

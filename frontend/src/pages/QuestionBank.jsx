@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { generateMockQuestions } from '../utils/helpers';
 import { CATEGORIES, DIFFICULTIES } from '../constants/enums';
+import { Bookmark, BookmarkCheck, ChevronLeft, ChevronRight } from 'lucide-react';
 import AOS from 'aos';
 
 export default function QuestionBank() {
@@ -34,7 +35,7 @@ export default function QuestionBank() {
   return (
     <div style={{ fontFamily: 'Inter, sans-serif' }}>
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-        <h1 className="text-3xl font-extrabold text-[#0F172A] mb-1">Question Bank 📚</h1>
+        <h1 className="text-3xl font-extrabold text-[#0F172A] mb-1">Question Bank</h1>
         <p className="text-[#475569] mb-6">Browse and practice from our curated collection</p>
       </motion.div>
 
@@ -87,7 +88,7 @@ export default function QuestionBank() {
                 className="bg-transparent border-none cursor-pointer text-xl p-1"
               >
                 <motion.span animate={{ rotateY: q.bookmarked ? 180 : 0 }} transition={{ type: 'spring', stiffness: 300 }}>
-                  {q.bookmarked ? '🔖' : '🏷️'}
+                  {q.bookmarked ? <BookmarkCheck size={18} className="text-[#3B82F6]" /> : <Bookmark size={18} className="text-[#8B9DB8]" />}
                 </motion.span>
               </motion.button>
             </div>
@@ -116,14 +117,51 @@ export default function QuestionBank() {
       {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex items-center justify-center gap-2 mt-8">
-          {Array.from({ length: totalPages }, (_, i) => (
-            <button
-              key={i} onClick={() => setCurrentPage(i + 1)}
-              className={`w-10 h-10 rounded-lg font-semibold text-sm transition-all cursor-pointer border-none ${
-                currentPage === i + 1 ? 'bg-[#6366F1] text-white' : 'bg-white text-[#475569] hover:bg-[#EEF2FF]'
-              }`}
-            >{i + 1}</button>
-          ))}
+          <button
+            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+            className="flex items-center gap-1 px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer border border-[#E2E8F0] bg-white text-[#475569] hover:bg-[#F8FAFC] disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <ChevronLeft size={16} /> Prev
+          </button>
+
+          <div className="flex items-center gap-1">
+            {(() => {
+              const pages = [];
+              if (totalPages <= 7) {
+                for (let i = 1; i <= totalPages; i++) pages.push(i);
+              } else {
+                if (currentPage <= 4) {
+                  pages.push(1, 2, 3, 4, 5, '...', totalPages);
+                } else if (currentPage >= totalPages - 3) {
+                  pages.push(1, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+                } else {
+                  pages.push(1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages);
+                }
+              }
+
+              return pages.map((page, i) => (
+                page === '...' ? (
+                  <span key={`ellipsis-${i}`} className="px-2 text-[#94A3B8] font-medium">...</span>
+                ) : (
+                  <button
+                    key={i} onClick={() => setCurrentPage(page)}
+                    className={`w-10 h-10 rounded-lg font-semibold text-sm transition-all cursor-pointer border-none ${
+                      currentPage === page ? 'bg-[#6366F1] text-white shadow-md shadow-[#6366F1]/20' : 'bg-transparent text-[#475569] hover:bg-[#F1F5F9]'
+                    }`}
+                  >{page}</button>
+                )
+              ));
+            })()}
+          </div>
+
+          <button
+            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+            className="flex items-center gap-1 px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer border border-[#E2E8F0] bg-white text-[#475569] hover:bg-[#F8FAFC] disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Next <ChevronRight size={16} />
+          </button>
         </div>
       )}
     </div>

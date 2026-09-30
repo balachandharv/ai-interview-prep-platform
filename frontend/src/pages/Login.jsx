@@ -43,11 +43,11 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: '#0B0F1A', fontFamily: 'Inter, sans-serif', position: 'relative', overflow: 'hidden' }}>
+    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: '#080C18', fontFamily: 'Inter, sans-serif', position: 'relative', overflow: 'hidden' }}>
       
       {/* Background Animated Orbs */}
-      <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '500px', height: '500px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(129,140,248,0.15) 0%, transparent 70%)', filter: 'blur(60px)', animation: 'orb-move-1 20s ease-in-out infinite', pointerEvents: 'none' }} />
-      <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '400px', height: '400px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(167,139,250,0.12) 0%, transparent 70%)', filter: 'blur(60px)', animation: 'orb-move-2 25s ease-in-out infinite', pointerEvents: 'none' }} />
+      <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '500px', height: '500px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%)', filter: 'blur(60px)', animation: 'orb-move-1 20s ease-in-out infinite', pointerEvents: 'none' }} />
+      <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '400px', height: '400px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(245,158,66,0.08) 0%, transparent 70%)', filter: 'blur(60px)', animation: 'orb-move-2 25s ease-in-out infinite', pointerEvents: 'none' }} />
 
       <motion.div
         initial={{ opacity: 0, y: 30, scale: 0.95 }}
@@ -110,7 +110,7 @@ export default function Login() {
 
             {/* Forgot Password */}
             <motion.div custom={2} variants={fieldVariants} initial="hidden" animate="visible" className="flex justify-end">
-              <a href="#" onClick={(e) => { e.preventDefault(); toast('Password reset link sent (Mock)', { icon: '📧' }); }} className="text-sm text-[#818CF8] font-medium hover:text-[#A78BFA] no-underline transition-colors">Forgot password?</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); toast('Password reset link sent (Mock)', { icon: '✉' }); }} className="text-sm text-[#818CF8] font-medium hover:text-[#A78BFA] no-underline transition-colors">Forgot password?</a>
             </motion.div>
 
             {/* Submit */}

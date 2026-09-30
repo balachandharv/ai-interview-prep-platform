@@ -3,22 +3,22 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { roleplayAPI } from '../services/api';
 import { ROLEPLAY_PERSONAS } from '../constants/enums';
-import { Loader } from 'lucide-react';
+import { Loader, Clock } from 'lucide-react';
 
 const container = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.08 } } };
 const item = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } };
-const diffBadge = { Easy: '#10B981', Medium: '#F59E0B', Hard: '#EF4444' };
+const diffBadge = { Easy: '#10B981', Medium: '#F59E42', Hard: '#EF4444' };
 
-// Default avatar mapping by persona name (backend doesn't store emojis)
+// Styled initials for professional avatar rendering
 const AVATAR_MAP = {
-  'Priya Sharma': '👩‍💻',
-  'David Chen': '👨‍💼',
-  'Sarah Johnson': '👩‍💼',
-  'Rahul Gupta': '🧑‍💻',
-  'Jennifer Lee': '👩‍🏫',
-  'Michael Brown': '👨‍🔬',
-  'Anjali Verma': '👩‍🎓',
-  'James Wilson': '🕴️',
+  'Priya Sharma': 'PS',
+  'David Chen': 'DC',
+  'Sarah Johnson': 'SJ',
+  'Rahul Gupta': 'RG',
+  'Jennifer Lee': 'JL',
+  'Michael Brown': 'MB',
+  'Anjali Verma': 'AV',
+  'James Wilson': 'JW',
 };
 
 const COLOR_MAP = {
@@ -52,7 +52,7 @@ export default function RoleplayMode() {
           style: p.style,
           difficulty: p.difficulty,
           duration: p.duration,
-          avatar: AVATAR_MAP[p.name] || '🧑‍💻',
+          avatar: AVATAR_MAP[p.name] || p.name.split(' ').map(w => w[0]).join(''),
           color: COLOR_MAP[p.name] || '#6366F1',
           description: `${p.style} interview at ${p.company}. Difficulty: ${p.difficulty}.`,
         }));
@@ -73,7 +73,7 @@ export default function RoleplayMode() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader size={32} className="animate-spin text-[#6366F1]" />
+        <Loader size={32} className="animate-spin text-[#3B82F6]" />
         <span className="ml-3 text-[#475569] font-medium">Loading interviewers...</span>
       </div>
     );
@@ -106,22 +106,22 @@ export default function RoleplayMode() {
             onClick={() => setSelected(persona)}
             className={`relative p-5 rounded-2xl cursor-pointer transition-all border-2 bg-white ${
               selected?.id === persona.id
-                ? 'border-[#6366F1] shadow-lg shadow-[#6366F1]/10'
-                : 'border-[#E2E8F0] hover:border-[#6366F1]/50'
+                ? 'border-[#3B82F6] shadow-lg shadow-[#3B82F6]/10'
+                : 'border-[#E2E8F0] hover:border-[#3B82F6]/50'
             }`}
           >
             {selected?.id === persona.id && (
-              <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute -top-2 -right-2 w-6 h-6 bg-[#6366F1] rounded-full flex items-center justify-center text-white text-xs">✓</motion.div>
+              <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute -top-2 -right-2 w-6 h-6 bg-[#3B82F6] rounded-full flex items-center justify-center text-white text-xs">✓</motion.div>
             )}
-            <div className="text-4xl mb-3">{persona.avatar}</div>
+            <div className="w-12 h-12 rounded-xl mb-3 flex items-center justify-center text-white font-bold text-sm" style={{ background: `linear-gradient(135deg, ${persona.color}, ${persona.color}CC)` }}>{persona.avatar}</div>
             <h3 className="text-base font-bold text-[#0F172A]">{persona.name}</h3>
             <p className="text-xs text-[#475569] mb-3">{persona.role} at {persona.company}</p>
             <div className="flex flex-wrap gap-1.5 mb-3">
               <span className="badge badge-primary text-[10px]">{persona.style}</span>
               <span className="badge text-[10px]" style={{ background: diffBadge[persona.difficulty] + '15', color: diffBadge[persona.difficulty] }}>{persona.difficulty}</span>
-              <span className="text-[10px] text-[#94A3B8]">⏱️ {persona.duration}</span>
+              <span className="text-[10px] text-[#8B9DB8] flex items-center gap-1"><Clock size={10} /> {persona.duration}</span>
             </div>
-            <p className="text-xs text-[#94A3B8] leading-relaxed">{persona.description}</p>
+            <p className="text-xs text-[#8B9DB8] leading-relaxed">{persona.description}</p>
           </motion.div>
         ))}
       </motion.div>

@@ -33,7 +33,7 @@ public class OpenAiService {
 
     private final OkHttpClient httpClient = new OkHttpClient.Builder()
         .connectTimeout(30, TimeUnit.SECONDS)
-        .readTimeout(60, TimeUnit.SECONDS)
+        .readTimeout(300, TimeUnit.SECONDS)
         .writeTimeout(30, TimeUnit.SECONDS)
         .build();
 
@@ -96,7 +96,7 @@ public class OpenAiService {
         try {
             Map<String, Object> requestBody = new HashMap<>();
             requestBody.put("model", model);
-            requestBody.put("max_tokens", 500);
+            requestBody.put("max_tokens", 150);
             requestBody.put("temperature", 0.8);
 
             List<Map<String, String>> messages = new ArrayList<>();
@@ -116,6 +116,12 @@ public class OpenAiService {
             try (Response response = httpClient.newCall(request).execute()) {
                 String responseBody = response.body().string();
                 JsonNode root = objectMapper.readTree(responseBody);
+                
+                if (root.has("error")) {
+                    log.error("Ollama API Error: {}", root.path("error").toString());
+                    throw new AIServiceException("AI service error: " + root.path("error").path("message").asText());
+                }
+                
                 return root.path("choices").get(0)
                     .path("message").path("content").asText();
             }
@@ -168,6 +174,31 @@ public class OpenAiService {
         return callOpenAiApi(
             "You are a career coach and technical interview expert. Return JSON only.",
             prompt, 1000);
+    }
+
+    public Map<String, Object> evaluateRoleplaySession(List<Map<String, String>> conversationHistory) {
+        String systemPrompt = "You are an expert technical recruiter evaluating a completed mock interview session. " +
+            "Based on the transcript, provide an objective evaluation. " +
+            "Respond strictly with valid JSON containing ONLY these exact keys: " +
+            "\"overallScore\" (double 0-10), \"communicationScore\" (double 0-10), \"technicalDepthScore\" (double 0-10), " +
+            "\"confidenceScore\" (double 0-10), \"fillerWordCount\" (integer), \"strengths\" (array of strings), " +
+            "\"improvements\" (array of strings), and \"actionPlan\" (string).";
+
+        try {
+            String transcript = objectMapper.writeValueAsString(conversationHistory);
+            String aiResponse = callOpenAiApi(systemPrompt, "Evaluate this transcript: " + transcript, 1000);
+            
+            aiResponse = aiResponse.replaceAll("```json", "").replaceAll("```", "").trim();
+            return objectMapper.readValue(aiResponse, new TypeReference<Map<String, Object>>() {});
+        } catch (Exception e) {
+            log.error("Failed to evaluate roleplay session: {}", e.getMessage());
+            // Fallback to zeros instead of crashing the save
+            return Map.of(
+                "overallScore", 0.0, "communicationScore", 0.0, "technicalDepthScore", 0.0, "confidenceScore", 0.0,
+                "fillerWordCount", 0, "strengths", List.of("Session completed"), "improvements", List.of("Need more data"),
+                "actionPlan", "Complete more sessions to get actionable feedback."
+            );
+        }
     }
 
     @Retryable(

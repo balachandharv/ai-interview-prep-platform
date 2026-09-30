@@ -1,3 +1,5 @@
+import mockQuestionsData from './questions.json';
+
 /**
  * Calculate grade from score
  */
@@ -129,11 +131,5 @@ export function getInitials(name) {
  * Generate mock questions
  */
 export function generateMockQuestions() {
-  return [
-    { id: 1, text: "Can you tell me a little about yourself?", category: "Behavioral", difficulty: "Easy", bookmarked: false, company: "Amazon", masteryCount: 3, modelAnswer: "Focus on your professional journey, highlighting key achievements.", keyPoints: ["Keep it under 2 minutes", "Highlight relevant experience"] },
-    { id: 2, text: "How would you design a URL shortening service?", category: "System Design", difficulty: "Hard", bookmarked: true, company: "Google", masteryCount: 0, modelAnswer: "Discuss requirements, capacity estimation, and high-level design.", keyPoints: ["Database schema", "Hashing strategy", "Caching"] },
-    { id: 3, text: "Explain the difference between a process and a thread.", category: "DSA", difficulty: "Medium", bookmarked: false, company: "Microsoft", masteryCount: 1, modelAnswer: "A process is an executing instance of an application, while a thread is a path of execution within a process.", keyPoints: ["Memory sharing", "Context switching overhead"] },
-    { id: 4, text: "Describe a time you failed and what you learned.", category: "HR", difficulty: "Medium", bookmarked: false, company: null, masteryCount: 4, modelAnswer: "Use the STAR method to describe a genuine failure and emphasize the learning outcome.", keyPoints: ["Take accountability", "Show growth"] },
-    { id: 5, text: "Implement a binary search tree in Java.", category: "DSA", difficulty: "Medium", bookmarked: false, company: null, masteryCount: 0, modelAnswer: "Create Node class with left/right pointers, then implement insert and search methods.", keyPoints: ["O(log n) time complexity", "Handling edge cases"] },
-  ];
+  return mockQuestionsData;
 }

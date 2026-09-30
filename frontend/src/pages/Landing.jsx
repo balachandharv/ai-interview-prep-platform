@@ -10,9 +10,9 @@ import Footer from '../components/layout/Footer';
 import { useInView } from 'react-intersection-observer';
 
 const features = [
-  { icon: <Target size={24} />, title: 'AI Mock Interviews', desc: 'Practice with AI-powered mock interviews tailored to your target role and company.', color: '#818CF8' },
-  { icon: <VenetianMask size={24} />, title: 'Roleplay Mode', desc: 'Immersive interview simulation with AI personas from top tech companies.', color: '#A78BFA' },
-  { icon: <BarChart3 size={24} />, title: 'Smart Analytics', desc: 'Track your progress with detailed scoring, radar charts, and performance trends.', color: '#38BDF8' },
+  { icon: <Target size={24} />, title: 'AI Mock Interviews', desc: 'Practice with AI-powered mock interviews tailored to your target role and company.', color: '#3B82F6' },
+  { icon: <VenetianMask size={24} />, title: 'Roleplay Mode', desc: 'Immersive interview simulation with AI personas from top tech companies.', color: '#F59E42' },
+  { icon: <BarChart3 size={24} />, title: 'Smart Analytics', desc: 'Track your progress with detailed scoring, radar charts, and performance trends.', color: '#06B6D4' },
   { icon: <Zap size={24} />, title: 'Adaptive Learning', desc: 'Questions adapt to your skill level automatically for optimal learning.', color: '#34D399' },
   { icon: <Building size={24} />, title: 'Company Prep', desc: 'Company-specific preparation with real interview processes and round structures.', color: '#FBBF24' },
   { icon: <Shield size={24} />, title: 'Resume Analysis', desc: 'AI analyzes your resume and generates personalized interview questions.', color: '#FB7185' },
@@ -48,8 +48,8 @@ export default function Landing() {
     fpsLimit: 60,
     interactivity: { events: { onHover: { enable: true, mode: 'grab' } }, modes: { grab: { distance: 150, links: { opacity: 0.3 } } } },
     particles: {
-      color: { value: '#818CF8' },
-      links: { color: '#818CF8', distance: 150, enable: true, opacity: 0.08, width: 1 },
+      color: { value: '#3B82F6' },
+      links: { color: '#3B82F6', distance: 150, enable: true, opacity: 0.06, width: 1 },
       move: { enable: true, speed: 0.6, direction: 'none', outModes: { default: 'bounce' } },
       number: { density: { enable: true, area: 1000 }, value: 50 },
       opacity: { value: 0.2 },
@@ -60,15 +60,15 @@ export default function Landing() {
   }), []);
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0B0F1A', fontFamily: 'Inter, sans-serif', overflowX: 'hidden' }}>
+    <div style={{ minHeight: '100vh', background: '#080C18', fontFamily: 'Inter, sans-serif', overflowX: 'hidden' }}>
       <Navbar />
 
       {/* ═══ HERO ═══ */}
       <section style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
         {/* Animated gradient orbs */}
-        <div style={{ position: 'absolute', top: '-20%', left: '-10%', width: '600px', height: '600px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(129,140,248,0.15) 0%, transparent 70%)', filter: 'blur(60px)', animation: 'orb-move-1 20s ease-in-out infinite', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '500px', height: '500px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(167,139,250,0.12) 0%, transparent 70%)', filter: 'blur(60px)', animation: 'orb-move-2 25s ease-in-out infinite', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', top: '40%', right: '20%', width: '300px', height: '300px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(56,189,248,0.08) 0%, transparent 70%)', filter: 'blur(40px)', animation: 'orb-move-1 15s ease-in-out infinite reverse', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', top: '-20%', left: '-10%', width: '600px', height: '600px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%)', filter: 'blur(60px)', animation: 'orb-move-1 20s ease-in-out infinite', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '500px', height: '500px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(245,158,66,0.08) 0%, transparent 70%)', filter: 'blur(60px)', animation: 'orb-move-2 25s ease-in-out infinite', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', top: '40%', right: '20%', width: '300px', height: '300px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(6,182,212,0.06) 0%, transparent 70%)', filter: 'blur(40px)', animation: 'orb-move-1 15s ease-in-out infinite reverse', pointerEvents: 'none' }} />
 
         <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
           <Particles id="hero-particles" init={particlesInit} options={particlesOptions} style={{ width: '100%', height: '100%' }} />
@@ -77,14 +77,14 @@ export default function Landing() {
         <motion.div style={{ y: heroY, opacity: heroOpacity, position: 'relative', zIndex: 10, maxWidth: '900px', margin: '0 auto', padding: '120px 24px 80px', textAlign: 'center' }}>
           {/* Badge */}
           <motion.div initial={{ opacity: 0, y: 20, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.6 }}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(129,140,248,0.1)', border: '1px solid rgba(129,140,248,0.2)', color: '#818CF8', borderRadius: '9999px', padding: '8px 20px', fontSize: '0.875rem', fontWeight: 600, marginBottom: '32px', backdropFilter: 'blur(8px)' }}>
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.15)', color: '#3B82F6', borderRadius: '9999px', padding: '8px 20px', fontSize: '0.875rem', fontWeight: 600, marginBottom: '32px', backdropFilter: 'blur(8px)' }}>
             <Sparkles size={16} />
             AI-Powered Interview Preparation
           </motion.div>
 
           {/* Heading */}
           <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.15 }}
-            style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 800, color: '#F1F5F9', marginBottom: '16px', lineHeight: 1.1, letterSpacing: '-0.03em' }}>
+            style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 800, color: '#F0F4F8', marginBottom: '16px', lineHeight: 1.1, letterSpacing: '-0.03em' }}>
             Prepare to{' '}
             <span className="gradient-text">
               <TypeAnimation sequence={['Ace Google', 2000, 'Crack Amazon', 2000, 'Master System Design', 2000, 'Land Your Dream Job', 2500]} wrapper="span" speed={50} repeat={Infinity} />
@@ -93,16 +93,16 @@ export default function Landing() {
 
           {/* Subtitle */}
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
-            style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', color: '#94A3B8', maxWidth: '600px', margin: '0 auto 48px', lineHeight: 1.7 }}>
+            style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', color: '#8B9DB8', maxWidth: '600px', margin: '0 auto 48px', lineHeight: 1.7 }}>
             Practice with AI interviewers, get real-time feedback, and track your progress with intelligent analytics.
           </motion.p>
 
           {/* CTA */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.45 }}
             style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '16px' }}>
-            <motion.button whileHover={{ scale: 1.04, boxShadow: '0 12px 40px rgba(129,140,248,0.4)' }} whileTap={{ scale: 0.97 }}
+            <motion.button whileHover={{ scale: 1.04, boxShadow: '0 12px 40px rgba(59,130,246,0.3)' }} whileTap={{ scale: 0.97 }}
               onClick={() => navigate('/register')} className="btn btn-primary btn-lg"
-              style={{ fontSize: '1.0625rem', boxShadow: '0 8px 30px rgba(129,140,248,0.3)' }}>
+              style={{ fontSize: '1.0625rem', boxShadow: '0 8px 30px rgba(59,130,246,0.25)' }}>
               Start Free Now <ArrowRight size={20} />
             </motion.button>
             <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} className="btn btn-outline btn-lg" style={{ fontSize: '1.0625rem' }}>
@@ -115,7 +115,7 @@ export default function Landing() {
             style={{ marginTop: '72px', maxWidth: '900px', marginLeft: 'auto', marginRight: 'auto', position: 'relative' }}>
             {/* Glow behind preview */}
             <div style={{ position: 'absolute', inset: '-20px', background: 'radial-gradient(ellipse, rgba(129,140,248,0.12) 0%, transparent 70%)', filter: 'blur(40px)', pointerEvents: 'none' }} />
-            <div style={{ position: 'relative', background: 'rgba(17,24,39,0.7)', backdropFilter: 'blur(20px)', borderRadius: '20px', border: '1px solid rgba(148,163,184,0.1)', padding: '24px', boxShadow: '0 25px 80px rgba(0,0,0,0.4)' }}>
+            <div style={{ position: 'relative', background: 'rgba(15,20,35,0.75)', backdropFilter: 'blur(20px)', borderRadius: '16px', border: '1px solid rgba(138,157,184,0.08)', padding: '24px', boxShadow: '0 25px 80px rgba(0,0,0,0.4)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
                 <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#FB7185' }} />
                 <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#FBBF24' }} />
@@ -125,11 +125,11 @@ export default function Landing() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '16px' }}>
                 <div style={{ background: 'rgba(30,41,59,0.5)', borderRadius: '12px', padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {['Dashboard', 'Mock Interview', 'Roleplay', 'Analytics'].map((n, i) => (
-                    <div key={n} style={{ padding: '8px 12px', borderRadius: '8px', fontSize: '0.8125rem', transition: 'all 0.2s', ...(i === 0 ? { background: 'rgba(129,140,248,0.15)', color: '#818CF8', fontWeight: 600 } : { color: '#64748B' }) }}>{n}</div>
+                    <div key={n} style={{ padding: '8px 12px', borderRadius: '8px', fontSize: '0.8125rem', transition: 'all 0.2s', ...(i === 0 ? { background: 'rgba(59,130,246,0.12)', color: '#3B82F6', fontWeight: 600 } : { color: '#5A6B82' }) }}>{n}</div>
                   ))}
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  <div style={{ background: 'linear-gradient(135deg, rgba(129,140,248,0.15), rgba(167,139,250,0.1))', borderRadius: '12px', padding: '20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid rgba(129,140,248,0.1)' }}>
+                  <div style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.12), rgba(245,158,66,0.06))', borderRadius: '12px', padding: '20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid rgba(59,130,246,0.08)' }}>
                     <div>
                       <p style={{ fontSize: '0.8125rem', color: '#818CF8', fontWeight: 600, margin: 0 }}>Readiness Score</p>
                       <p style={{ fontSize: '2rem', fontWeight: 700, color: '#F1F5F9', margin: '4px 0 0' }}>78%</p>
