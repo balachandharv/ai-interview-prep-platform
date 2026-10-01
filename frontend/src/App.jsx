@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
 import { Toaster } from 'react-hot-toast';
@@ -8,6 +8,7 @@ import { store } from './store';
 import DashboardLayout from './components/layout/DashboardLayout';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import AdminRoute from './components/admin/AdminRoute';
+import BackgroundLayer from './components/common/BackgroundLayer';
 
 // Admin Pages
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -37,10 +38,24 @@ import Contact from './pages/Contact';
 import Legal from './pages/Legal';
 import ComingSoon from './pages/ComingSoon';
 
+/* ── Route-aware background variant selector ── */
+function AppBackground() {
+  const { pathname } = useLocation();
+  const variant = pathname === '/'
+    ? 'hero'
+    : ['/interview-session', '/roleplay-session'].includes(pathname)
+      ? 'calm'
+      : 'default';
+  return <BackgroundLayer variant={variant} />;
+}
+
 export default function App() {
   return (
     <Provider store={store}>
       <Router>
+        {/* Global ocean background — rendered once, behind everything */}
+        <AppBackground />
+
         <Toaster
           position="top-right"
           toastOptions={{
@@ -48,8 +63,14 @@ export default function App() {
             style: {
               fontFamily: 'Inter, sans-serif',
               fontSize: '0.875rem',
-              borderRadius: '12px',
-              padding: '12px 16px',
+              borderRadius: '999px',
+              padding: '12px 20px',
+              background: 'rgba(255,255,255,0.10)',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
+              border: '1px solid rgba(255,255,255,0.14)',
+              color: '#F0F6FC',
+              boxShadow: '0 8px 32px rgba(0,0,0,0.35)',
             },
           }}
         />

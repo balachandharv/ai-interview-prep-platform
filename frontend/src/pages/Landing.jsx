@@ -10,7 +10,7 @@ import Footer from '../components/layout/Footer';
 import { useInView } from 'react-intersection-observer';
 
 const features = [
-  { icon: <Target size={24} />, title: 'AI Mock Interviews', desc: 'Practice with AI-powered mock interviews tailored to your target role and company.', color: '#3B82F6' },
+  { icon: <Target size={24} />, title: 'AI Mock Interviews', desc: 'Practice with AI-powered mock interviews tailored to your target role and company.', color: 'var(--aqua-400)' },
   { icon: <VenetianMask size={24} />, title: 'Roleplay Mode', desc: 'Immersive interview simulation with AI personas from top tech companies.', color: '#F59E42' },
   { icon: <BarChart3 size={24} />, title: 'Smart Analytics', desc: 'Track your progress with detailed scoring, radar charts, and performance trends.', color: '#06B6D4' },
   { icon: <Zap size={24} />, title: 'Adaptive Learning', desc: 'Questions adapt to your skill level automatically for optimal learning.', color: '#34D399' },
@@ -49,7 +49,7 @@ export default function Landing() {
     interactivity: { events: { onHover: { enable: true, mode: 'grab' } }, modes: { grab: { distance: 150, links: { opacity: 0.3 } } } },
     particles: {
       color: { value: '#3B82F6' },
-      links: { color: '#3B82F6', distance: 150, enable: true, opacity: 0.06, width: 1 },
+      links: { color: 'var(--aqua-400)', distance: 150, enable: true, opacity: 0.06, width: 1 },
       move: { enable: true, speed: 0.6, direction: 'none', outModes: { default: 'bounce' } },
       number: { density: { enable: true, area: 1000 }, value: 50 },
       opacity: { value: 0.2 },
@@ -60,31 +60,23 @@ export default function Landing() {
   }), []);
 
   return (
-    <div style={{ minHeight: '100vh', background: '#080C18', fontFamily: 'Inter, sans-serif', overflowX: 'hidden' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--ocean-950)', fontFamily: 'Inter, sans-serif', overflowX: 'hidden' }}>
       <Navbar />
 
       {/* ═══ HERO ═══ */}
       <section style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-        {/* Animated gradient orbs */}
-        <div style={{ position: 'absolute', top: '-20%', left: '-10%', width: '600px', height: '600px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%)', filter: 'blur(60px)', animation: 'orb-move-1 20s ease-in-out infinite', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '500px', height: '500px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(245,158,66,0.08) 0%, transparent 70%)', filter: 'blur(60px)', animation: 'orb-move-2 25s ease-in-out infinite', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', top: '40%', right: '20%', width: '300px', height: '300px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(6,182,212,0.06) 0%, transparent 70%)', filter: 'blur(40px)', animation: 'orb-move-1 15s ease-in-out infinite reverse', pointerEvents: 'none' }} />
-
-        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-          <Particles id="hero-particles" init={particlesInit} options={particlesOptions} style={{ width: '100%', height: '100%' }} />
-        </div>
 
         <motion.div style={{ y: heroY, opacity: heroOpacity, position: 'relative', zIndex: 10, maxWidth: '900px', margin: '0 auto', padding: '120px 24px 80px', textAlign: 'center' }}>
           {/* Badge */}
           <motion.div initial={{ opacity: 0, y: 20, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.6 }}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.15)', color: '#3B82F6', borderRadius: '9999px', padding: '8px 20px', fontSize: '0.875rem', fontWeight: 600, marginBottom: '32px', backdropFilter: 'blur(8px)' }}>
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(6,182,212,0.06)', border: '1px solid rgba(6,182,212,0.12)', color: 'var(--aqua-400)', borderRadius: '9999px', padding: '8px 20px', fontSize: '0.875rem', fontWeight: 600, marginBottom: '32px', backdropFilter: 'blur(8px)' }}>
             <Sparkles size={16} />
             AI-Powered Interview Preparation
           </motion.div>
 
           {/* Heading */}
           <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.15 }}
-            style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 800, color: '#F0F4F8', marginBottom: '16px', lineHeight: 1.1, letterSpacing: '-0.03em' }}>
+            style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '16px', lineHeight: 1.1, letterSpacing: '-0.03em' }}>
             Prepare to{' '}
             <span className="gradient-text">
               <TypeAnimation sequence={['Ace Google', 2000, 'Crack Amazon', 2000, 'Master System Design', 2000, 'Land Your Dream Job', 2500]} wrapper="span" speed={50} repeat={Infinity} />
@@ -93,7 +85,7 @@ export default function Landing() {
 
           {/* Subtitle */}
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
-            style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', color: '#8B9DB8', maxWidth: '600px', margin: '0 auto 48px', lineHeight: 1.7 }}>
+            style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', color: 'var(--text-secondary)', maxWidth: '600px', margin: '0 auto 48px', lineHeight: 1.7 }}>
             Practice with AI interviewers, get real-time feedback, and track your progress with intelligent analytics.
           </motion.p>
 
@@ -102,7 +94,7 @@ export default function Landing() {
             style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '16px' }}>
             <motion.button whileHover={{ scale: 1.04, boxShadow: '0 12px 40px rgba(59,130,246,0.3)' }} whileTap={{ scale: 0.97 }}
               onClick={() => navigate('/register')} className="btn btn-primary btn-lg"
-              style={{ fontSize: '1.0625rem', boxShadow: '0 8px 30px rgba(59,130,246,0.25)' }}>
+              style={{ fontSize: '1.0625rem', boxShadow: '0 8px 30px rgba(6,182,212,0.20)' }}>
               Start Free Now <ArrowRight size={20} />
             </motion.button>
             <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} className="btn btn-outline btn-lg" style={{ fontSize: '1.0625rem' }}>
@@ -113,39 +105,37 @@ export default function Landing() {
           {/* Dashboard Preview */}
           <motion.div initial={{ opacity: 0, y: 60, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 1, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
             style={{ marginTop: '72px', maxWidth: '900px', marginLeft: 'auto', marginRight: 'auto', position: 'relative' }}>
-            {/* Glow behind preview */}
-            <div style={{ position: 'absolute', inset: '-20px', background: 'radial-gradient(ellipse, rgba(129,140,248,0.12) 0%, transparent 70%)', filter: 'blur(40px)', pointerEvents: 'none' }} />
-            <div style={{ position: 'relative', background: 'rgba(15,20,35,0.75)', backdropFilter: 'blur(20px)', borderRadius: '16px', border: '1px solid rgba(138,157,184,0.08)', padding: '24px', boxShadow: '0 25px 80px rgba(0,0,0,0.4)' }}>
+            <div className="glass" style={{ position: 'relative', padding: '24px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
                 <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#FB7185' }} />
                 <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#FBBF24' }} />
                 <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#34D399' }} />
-                <span style={{ marginLeft: '12px', fontSize: '0.75rem', color: '#64748B' }}>InterviewAI Dashboard</span>
+                <span style={{ marginLeft: '12px', fontSize: '0.75rem', color: 'var(--text-muted)' }}>InterviewAI Dashboard</span>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '16px' }}>
-                <div style={{ background: 'rgba(30,41,59,0.5)', borderRadius: '12px', padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <div style={{ background: 'var(--glass-bg)', borderRadius: '12px', padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {['Dashboard', 'Mock Interview', 'Roleplay', 'Analytics'].map((n, i) => (
-                    <div key={n} style={{ padding: '8px 12px', borderRadius: '8px', fontSize: '0.8125rem', transition: 'all 0.2s', ...(i === 0 ? { background: 'rgba(59,130,246,0.12)', color: '#3B82F6', fontWeight: 600 } : { color: '#5A6B82' }) }}>{n}</div>
+                    <div key={n} style={{ padding: '8px 12px', borderRadius: '8px', fontSize: '0.8125rem', transition: 'all 0.2s', ...(i === 0 ? { background: 'rgba(6,182,212,0.10)', color: 'var(--aqua-400)', fontWeight: 600 } : { color: 'var(--text-muted)' }) }}>{n}</div>
                   ))}
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  <div style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.12), rgba(245,158,66,0.06))', borderRadius: '12px', padding: '20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid rgba(59,130,246,0.08)' }}>
+                  <div style={{ background: 'linear-gradient(135deg, rgba(6,182,212,0.10), rgba(245,158,66,0.06))', borderRadius: '12px', padding: '20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid rgba(6,182,212,0.06)' }}>
                     <div>
-                      <p style={{ fontSize: '0.8125rem', color: '#818CF8', fontWeight: 600, margin: 0 }}>Readiness Score</p>
-                      <p style={{ fontSize: '2rem', fontWeight: 700, color: '#F1F5F9', margin: '4px 0 0' }}>78%</p>
+                      <p style={{ fontSize: '0.8125rem', color: 'var(--aqua-400)', fontWeight: 600, margin: 0 }}>Readiness Score</p>
+                      <p style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)', margin: '4px 0 0' }}>78%</p>
                     </div>
-                    <div style={{ width: '56px', height: '56px', borderRadius: '50%', border: '3px solid #818CF8', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 20px rgba(129,140,248,0.3)' }}>
-                      <span style={{ fontWeight: 700, color: '#818CF8', fontSize: '1rem' }}>78</span>
+                    <div style={{ width: '56px', height: '56px', borderRadius: '50%', border: '3px solid var(--aqua-400)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 20px rgba(6,182,212,0.20)' }}>
+                      <span style={{ fontWeight: 700, color: 'var(--aqua-400)', fontSize: '1rem' }}>78</span>
                     </div>
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                     <div style={{ background: 'rgba(52,211,153,0.08)', borderRadius: '12px', padding: '14px', border: '1px solid rgba(52,211,153,0.1)' }}>
                       <p style={{ fontSize: '0.75rem', color: '#34D399', fontWeight: 600, margin: 0 }}>Sessions</p>
-                      <p style={{ fontSize: '1.5rem', fontWeight: 700, color: '#F1F5F9', margin: '2px 0 0' }}>24</p>
+                      <p style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)', margin: '2px 0 0' }}>24</p>
                     </div>
                     <div style={{ background: 'rgba(167,139,250,0.08)', borderRadius: '12px', padding: '14px', border: '1px solid rgba(167,139,250,0.1)' }}>
-                      <p style={{ fontSize: '0.75rem', color: '#A78BFA', fontWeight: 600, margin: 0 }}>Avg Score</p>
-                      <p style={{ fontSize: '1.5rem', fontWeight: 700, color: '#F1F5F9', margin: '2px 0 0' }}>7.8</p>
+                      <p style={{ fontSize: '0.75rem', color: 'var(--aqua-300)', fontWeight: 600, margin: 0 }}>Avg Score</p>
+                      <p style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)', margin: '2px 0 0' }}>7.8</p>
                     </div>
                   </div>
                 </div>
@@ -160,14 +150,14 @@ export default function Landing() {
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px' }}>
           <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} style={{ textAlign: 'center', marginBottom: '72px' }}>
             <motion.div variants={fadeUp} transition={{ duration: 0.6 }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(129,140,248,0.1)', border: '1px solid rgba(129,140,248,0.15)', borderRadius: '9999px', padding: '6px 16px', fontSize: '0.8125rem', color: '#818CF8', fontWeight: 600, marginBottom: '20px' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(6,182,212,0.08)', border: '1px solid rgba(129,140,248,0.15)', borderRadius: '9999px', padding: '6px 16px', fontSize: '0.8125rem', color: 'var(--aqua-400)', fontWeight: 600, marginBottom: '20px' }}>
                 <Sparkles size={14} /> Features
               </div>
             </motion.div>
-            <motion.h2 variants={fadeUp} transition={{ duration: 0.6 }} style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: '#F1F5F9', marginBottom: '16px', letterSpacing: '-0.02em' }}>
+            <motion.h2 variants={fadeUp} transition={{ duration: 0.6 }} style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '16px', letterSpacing: '-0.02em' }}>
               Everything You Need to <span className="gradient-text">Succeed</span>
             </motion.h2>
-            <motion.p variants={fadeUp} transition={{ duration: 0.6 }} style={{ fontSize: '1.125rem', color: '#94A3B8', maxWidth: '560px', margin: '0 auto', lineHeight: 1.7 }}>
+            <motion.p variants={fadeUp} transition={{ duration: 0.6 }} style={{ fontSize: '1.125rem', color: 'var(--text-secondary)', maxWidth: '560px', margin: '0 auto', lineHeight: 1.7 }}>
               Comprehensive tools designed to maximize your interview performance.
             </motion.p>
           </motion.div>
@@ -179,8 +169,8 @@ export default function Landing() {
                 <div style={{ width: '48px', height: '48px', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: `${f.color}15`, color: f.color, marginBottom: '20px', border: `1px solid ${f.color}20` }}>
                   {f.icon}
                 </div>
-                <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#F1F5F9', marginBottom: '8px' }}>{f.title}</h3>
-                <p style={{ color: '#94A3B8', fontSize: '0.875rem', lineHeight: 1.7, margin: 0 }}>{f.desc}</p>
+                <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px' }}>{f.title}</h3>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', lineHeight: 1.7, margin: 0 }}>{f.desc}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -196,7 +186,7 @@ export default function Landing() {
               <motion.div key={s.label} initial={{ opacity: 0, scale: 0.8 }} animate={statsInView ? { opacity: 1, scale: 1 } : {}} transition={{ duration: 0.5, delay: i * 0.1 }}
                 style={{ textAlign: 'center', padding: '32px 16px', background: 'rgba(17,24,39,0.5)', backdropFilter: 'blur(12px)', borderRadius: '20px', border: '1px solid rgba(148,163,184,0.08)' }}>
                 <div style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '4px' }} className="gradient-text">{s.value}</div>
-                <p style={{ color: '#94A3B8', fontWeight: 500, margin: 0, fontSize: '0.875rem' }}>{s.label}</p>
+                <p style={{ color: 'var(--text-secondary)', fontWeight: 500, margin: 0, fontSize: '0.875rem' }}>{s.label}</p>
               </motion.div>
             ))}
           </div>
@@ -207,14 +197,14 @@ export default function Landing() {
       <section id="how-it-works" style={{ padding: '120px 0' }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 24px' }}>
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} style={{ textAlign: 'center', marginBottom: '72px' }}>
-            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: '#F1F5F9', marginBottom: '16px' }}>
+            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '16px' }}>
               How It <span className="gradient-text">Works</span>
             </h2>
           </motion.div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '48px' }}>
             {[
-              { step: '01', title: 'Set Your Goals', desc: 'Choose your target role, company, and experience level.', icon: <Target size={28} />, color: '#818CF8' },
-              { step: '02', title: 'Practice with AI', desc: 'Take mock interviews or roleplay with AI interviewers.', icon: <Bot size={28} />, color: '#A78BFA' },
+              { step: '01', title: 'Set Your Goals', desc: 'Choose your target role, company, and experience level.', icon: <Target size={28} />, color: 'var(--aqua-400)' },
+              { step: '02', title: 'Practice with AI', desc: 'Take mock interviews or roleplay with AI interviewers.', icon: <Bot size={28} />, color: 'var(--aqua-300)' },
               { step: '03', title: 'Track & Improve', desc: 'Get instant AI feedback and track your progress.', icon: <BarChart3 size={28} />, color: '#38BDF8' },
             ].map((s, i) => (
               <motion.div key={s.step} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.15 }} style={{ textAlign: 'center' }}>
@@ -222,8 +212,8 @@ export default function Landing() {
                   {s.icon}
                   <span style={{ position: 'absolute', top: '-6px', right: '-6px', width: '28px', height: '28px', background: `linear-gradient(135deg, ${s.color}, ${s.color}CC)`, color: '#FFF', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.6875rem', fontWeight: 700 }}>{s.step}</span>
                 </div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#F1F5F9', marginBottom: '10px' }}>{s.title}</h3>
-                <p style={{ color: '#94A3B8', lineHeight: 1.7, margin: 0 }}>{s.desc}</p>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '10px' }}>{s.title}</h3>
+                <p style={{ color: 'var(--text-secondary)', lineHeight: 1.7, margin: 0 }}>{s.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -234,7 +224,7 @@ export default function Landing() {
       <section id="testimonials" style={{ padding: '120px 0', background: 'rgba(17,24,39,0.3)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px' }}>
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} style={{ textAlign: 'center', marginBottom: '72px' }}>
-            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: '#F1F5F9', marginBottom: '16px' }}>
+            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '16px' }}>
               Loved by <span className="gradient-text">Thousands</span>
             </h2>
           </motion.div>
@@ -243,14 +233,14 @@ export default function Landing() {
               <motion.div key={t.name} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.12, duration: 0.5 }}
                 style={{ background: 'rgba(17,24,39,0.6)', backdropFilter: 'blur(16px)', borderRadius: '20px', padding: '28px', border: '1px solid rgba(148,163,184,0.08)', transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)' }}>
                 <div style={{ display: 'flex', gap: '4px', marginBottom: '20px' }}>
-                  {[1,2,3,4,5].map(s => <Star key={s} size={16} fill="#FBBF24" color="#FBBF24" />)}
+                  {[1,2,3,4,5].map(s => <Star key={s} size={16} fill="var(--amber-500)" color="var(--amber-500)" />)}
                 </div>
                 <p style={{ color: '#CBD5E1', fontStyle: 'italic', marginBottom: '24px', lineHeight: 1.7, fontSize: '0.9375rem' }}>"{t.quote}"</p>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'linear-gradient(135deg, #818CF8, #A78BFA)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFF', fontWeight: 700, fontSize: '0.8125rem' }}>{t.avatar}</div>
+                  <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--aqua-400), var(--aqua-300))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFF', fontWeight: 700, fontSize: '0.8125rem' }}>{t.avatar}</div>
                   <div>
-                    <p style={{ fontWeight: 600, color: '#F1F5F9', fontSize: '0.875rem', margin: 0 }}>{t.name}</p>
-                    <p style={{ fontSize: '0.75rem', color: '#64748B', margin: '2px 0 0' }}>{t.role}</p>
+                    <p style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.875rem', margin: 0 }}>{t.name}</p>
+                    <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', margin: '2px 0 0' }}>{t.role}</p>
                   </div>
                 </div>
               </motion.div>
@@ -263,16 +253,16 @@ export default function Landing() {
       <section style={{ padding: '120px 0' }}>
         <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 24px', textAlign: 'center' }}>
           <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.7 }}
-            style={{ background: 'linear-gradient(135deg, rgba(129,140,248,0.15), rgba(167,139,250,0.1))', border: '1px solid rgba(129,140,248,0.2)', borderRadius: '32px', padding: 'clamp(40px, 6vw, 80px)', position: 'relative', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', top: '-50%', left: '-20%', width: '400px', height: '400px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(129,140,248,0.15), transparent 70%)', filter: 'blur(60px)', pointerEvents: 'none' }} />
+            style={{ background: 'linear-gradient(135deg, rgba(129,140,248,0.15), rgba(167,139,250,0.1))', border: '1px solid rgba(6,182,212,0.12)', borderRadius: '32px', padding: 'clamp(40px, 6vw, 80px)', position: 'relative', overflow: 'hidden' }}>
+
             <div style={{ position: 'relative', zIndex: 1 }}>
-              <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: '#F1F5F9', marginBottom: '16px' }}>
+              <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '16px' }}>
                 Ready to Land Your Dream Job?
               </h2>
-              <p style={{ fontSize: '1.125rem', color: '#94A3B8', marginBottom: '40px', maxWidth: '480px', marginLeft: 'auto', marginRight: 'auto' }}>
+              <p style={{ fontSize: '1.125rem', color: 'var(--text-secondary)', marginBottom: '40px', maxWidth: '480px', marginLeft: 'auto', marginRight: 'auto' }}>
                 Join thousands of developers who aced their interviews with InterviewAI.
               </p>
-              <motion.button whileHover={{ scale: 1.04, boxShadow: '0 12px 40px rgba(129,140,248,0.4)' }} whileTap={{ scale: 0.97 }}
+              <motion.button whileHover={{ scale: 1.04, boxShadow: '0 12px 40px rgba(6,182,212,0.25)' }} whileTap={{ scale: 0.97 }}
                 onClick={() => navigate('/register')} className="btn btn-primary btn-lg" style={{ fontSize: '1.0625rem' }}>
                 Start Preparing Now — It's Free <ArrowRight size={20} />
               </motion.button>

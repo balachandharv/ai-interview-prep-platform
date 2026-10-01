@@ -42,11 +42,16 @@ export default function Sidebar() {
       {/* Logo */}
       <div className="px-5 mb-8 mt-2">
         <NavLink to="/dashboard" className="flex items-center gap-3 no-underline" onClick={closeSidebar}>
-          <motion.div whileHover={{ rotate: 180 }} transition={{ duration: 0.4 }} className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg flex-shrink-0" style={{ background: 'linear-gradient(135deg, #3B82F6, #2563EB)', boxShadow: '0 4px 12px rgba(59,130,246,0.25)' }}>
-            <Sparkles size={20} color="white" />
-          </motion.div>
-          <span className="text-xl font-bold text-[#F0F4F8]">
-            Interview<span style={{ color: '#3B82F6' }}>AI</span>
+          <motion.img 
+            src="/logo.png" 
+            alt="Logo" 
+            whileHover={{ scale: 1.05, rotate: 5 }} 
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            className="w-11 h-11 rounded-xl shadow-lg flex-shrink-0 object-cover border border-[rgba(255,255,255,0.1)]" 
+            style={{ boxShadow: '0 4px 12px rgba(6,182,212,0.3)' }} 
+          />
+          <span className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>
+            Interview<span style={{ color: 'var(--aqua-400)' }}>AI</span>
           </span>
         </NavLink>
       </div>
@@ -54,7 +59,7 @@ export default function Sidebar() {
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
         <div className="px-3">
-          <p className="px-4 mb-3 text-xs font-bold text-[#5A6B82] uppercase tracking-widest">Menu</p>
+          <p className="px-4 mb-3 text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Menu</p>
           <div className="space-y-1">
             {navItems.map((item) => (
               <NavLink
@@ -69,11 +74,12 @@ export default function Sidebar() {
                     {isActive && (
                       <motion.div
                         layoutId="activeNavIndicator"
-                        className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-[#3B82F6] rounded-r-full shadow-[0_0_8px_rgba(59,130,246,0.6)]"
+                        className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 rounded-r-full"
+                        style={{ background: 'var(--aqua-400)', boxShadow: '0 0 8px rgba(34,211,238,0.6)' }}
                         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                       />
                     )}
-                    <span className="flex-shrink-0 z-10" style={{ color: isActive ? '#3B82F6' : '#8B9DB8' }}>{item.icon}</span>
+                    <span className="flex-shrink-0 z-10" style={{ color: isActive ? 'var(--aqua-400)' : 'var(--text-secondary)' }}>{item.icon}</span>
                     <span className="min-w-0 truncate z-10" style={{ fontWeight: isActive ? 600 : 500 }}>{item.label}</span>
                   </>
                 )}
@@ -86,10 +92,15 @@ export default function Sidebar() {
       {/* Bottom Section */}
       <div className="px-5 pt-6 pb-4 mt-auto">
         <motion.button
-          whileHover={{ scale: 1.02, background: 'rgba(239,68,68,0.12)' }}
+          whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-[#EF4444] bg-[rgba(239,68,68,0.04)] border border-[rgba(239,68,68,0.1)] transition-all cursor-pointer"
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all"
+          style={{
+            color: 'var(--danger-500)',
+            background: 'rgba(239,68,68,0.06)',
+            border: '1px solid rgba(239,68,68,0.12)',
+          }}
         >
           <LogOut size={18} />
           <span className="font-semibold">Log Out</span>
@@ -109,7 +120,8 @@ export default function Sidebar() {
           <>
             <motion.div
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black/60 backdrop-blur-md z-40 lg:hidden"
+              className="fixed inset-0 z-40 lg:hidden"
+              style={{ background: 'rgba(3,9,18,0.7)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)' }}
               onClick={closeSidebar}
             />
             <motion.div

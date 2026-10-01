@@ -45,7 +45,7 @@ export default function Onboarding() {
     try {
       await dispatch(updateProfile(formData));
       dispatch(setOnboardingComplete());
-      toast.success('Setup complete! Let\'s go!', { style: { background: '#ECFDF5', color: '#0F172A', border: '1px solid #10B981' } });
+      toast.success('Setup complete! Let\'s go!', { style: { background: 'rgba(16,185,129,0.1)', color: 'var(--emerald-500)', border: '1px solid rgba(16,185,129,0.2)' } });
       navigate('/dashboard');
     } catch {
       toast.error('Failed to save preferences');
@@ -71,7 +71,7 @@ export default function Onboarding() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-8" style={{ background: '#F8FAFC', fontFamily: 'Inter, sans-serif' }}>
+    <div className="min-h-screen flex items-center justify-center px-4 py-8" style={{ background: 'var(--glass-bg)', fontFamily: 'Inter, sans-serif' }}>
       <div className="w-full max-w-2xl">
         {/* Progress */}
         <div className="mb-8">
@@ -79,15 +79,15 @@ export default function Onboarding() {
             {steps.map((s, i) => (
               <div key={s} className="flex items-center gap-2">
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
-                  i <= step ? 'bg-[#6366F1] text-white' : 'bg-[#E2E8F0] text-[#94A3B8]'
+                  i <= step ? 'bg-[var(--aqua-500)] text-white' : 'bg-[var(--glass-border)] text-[var(--text-secondary)]'
                 }`}>{i + 1}</div>
-                <span className={`text-sm font-medium hidden sm:block ${i <= step ? 'text-[#6366F1]' : 'text-[#94A3B8]'}`}>{s}</span>
+                <span className={`text-sm font-medium hidden sm:block ${i <= step ? 'text-[var(--aqua-500)]' : 'text-[var(--text-secondary)]'}`}>{s}</span>
               </div>
             ))}
           </div>
-          <div className="h-2 bg-[#E2E8F0] rounded-full overflow-hidden">
+          <div className="h-2 bg-[var(--glass-border)] rounded-full overflow-hidden">
             <motion.div
-              className="h-full bg-[#6366F1] rounded-full"
+              className="h-full bg-[var(--aqua-500)] rounded-full"
               animate={{ width: `${progress}%` }}
               transition={{ duration: 0.5, ease: 'easeOut' }}
             />
@@ -95,7 +95,7 @@ export default function Onboarding() {
         </div>
 
         {/* Step Content */}
-        <div className="bg-white rounded-2xl border border-[#E2E8F0] shadow-lg shadow-[#6366F1]/5 p-8">
+        <div className="bg-[var(--glass-bg)] rounded-2xl border border-[var(--glass-border)] shadow-lg shadow-[var(--aqua-500)]/5 p-8">
           <AnimatePresence mode="wait">
             <motion.div
               key={step}
@@ -107,8 +107,8 @@ export default function Onboarding() {
               {/* Step 1: Target Role */}
               {step === 0 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0F172A] mb-2">What role are you targeting?</h2>
-                  <p className="text-[#475569] mb-6">Choose the role you're preparing for</p>
+                  <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-2">What role are you targeting?</h2>
+                  <p className="text-[var(--text-secondary)] mb-6">Choose the role you're preparing for</p>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     {TARGET_ROLES.map((role) => (
                       <motion.button
@@ -117,12 +117,12 @@ export default function Onboarding() {
                         onClick={() => setFormData({ ...formData, targetRole: role.id })}
                         className={`p-4 rounded-xl border-2 text-left cursor-pointer transition-all ${
                           formData.targetRole === role.id
-                            ? 'border-[#6366F1] bg-[#EEF2FF]'
-                            : 'border-[#E2E8F0] bg-white hover:border-[#6366F1]/50'
+                            ? 'border-[var(--aqua-500)] bg-[#EEF2FF]'
+                            : 'border-[var(--glass-border)] bg-[var(--glass-bg)] hover:border-[var(--aqua-500)]/50'
                         }`}
                       >
                         <span className="text-2xl mb-2 block">{role.icon}</span>
-                        <span className="text-sm font-semibold text-[#0F172A]">{role.label}</span>
+                        <span className="text-sm font-semibold text-[var(--text-primary)]">{role.label}</span>
                       </motion.button>
                     ))}
                   </div>
@@ -132,8 +132,8 @@ export default function Onboarding() {
               {/* Step 2: Experience Level */}
               {step === 1 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0F172A] mb-2">What's your experience level?</h2>
-                  <p className="text-[#475569] mb-6">This helps us calibrate question difficulty</p>
+                  <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-2">What's your experience level?</h2>
+                  <p className="text-[var(--text-secondary)] mb-6">This helps us calibrate question difficulty</p>
                   <div className="space-y-3">
                     {EXPERIENCE_LEVELS.map((level) => (
                       <motion.button
@@ -142,11 +142,11 @@ export default function Onboarding() {
                         onClick={() => setFormData({ ...formData, experienceLevel: level })}
                         className={`w-full p-4 rounded-xl border-2 text-left cursor-pointer transition-all ${
                           formData.experienceLevel === level
-                            ? 'border-[#6366F1] bg-[#EEF2FF]'
-                            : 'border-[#E2E8F0] bg-white hover:border-[#6366F1]/50'
+                            ? 'border-[var(--aqua-500)] bg-[#EEF2FF]'
+                            : 'border-[var(--glass-border)] bg-[var(--glass-bg)] hover:border-[var(--aqua-500)]/50'
                         }`}
                       >
-                        <span className="font-semibold text-[#0F172A]">{level}</span>
+                        <span className="font-semibold text-[var(--text-primary)]">{level}</span>
                       </motion.button>
                     ))}
                   </div>
@@ -156,8 +156,8 @@ export default function Onboarding() {
               {/* Step 3: Target Companies */}
               {step === 2 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0F172A] mb-2">Target companies?</h2>
-                  <p className="text-[#475569] mb-6">Select all that apply</p>
+                  <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-2">Target companies?</h2>
+                  <p className="text-[var(--text-secondary)] mb-6">Select all that apply</p>
                   <div className="flex flex-wrap gap-3">
                     {COMPANIES.map((company) => (
                       <motion.button
@@ -168,14 +168,14 @@ export default function Onboarding() {
                         className={`px-3 py-2 rounded-xl border-2 cursor-pointer transition-all flex items-center gap-3 ${
                           formData.targetCompanies.includes(company.id)
                             ? 'border-[#3B82F6] bg-[#3B82F6]/5'
-                            : 'border-[#E2E8F0] bg-white text-[#475569] hover:border-[#3B82F6]/50'
+                            : 'border-[var(--glass-border)] bg-[var(--glass-bg)] text-[var(--text-secondary)] hover:border-[#3B82F6]/50'
                         }`}
                       >
                         <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold" style={{ background: company.color }}>
                           {companyIcons[company.id] || company.logo}
                         </div>
-                        <span className="font-semibold text-sm text-[#0F172A]">{company.name}</span>
-                        {formData.targetCompanies.includes(company.id) && <span className="text-[#3B82F6] ml-1">✓</span>}
+                        <span className="font-semibold text-sm text-[var(--text-primary)]">{company.name}</span>
+                        {formData.targetCompanies.includes(company.id) && <span className="text-[var(--aqua-400)] ml-1">✓</span>}
                       </motion.button>
                     ))}
                   </div>
@@ -185,8 +185,8 @@ export default function Onboarding() {
               {/* Step 4: Weak Areas */}
               {step === 3 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-[#0F172A] mb-2">Areas to improve?</h2>
-                  <p className="text-[#475569] mb-6">We'll focus your practice on these topics</p>
+                  <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-2">Areas to improve?</h2>
+                  <p className="text-[var(--text-secondary)] mb-6">We'll focus your practice on these topics</p>
                   <div className="grid grid-cols-2 gap-3">
                     {WEAK_AREAS.map((area) => (
                       <motion.label
@@ -194,16 +194,16 @@ export default function Onboarding() {
                         whileTap={{ scale: 0.98 }}
                         className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
                           formData.weakAreas.includes(area)
-                            ? 'border-[#6366F1] bg-[#EEF2FF]'
-                            : 'border-[#E2E8F0] hover:border-[#6366F1]/50'
+                            ? 'border-[var(--aqua-500)] bg-[#EEF2FF]'
+                            : 'border-[var(--glass-border)] hover:border-[var(--aqua-500)]/50'
                         }`}
                       >
                         <motion.div
                           animate={{ scale: formData.weakAreas.includes(area) ? 1 : 0.8 }}
                           className={`w-5 h-5 rounded flex items-center justify-center text-xs ${
                             formData.weakAreas.includes(area)
-                              ? 'bg-[#6366F1] text-white'
-                              : 'bg-[#E2E8F0]'
+                              ? 'bg-[var(--aqua-500)] text-white'
+                              : 'bg-[var(--glass-border)]'
                           }`}
                         >
                           {formData.weakAreas.includes(area) && '✓'}
@@ -214,7 +214,7 @@ export default function Onboarding() {
                           onChange={() => toggleWeakArea(area)}
                           className="sr-only"
                         />
-                        <span className="text-sm font-medium text-[#0F172A]">{area}</span>
+                        <span className="text-sm font-medium text-[var(--text-primary)]">{area}</span>
                       </motion.label>
                     ))}
                   </div>
@@ -224,7 +224,7 @@ export default function Onboarding() {
           </AnimatePresence>
 
           {/* Navigation */}
-          <div className="flex justify-between mt-8 pt-6 border-t border-[#E2E8F0]">
+          <div className="flex justify-between mt-8 pt-6 border-t border-[var(--glass-border)]">
             <motion.button
               whileTap={{ scale: 0.97 }}
               onClick={() => step > 0 && setStep(step - 1)}

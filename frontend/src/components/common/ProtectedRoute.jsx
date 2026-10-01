@@ -9,8 +9,8 @@ export default function ProtectedRoute() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#0B0F1A]">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 border-4 border-[rgba(129,140,248,0.2)] border-t-[#818CF8] rounded-full animate-spin" />
-          <p className="text-[#94A3B8] font-medium animate-pulse">Loading your experience...</p>
+          <div className="w-12 h-12 border-4 border-[rgba(6,182,212,0.12)] border-t-[var(--aqua-400)] rounded-full animate-spin" />
+          <p className="text-[var(--text-secondary)] font-medium animate-pulse">Loading your experience...</p>
         </div>
       </div>
     );

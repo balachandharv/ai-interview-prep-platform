@@ -23,8 +23,8 @@ export default function CompanyPrep() {
   return (
     <div style={{ fontFamily: 'Inter, sans-serif' }}>
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-        <h1 className="text-3xl font-extrabold text-[#0F172A] mb-1">Company Prep</h1>
-        <p className="text-[#475569] mb-8">Prepare for interviews at top tech companies</p>
+        <h1 className="text-3xl font-extrabold text-[var(--text-primary)] mb-1">Company Prep</h1>
+        <p className="text-[var(--text-secondary)] mb-8">Prepare for interviews at top tech companies</p>
       </motion.div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -32,11 +32,11 @@ export default function CompanyPrep() {
           <motion.div key={c.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
             whileHover={{ y: -4 }} onClick={() => setSelectedCompany(c)}
             className={`p-6 rounded-2xl text-center cursor-pointer transition-all border-2 ${
-              selectedCompany?.id === c.id ? 'border-[#6366F1] bg-[#EEF2FF]' : 'border-[#E2E8F0] bg-white hover:bg-[#EEF2FF]'
+              selectedCompany?.id === c.id ? 'border-[var(--aqua-500)] bg-[#EEF2FF]' : 'border-[var(--glass-border)] bg-[var(--glass-bg)] hover:bg-[#EEF2FF]'
             }`}>
             <span className="text-4xl block mb-2">{c.logo}</span>
-            <p className="font-semibold text-[#0F172A] text-sm">{c.name}</p>
-            <p className="text-xs text-[#94A3B8]">{c.rounds} rounds</p>
+            <p className="font-semibold text-[var(--text-primary)] text-sm">{c.name}</p>
+            <p className="text-xs text-[var(--text-secondary)]">{c.rounds} rounds</p>
           </motion.div>
         ))}
       </div>
@@ -46,8 +46,8 @@ export default function CompanyPrep() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="space-y-6">
             {/* Overview */}
             <div className="card-flat p-6">
-              <h3 className="text-lg font-bold text-[#0F172A] mb-3">{selectedCompany.logo} {selectedCompany.name}</h3>
-              <p className="text-[#475569] text-sm mb-4">{details.overview}</p>
+              <h3 className="text-lg font-bold text-[var(--text-primary)] mb-3">{selectedCompany.logo} {selectedCompany.name}</h3>
+              <p className="text-[var(--text-secondary)] text-sm mb-4">{details.overview}</p>
               <div className="flex gap-3">
                 <span className="badge badge-primary">Difficulty: {details.difficulty}</span>
                 <span className="badge badge-secondary">{details.avgRounds} Rounds</span>
@@ -56,16 +56,16 @@ export default function CompanyPrep() {
 
             {/* Interview Process */}
             <div className="card-flat p-6">
-              <h3 className="text-base font-bold text-[#0F172A] mb-4">Interview Process</h3>
+              <h3 className="text-base font-bold text-[var(--text-primary)] mb-4">Interview Process</h3>
               <div className="space-y-3">
                 {details.rounds.map((round, i) => (
                   <div key={i} className="flex items-center gap-4">
                     <div className="flex flex-col items-center">
-                      <div className="w-8 h-8 rounded-full bg-[#6366F1] text-white flex items-center justify-center text-sm font-bold">{i + 1}</div>
-                      {i < details.rounds.length - 1 && <div className="w-0.5 h-8 bg-[#E2E8F0]" />}
+                      <div className="w-8 h-8 rounded-full bg-[var(--aqua-500)] text-white flex items-center justify-center text-sm font-bold">{i + 1}</div>
+                      {i < details.rounds.length - 1 && <div className="w-0.5 h-8 bg-[var(--glass-border)]" />}
                     </div>
                     <div className="flex-1 p-3 rounded-xl bg-[#F8FAFC]">
-                      <p className="text-sm font-semibold text-[#0F172A]">{round}</p>
+                      <p className="text-sm font-semibold text-[var(--text-primary)]">{round}</p>
                     </div>
                   </div>
                 ))}
@@ -74,7 +74,7 @@ export default function CompanyPrep() {
 
             {/* Topics */}
             <div className="card-flat p-6">
-              <h3 className="text-base font-bold text-[#0F172A] mb-4">Common Topics</h3>
+              <h3 className="text-base font-bold text-[var(--text-primary)] mb-4">Common Topics</h3>
               <div className="flex flex-wrap gap-2">
                 {details.topics.map(t => <span key={t} className="chip chip-active">{t}</span>)}
               </div>

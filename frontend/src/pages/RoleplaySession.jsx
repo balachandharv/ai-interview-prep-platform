@@ -34,8 +34,7 @@ export default function RoleplaySession() {
 
   const stompClientRef = useRef(null);
   const messagesEndRef = useRef(null);
-  const { isListening, transcript, startListening, stopListening } = useSpeechRecognition();
-  const maxQuestions = 8;
+  const { isListening, transcript, startListening, stopListening, resetTranscript } = useSpeechRecognition();
 
   // Step 1: Create session in DB via HTTP before opening WebSocket
   useEffect(() => {
@@ -188,8 +187,11 @@ export default function RoleplaySession() {
   }, [messages]);
 
   useEffect(() => {
-    if (transcript) setInput(prev => prev + ' ' + transcript);
-  }, [transcript]);
+    if (!isListening && transcript) {
+      setInput(prev => (prev + (prev && !prev.endsWith(' ') ? ' ' : '') + transcript).trim());
+      resetTranscript();
+    }
+  }, [isListening, transcript, resetTranscript]);
 
   const handleSend = useCallback(() => {
     if (!input.trim() || isAIThinking) return;
@@ -220,10 +222,6 @@ export default function RoleplaySession() {
     });
 
     setInput('');
-
-    if (newCount >= maxQuestions) {
-      setTimeout(() => handleEndSession([...messages, userMsg], newCount), 2000);
-    }
   }, [input, isAIThinking, connectionStatus, questionCount, messages, sessionId, isListening, stopListening]);
 
   const handleEndSession = useCallback(async (finalMessages = messages, count = questionCount) => {
@@ -246,7 +244,7 @@ export default function RoleplaySession() {
   if (!persona) {
     return (
       <div className="text-center py-20">
-        <p className="text-[#94A3B8]">No persona selected. <a href="/roleplay" className="text-[#818CF8]">Go back</a></p>
+        <p className="text-[var(--text-secondary)]">No persona selected. <a href="/roleplay" className="text-[var(--aqua-400)]">Go back</a></p>
       </div>
     );
   }
@@ -257,10 +255,10 @@ export default function RoleplaySession() {
   // Connection status indicator
   const ConnectionBadge = () => {
     const badges = {
-      [CONN_STATE.INITIALIZING]: { color: '#F59E0B', text: 'Initializing...', icon: <Loader size={12} className="animate-spin" /> },
-      [CONN_STATE.CONNECTING]:   { color: '#F59E0B', text: 'Connecting...', icon: <Loader size={12} className="animate-spin" /> },
+      [CONN_STATE.INITIALIZING]: { color: 'var(--amber-500)', text: 'Initializing...', icon: <Loader size={12} className="animate-spin" /> },
+      [CONN_STATE.CONNECTING]:   { color: 'var(--amber-500)', text: 'Connecting...', icon: <Loader size={12} className="animate-spin" /> },
       [CONN_STATE.CONNECTED]:    { color: '#34D399', text: 'Live', icon: <Wifi size={12} /> },
-      [CONN_STATE.RECONNECTING]: { color: '#F59E0B', text: 'Reconnecting...', icon: <Loader size={12} className="animate-spin" /> },
+      [CONN_STATE.RECONNECTING]: { color: 'var(--amber-500)', text: 'Reconnecting...', icon: <Loader size={12} className="animate-spin" /> },
       [CONN_STATE.ERROR]:        { color: '#EF4444', text: 'Connection Error', icon: <WifiOff size={12} /> },
     };
     const b = badges[connectionStatus] || badges[CONN_STATE.ERROR];
@@ -275,35 +273,32 @@ export default function RoleplaySession() {
   return (
     <div className="fixed inset-0 flex" style={{ fontFamily: 'Inter, sans-serif', background: 'var(--bg-primary)' }}>
       {/* Left Panel - AI Interviewer */}
-      <div className="w-[35%] hidden lg:flex flex-col border-r border-[rgba(148,163,184,0.1)] bg-[rgba(15,23,42,0.8)] backdrop-blur-xl p-8 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-64 h-64 bg-[#818CF8] opacity-5 rounded-full filter blur-3xl pointer-events-none" />
+      <div className="w-[35%] hidden lg:flex flex-col border-r border-[var(--glass-border)] bg-[rgba(15,23,42,0.8)] backdrop-blur-xl p-8 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-64 h-64 bg-[var(--aqua-400)] opacity-5 rounded-full filter blur-3xl pointer-events-none" />
 
-        <div className={`rounded-3xl p-8 text-center relative z-10 transition-all duration-500 ${isAIThinking ? 'shadow-[0_0_30px_rgba(129,140,248,0.2)]' : ''}`}
-          style={{ background: 'rgba(30,41,59,0.5)', border: `1px solid ${isAIThinking ? 'rgba(129,140,248,0.4)' : 'rgba(148,163,184,0.1)'}` }}>
+        <div className={`rounded-3xl p-8 text-center relative z-10 transition-all duration-500 ${isAIThinking ? 'shadow-[0_0_30px_rgba(6,182,212,0.12)]' : ''}`}
+          style={{ background: 'var(--glass-bg)', border: `1px solid ${isAIThinking ? 'rgba(6,182,212,0.25)' : 'var(--glass-border)'}` }}>
           <div className="text-7xl mb-6 relative inline-block">
             {persona.avatar}
             <div className={`absolute bottom-0 right-0 w-5 h-5 rounded-full border-4 border-[#1E293B] transition-colors ${connectionStatus === CONN_STATE.CONNECTED ? 'bg-[#34D399]' : 'bg-[#F59E0B]'}`} />
           </div>
-          <h2 className="text-2xl font-extrabold text-[#F1F5F9]">{persona.name}</h2>
-          <p className="text-sm font-medium text-[#818CF8] mt-1">{persona.role} @ {persona.company}</p>
-          {companyMode && <span className="inline-block mt-4 px-3 py-1 rounded-full bg-[rgba(129,140,248,0.1)] text-[#818CF8] text-xs font-bold border border-[rgba(129,140,248,0.2)]">Round 1: Technical</span>}
+          <h2 className="text-2xl font-extrabold text-[var(--text-primary)]">{persona.name}</h2>
+          <p className="text-sm font-medium text-[var(--aqua-400)] mt-1">{persona.role} @ {persona.company}</p>
+          {companyMode && <span className="inline-block mt-4 px-3 py-1 rounded-full bg-[rgba(6,182,212,0.08)] text-[var(--aqua-400)] text-xs font-bold border border-[rgba(6,182,212,0.12)]">Round 1: Technical</span>}
         </div>
 
         <div className="mt-8 flex-1 relative z-10">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-bold text-[#64748B] uppercase tracking-wider">Interview Progress</span>
-            <span className="text-sm font-bold text-[#F1F5F9]">{questionCount}<span className="text-[#64748B]">/{maxQuestions}</span></span>
-          </div>
-          <div className="h-2 w-full bg-[rgba(30,41,59,0.5)] rounded-full overflow-hidden border border-[rgba(148,163,184,0.1)]">
-            <motion.div animate={{ width: `${(questionCount / maxQuestions) * 100}%` }} className="h-full bg-gradient-to-r from-[#818CF8] to-[#A78BFA] shadow-[0_0_10px_rgba(129,140,248,0.8)]" />
+            <span className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">Questions Answered</span>
+            <span className="text-sm font-bold text-[var(--text-primary)]">{questionCount}</span>
           </div>
         </div>
 
         {isAIThinking && (
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-6 p-4 rounded-2xl bg-[rgba(129,140,248,0.1)] border border-[rgba(129,140,248,0.2)] relative z-10">
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-6 p-4 rounded-2xl bg-[rgba(6,182,212,0.08)] border border-[rgba(6,182,212,0.12)] relative z-10">
             <div className="flex items-center justify-center gap-3">
-              <div className="flex gap-1"><div className="typing-dot bg-[#818CF8]" /><div className="typing-dot bg-[#818CF8]" /><div className="typing-dot bg-[#818CF8]" /></div>
-              <span className="text-sm font-medium text-[#818CF8]">{persona.name} is thinking...</span>
+              <div className="flex gap-1"><div className="typing-dot bg-[var(--aqua-400)]" /><div className="typing-dot bg-[var(--aqua-400)]" /><div className="typing-dot bg-[var(--aqua-400)]" /></div>
+              <span className="text-sm font-medium text-[var(--aqua-400)]">{persona.name} is thinking...</span>
             </div>
           </motion.div>
         )}
@@ -314,18 +309,18 @@ export default function RoleplaySession() {
         <div className="absolute inset-0 bg-gradient-to-br from-[rgba(129,140,248,0.02)] to-transparent pointer-events-none" />
 
         {/* Header */}
-        <div className="h-16 flex items-center justify-between px-6 bg-[rgba(15,23,42,0.9)] backdrop-blur-md border-b border-[rgba(148,163,184,0.1)] z-10">
+        <div className="h-16 flex items-center justify-between px-6 bg-[rgba(15,23,42,0.9)] backdrop-blur-md border-b border-[var(--glass-border)] z-10">
           <div className="flex items-center gap-3 lg:hidden">
             <span className="text-2xl">{persona.avatar}</span>
             <div>
-              <p className="text-sm font-bold text-[#F1F5F9]">{persona.name}</p>
-              <p className="text-xs text-[#818CF8]">{persona.company}</p>
+              <p className="text-sm font-bold text-[var(--text-primary)]">{persona.name}</p>
+              <p className="text-xs text-[var(--aqua-400)]">{persona.company}</p>
             </div>
           </div>
           <div className="hidden lg:block" />
           <div className="flex items-center gap-3">
             <ConnectionBadge />
-            <span className="text-xs font-bold text-[#64748B] bg-[rgba(30,41,59,0.5)] px-3 py-1.5 rounded-lg border border-[rgba(148,163,184,0.1)]">Q{questionCount}/{maxQuestions}</span>
+            <span className="text-xs font-bold text-[var(--text-muted)] bg-[var(--glass-bg)] px-3 py-1.5 rounded-lg border border-[var(--glass-border)]">Q{questionCount}</span>
             <motion.button
               whileTap={{ scale: 0.97 }}
               onClick={() => setShowEndConfirm(true)}
@@ -341,9 +336,9 @@ export default function RoleplaySession() {
         {isLoading && (
           <div className="absolute inset-0 z-20 flex items-center justify-center bg-[rgba(15,23,42,0.7)] backdrop-blur-sm">
             <div className="text-center">
-              <Loader size={40} className="animate-spin text-[#818CF8] mx-auto mb-4" />
-              <p className="text-[#F1F5F9] font-semibold">Setting up your interview session...</p>
-              <p className="text-[#64748B] text-sm mt-1">Connecting to AI interviewer</p>
+              <Loader size={40} className="animate-spin text-[var(--aqua-400)] mx-auto mb-4" />
+              <p className="text-[var(--text-primary)] font-semibold">Setting up your interview session...</p>
+              <p className="text-[var(--text-muted)] text-sm mt-1">Connecting to AI interviewer</p>
             </div>
           </div>
         )}
@@ -354,16 +349,16 @@ export default function RoleplaySession() {
             <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
               className="mx-4 mt-3 p-3 rounded-xl flex items-center gap-3 z-10"
               style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)' }}>
-              <AlertTriangle size={16} className="text-[#EF4444] flex-shrink-0" />
-              <p className="text-sm text-[#EF4444]">{errorMessage}</p>
+              <AlertTriangle size={16} className="text-[var(--danger-500)] flex-shrink-0" />
+              <p className="text-sm text-[var(--danger-500)]">{errorMessage}</p>
             </motion.div>
           )}
           {connectionStatus === CONN_STATE.RECONNECTING && (
             <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
               className="mx-4 mt-3 p-3 rounded-xl flex items-center gap-3 z-10"
               style={{ background: 'rgba(245,158,11,0.1)', border: '1px solid rgba(245,158,11,0.2)' }}>
-              <Loader size={16} className="text-[#F59E0B] flex-shrink-0 animate-spin" />
-              <p className="text-sm text-[#F59E0B]">Connection lost. Reconnecting automatically... Your conversation is preserved.</p>
+              <Loader size={16} className="text-[var(--amber-500)] flex-shrink-0 animate-spin" />
+              <p className="text-sm text-[var(--amber-500)]">Connection lost. Reconnecting automatically... Your conversation is preserved.</p>
             </motion.div>
           )}
         </AnimatePresence>
@@ -376,9 +371,9 @@ export default function RoleplaySession() {
                 key={i} initial={{ opacity: 0, y: 20, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.4, type: 'spring', bounce: 0.4 }}
                 className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
-                <div className={`max-w-[80%] rounded-2xl p-5 ${msg.role === 'user' ? 'bg-[#818CF8] text-white rounded-br-none shadow-[0_8px_24px_rgba(129,140,248,0.3)]' : 'bg-[rgba(30,41,59,0.6)] text-[#E2E8F0] border border-[rgba(148,163,184,0.1)] rounded-bl-none shadow-lg'}`}>
+                <div className={`max-w-[80%] rounded-2xl p-5 ${msg.role === 'user' ? 'bg-[var(--aqua-400)] text-white rounded-br-none shadow-[0_8px_24px_rgba(6,182,212,0.20)]' : 'bg-[var(--glass-bg-strong)] text-[var(--glass-border)] border border-[var(--glass-border)] rounded-bl-none shadow-lg'}`}>
                   <p className="text-sm md:text-base leading-relaxed whitespace-pre-wrap">{msg.text}</p>
-                  <p className={`text-[10px] mt-2 text-right ${msg.role === 'user' ? 'text-indigo-200' : 'text-[#64748B]'}`}>
+                  <p className={`text-[10px] mt-2 text-right ${msg.role === 'user' ? 'text-indigo-200' : 'text-[var(--text-muted)]'}`}>
                     {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </p>
                 </div>
@@ -388,8 +383,8 @@ export default function RoleplaySession() {
 
           {isAIThinking && (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex justify-start">
-              <div className="bg-[rgba(30,41,59,0.6)] border border-[rgba(148,163,184,0.1)] rounded-2xl rounded-bl-none p-5 flex items-center gap-3">
-                <div className="flex gap-1.5"><div className="w-2 h-2 rounded-full bg-[#818CF8] animate-bounce" /><div className="w-2 h-2 rounded-full bg-[#818CF8] animate-bounce" style={{ animationDelay: '0.2s' }} /><div className="w-2 h-2 rounded-full bg-[#818CF8] animate-bounce" style={{ animationDelay: '0.4s' }} /></div>
+              <div className="bg-[var(--glass-bg-strong)] border border-[var(--glass-border)] rounded-2xl rounded-bl-none p-5 flex items-center gap-3">
+                <div className="flex gap-1.5"><div className="w-2 h-2 rounded-full bg-[var(--aqua-400)] animate-bounce" /><div className="w-2 h-2 rounded-full bg-[var(--aqua-400)] animate-bounce" style={{ animationDelay: '0.2s' }} /><div className="w-2 h-2 rounded-full bg-[var(--aqua-400)] animate-bounce" style={{ animationDelay: '0.4s' }} /></div>
               </div>
             </motion.div>
           )}
@@ -397,25 +392,26 @@ export default function RoleplaySession() {
         </div>
 
         {/* Input */}
-        <div className="p-4 bg-[rgba(15,23,42,0.9)] backdrop-blur-md border-t border-[rgba(148,163,184,0.1)] z-10 relative">
-          <div className="flex items-end gap-3 max-w-5xl mx-auto">
+        <div className="p-4 bg-[rgba(15,23,42,0.9)] backdrop-blur-md border-t border-[var(--glass-border)] z-10 relative">
+          <div className="flex items-center gap-3 max-w-5xl mx-auto">
             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }} onClick={isListening ? stopListening : startListening}
               className="w-12 h-12 rounded-full flex items-center justify-center border-none cursor-pointer relative shadow-[0_4px_12px_rgba(0,0,0,0.3)] flex-shrink-0 transition-colors"
-              style={{ background: isListening ? '#FB7185' : 'rgba(30,41,59,0.8)' }}>
+              style={{ background: isListening ? '#FB7185' : 'var(--glass-bg-strong)' }}>
               {isListening && <div className="pulse-ring w-12 h-12 border-[#FB7185]" />}
-              <span className="text-[#F1F5F9]">{isListening ? <Square size={18} fill="currentColor" /> : <Mic size={20} />}</span>
+              <span className="text-[var(--text-primary)]">{isListening ? <Square size={18} fill="currentColor" /> : <Mic size={20} />}</span>
             </motion.button>
             <div className="flex-1 relative">
               <textarea
-                value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={handleKeyDown}
-                className="input w-full bg-[rgba(30,41,59,0.6)] border border-[rgba(148,163,184,0.2)] rounded-2xl py-3 px-4 text-[#F1F5F9] focus:bg-[rgba(30,41,59,0.9)] focus:border-[#818CF8] custom-scrollbar" rows={1}
+                value={isListening && transcript ? input + (input && !input.endsWith(' ') ? ' ' : '') + transcript : input}
+                onChange={(e) => setInput(e.target.value)} onKeyDown={handleKeyDown}
+                className="input block w-full bg-[var(--glass-bg-strong)] border border-[rgba(255,255,255,0.12)] rounded-2xl py-3 px-4 text-[var(--text-primary)] focus:bg-[rgba(30,41,59,0.9)] focus:border-[var(--aqua-400)] custom-scrollbar" rows={1}
                 style={{ resize: 'none', minHeight: '48px', maxHeight: '120px' }}
                 placeholder={connectionStatus === CONN_STATE.CONNECTED ? 'Type your response or press enter...' : 'Waiting for connection...'}
-                disabled={isAIThinking || connectionStatus !== CONN_STATE.CONNECTED || questionCount >= maxQuestions}
+                disabled={isAIThinking || connectionStatus !== CONN_STATE.CONNECTED}
               />
             </div>
             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={handleSend} disabled={!canSend}
-              className="w-12 h-12 rounded-2xl flex items-center justify-center border-none cursor-pointer bg-[#818CF8] text-white shadow-[0_4px_12px_rgba(129,140,248,0.4)] disabled:opacity-50 disabled:shadow-none flex-shrink-0">
+              className="w-12 h-12 rounded-2xl flex items-center justify-center border-none cursor-pointer bg-[var(--aqua-400)] text-white shadow-[0_4px_12px_rgba(6,182,212,0.25)] disabled:opacity-50 disabled:shadow-none flex-shrink-0">
               <Send size={18} />
             </motion.button>
           </div>
@@ -426,16 +422,16 @@ export default function RoleplaySession() {
       <AnimatePresence>
         {showEndConfirm && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="modal-overlay z-50 fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center">
-            <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }} className="modal-content bg-[rgba(15,23,42,0.95)] border border-[rgba(148,163,184,0.1)] p-8 rounded-3xl max-w-md w-full shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
-              <div className="w-12 h-12 rounded-full bg-[rgba(239,68,68,0.1)] flex items-center justify-center mb-4 text-[#EF4444]">
+            <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }} className="modal-content bg-[rgba(15,23,42,0.95)] border border-[var(--glass-border)] p-8 rounded-3xl max-w-md w-full shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+              <div className="w-12 h-12 rounded-full bg-[rgba(239,68,68,0.1)] flex items-center justify-center mb-4 text-[var(--danger-500)]">
                 <AlertTriangle size={24} />
               </div>
-              <h3 className="text-xl font-bold text-[#F1F5F9] mb-2">End Interview Early?</h3>
-              <p className="text-[#94A3B8] text-sm mb-8 leading-relaxed">
-                Are you sure you want to end this interview? You've answered <span className="text-[#F1F5F9] font-bold">{questionCount}</span> out of <span className="text-[#F1F5F9] font-bold">{maxQuestions}</span> questions.
+              <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2">End Interview?</h3>
+              <p className="text-[var(--text-secondary)] text-sm mb-8 leading-relaxed">
+                Are you sure you want to end this interview? You've answered <span className="text-[var(--text-primary)] font-bold">{questionCount}</span> questions so far.
               </p>
               <div className="flex gap-4">
-                <motion.button whileTap={{ scale: 0.97 }} onClick={() => setShowEndConfirm(false)} className="flex-1 py-3 rounded-xl font-bold text-sm bg-[rgba(30,41,59,0.5)] text-[#E2E8F0] hover:bg-[rgba(30,41,59,0.8)] transition-colors border border-[rgba(148,163,184,0.1)]">Cancel</motion.button>
+                <motion.button whileTap={{ scale: 0.97 }} onClick={() => setShowEndConfirm(false)} className="flex-1 py-3 rounded-xl font-bold text-sm bg-[var(--glass-bg)] text-[var(--glass-border)] hover:bg-[var(--glass-bg-strong)] transition-colors border border-[var(--glass-border)]">Cancel</motion.button>
                 <motion.button whileTap={{ scale: 0.97 }} onClick={() => handleEndSession()}
                   className="flex-1 py-3 rounded-xl font-bold text-sm bg-[#EF4444] text-white shadow-[0_4px_12px_rgba(239,68,68,0.4)] hover:bg-[#DC2626] transition-colors">End Session</motion.button>
               </div>

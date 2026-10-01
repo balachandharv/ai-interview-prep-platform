@@ -59,5 +59,26 @@ public class AnalyticsController {
             "sessions", sessionDtos
         ));
     }
+    @GetMapping("/overview")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> getOverview(Authentication authentication) {
+        String email = authentication.getName();
+        User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+            
+        List<Session> userSessions = sessionRepository.findByUserId(user.getId());
+        
+        long totalSessions = userSessions.size();
+        
+        return ResponseEntity.ok(Map.of(
+            "success", true,
+            "data", Map.of(
+                "totalSessions", totalSessions,
+                "hasData", totalSessions > 0,
+                "trendData", List.of(),
+                "radarData", List.of(),
+                "categoryData", List.of()
+            )
+        ));
+    }
 }
-

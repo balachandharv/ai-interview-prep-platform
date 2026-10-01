@@ -40,37 +40,37 @@ export default function ResumeInterview() {
     setAnalyzed(true);
   };
 
-  const handleDragOver = (e) => { e.preventDefault(); e.currentTarget.style.borderColor = '#818CF8'; e.currentTarget.style.background = 'rgba(129,140,248,0.1)'; };
-  const handleDragLeave = (e) => { e.currentTarget.style.borderColor = 'rgba(148,163,184,0.2)'; e.currentTarget.style.background = 'rgba(30,41,59,0.3)'; };
-  const handleDrop = (e) => { e.preventDefault(); e.currentTarget.style.borderColor = 'rgba(148,163,184,0.2)'; e.currentTarget.style.background = 'rgba(30,41,59,0.3)'; /* Handle file drop */ };
+  const handleDragOver = (e) => { e.preventDefault(); e.currentTarget.style.borderColor = 'var(--aqua-400)'; e.currentTarget.style.background = 'rgba(6,182,212,0.08)'; };
+  const handleDragLeave = (e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; e.currentTarget.style.background = 'rgba(30,41,59,0.3)'; };
+  const handleDrop = (e) => { e.preventDefault(); e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; e.currentTarget.style.background = 'rgba(30,41,59,0.3)'; /* Handle file drop */ };
 
   return (
     <div style={{ fontFamily: 'Inter, sans-serif' }}>
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="mb-8 relative z-10">
-        <h1 className="text-3xl font-extrabold text-[#F1F5F9] mb-2 flex items-center gap-3">
-          Resume Interview <FileText className="text-[#A78BFA]" size={28} />
+        <h1 className="text-3xl font-extrabold text-[var(--text-primary)] mb-2 flex items-center gap-3">
+          Resume Interview <FileText className="text-[var(--aqua-300)]" size={28} />
         </h1>
-        <p className="text-[#94A3B8] text-lg">Get personalized interview questions based on your resume.</p>
+        <p className="text-[var(--text-secondary)] text-lg">Get personalized interview questions based on your resume.</p>
       </motion.div>
 
       {!analyzed ? (
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="relative z-10 max-w-3xl">
           {/* Upload Area */}
           <div onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop}
-            className="border-2 border-dashed border-[rgba(148,163,184,0.2)] bg-[rgba(30,41,59,0.3)] rounded-2xl p-12 text-center hover:border-[#818CF8] hover:bg-[rgba(129,140,248,0.05)] transition-all cursor-pointer group">
-            <UploadCloud size={48} className="mx-auto mb-4 text-[#64748B] group-hover:text-[#818CF8] transition-colors" />
-            <p className="font-bold text-[#F1F5F9] text-lg">Drag & drop your resume (PDF)</p>
-            <p className="text-[#94A3B8] text-sm mt-2">or click to browse files</p>
+            className="border-2 border-dashed border-[rgba(255,255,255,0.12)] bg-[rgba(30,41,59,0.3)] rounded-2xl p-12 text-center hover:border-[var(--aqua-400)] hover:bg-[rgba(129,140,248,0.05)] transition-all cursor-pointer group">
+            <UploadCloud size={48} className="mx-auto mb-4 text-[var(--text-muted)] group-hover:text-[var(--aqua-400)] transition-colors" />
+            <p className="font-bold text-[var(--text-primary)] text-lg">Drag & drop your resume (PDF)</p>
+            <p className="text-[var(--text-secondary)] text-sm mt-2">or click to browse files</p>
           </div>
 
           <div className="flex items-center my-6">
-            <div className="flex-1 border-t border-[rgba(148,163,184,0.1)]"></div>
-            <span className="px-4 text-xs text-[#64748B] font-bold uppercase tracking-wider">or paste text</span>
-            <div className="flex-1 border-t border-[rgba(148,163,184,0.1)]"></div>
+            <div className="flex-1 border-t border-[var(--glass-border)]"></div>
+            <span className="px-4 text-xs text-[var(--text-muted)] font-bold uppercase tracking-wider">or paste text</span>
+            <div className="flex-1 border-t border-[var(--glass-border)]"></div>
           </div>
 
           <textarea value={resumeText} onChange={(e) => setResumeText(e.target.value)}
-            className="input textarea mb-8 w-full p-4 bg-[rgba(30,41,59,0.4)] border border-[rgba(148,163,184,0.1)] rounded-xl focus:bg-[rgba(30,41,59,0.6)] focus:border-[#818CF8] transition-all resize-y shadow-inner text-[#F1F5F9]" style={{ minHeight: '200px' }}
+            className="input textarea mb-8 w-full p-4 bg-[var(--glass-bg)] border border-[var(--glass-border)] rounded-xl focus:bg-[var(--glass-bg-strong)] focus:border-[var(--aqua-400)] transition-all resize-y shadow-inner text-[var(--text-primary)]" style={{ minHeight: '200px' }}
             placeholder="Paste your resume text here..." />
 
           <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={handleAnalyze} disabled={!resumeText.trim() || analyzing}
@@ -91,43 +91,43 @@ export default function ResumeInterview() {
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Skills Extracted */}
-            <div className="card-flat p-6 border-[rgba(129,140,248,0.2)] bg-[rgba(129,140,248,0.05)]">
-              <h3 className="text-base font-bold text-[#F1F5F9] mb-4 flex items-center gap-2">
-                <Sparkles className="text-[#818CF8]" size={18} /> Skills Extracted
+            <div className="card-flat p-6 border-[rgba(6,182,212,0.12)] bg-[rgba(129,140,248,0.05)]">
+              <h3 className="text-base font-bold text-[var(--text-primary)] mb-4 flex items-center gap-2">
+                <Sparkles className="text-[var(--aqua-400)]" size={18} /> Skills Extracted
               </h3>
               <div className="flex flex-wrap gap-2.5">
-                {skills.map(s => <span key={s} className="chip chip-active bg-[rgba(129,140,248,0.2)] border-[#818CF8] text-[#F1F5F9] hover:bg-[rgba(129,140,248,0.4)]">{s}</span>)}
+                {skills.map(s => <span key={s} className="chip chip-active bg-[rgba(6,182,212,0.12)] border-[var(--aqua-400)] text-[var(--text-primary)] hover:bg-[rgba(6,182,212,0.25)]">{s}</span>)}
               </div>
             </div>
 
             {/* Gap Analysis */}
             <div className="card-flat p-6">
-              <h3 className="text-base font-bold text-[#F1F5F9] mb-6">Skill Gap Analysis</h3>
+              <h3 className="text-base font-bold text-[var(--text-primary)] mb-6">Skill Gap Analysis</h3>
               <ResponsiveContainer width="100%" height={250}>
                 <BarChart data={gapData} layout="vertical">
-                  <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 10, fill: '#94A3B8' }} />
-                  <YAxis type="category" dataKey="skill" tick={{ fontSize: 12, fill: '#E2E8F0' }} width={100} />
-                  <Tooltip cursor={{ fill: 'rgba(255,255,255,0.05)' }} contentStyle={{ background: 'rgba(17,24,39,0.9)', border: '1px solid rgba(148,163,184,0.1)', borderRadius: '8px', color: '#F1F5F9' }} />
-                  <Bar dataKey="user" fill="#818CF8" name="Your Skills" radius={[0, 4, 4, 0]} animationDuration={1500} />
-                  <Bar dataKey="required" fill="rgba(148,163,184,0.2)" name="Required" radius={[0, 4, 4, 0]} animationDuration={1500} />
+                  <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 10, fill: 'var(--text-secondary)' }} />
+                  <YAxis type="category" dataKey="skill" tick={{ fontSize: 12, fill: 'var(--glass-border)' }} width={100} />
+                  <Tooltip cursor={{ fill: 'rgba(255,255,255,0.05)' }} contentStyle={{ background: 'var(--glass-bg-strong)', border: '1px solid var(--glass-border)', borderRadius: '8px', color: 'var(--text-primary)' }} />
+                  <Bar dataKey="user" fill="var(--aqua-400)" name="Your Skills" radius={[0, 4, 4, 0]} animationDuration={1500} />
+                  <Bar dataKey="required" fill="rgba(255,255,255,0.12)" name="Required" radius={[0, 4, 4, 0]} animationDuration={1500} />
                 </BarChart>
               </ResponsiveContainer>
-              <div className="flex justify-center gap-6 mt-4 text-xs font-semibold text-[#94A3B8]">
-                <span className="flex items-center gap-2"><span className="w-3 h-3 rounded bg-[#818CF8]" /> Your Skills</span>
-                <span className="flex items-center gap-2"><span className="w-3 h-3 rounded bg-[rgba(148,163,184,0.2)]" /> Required Level</span>
+              <div className="flex justify-center gap-6 mt-4 text-xs font-semibold text-[var(--text-secondary)]">
+                <span className="flex items-center gap-2"><span className="w-3 h-3 rounded bg-[var(--aqua-400)]" /> Your Skills</span>
+                <span className="flex items-center gap-2"><span className="w-3 h-3 rounded bg-[rgba(255,255,255,0.12)]" /> Required Level</span>
               </div>
             </div>
           </div>
 
           {/* Generated Questions */}
           <div className="card-flat p-6">
-            <h3 className="text-base font-bold text-[#F1F5F9] mb-6">Personalized Questions ({questions.length})</h3>
+            <h3 className="text-base font-bold text-[var(--text-primary)] mb-6">Personalized Questions ({questions.length})</h3>
             <div className="space-y-4">
               {questions.map((q, i) => (
                 <motion.div key={i} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-                  className="p-4 rounded-xl bg-[rgba(30,41,59,0.4)] border border-[rgba(148,163,184,0.05)] flex items-start gap-4 group hover:bg-[rgba(129,140,248,0.05)] hover:border-[rgba(129,140,248,0.2)] transition-colors">
-                  <span className="w-8 h-8 rounded-lg bg-[rgba(129,140,248,0.1)] text-[#818CF8] flex items-center justify-center font-bold flex-shrink-0 group-hover:bg-[#818CF8] group-hover:text-white transition-colors">{i + 1}</span>
-                  <p className="text-sm font-medium text-[#E2E8F0] leading-relaxed pt-1">{q}</p>
+                  className="p-4 rounded-xl bg-[var(--glass-bg)] border border-[rgba(148,163,184,0.05)] flex items-start gap-4 group hover:bg-[rgba(129,140,248,0.05)] hover:border-[rgba(6,182,212,0.12)] transition-colors">
+                  <span className="w-8 h-8 rounded-lg bg-[rgba(6,182,212,0.08)] text-[var(--aqua-400)] flex items-center justify-center font-bold flex-shrink-0 group-hover:bg-[var(--aqua-400)] group-hover:text-white transition-colors">{i + 1}</span>
+                  <p className="text-sm font-medium text-[var(--glass-border)] leading-relaxed pt-1">{q}</p>
                 </motion.div>
               ))}
             </div>

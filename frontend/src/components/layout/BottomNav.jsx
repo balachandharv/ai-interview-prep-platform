@@ -33,22 +33,23 @@ export default function BottomNav() {
               {isActive && (
                 <motion.div
                   layoutId="activeBottomTabGlow"
-                  className="absolute inset-0 bg-[rgba(129,140,248,0.1)] rounded-xl"
+                  className="absolute inset-0 rounded-xl"
+                  style={{ background: 'rgba(6,182,212,0.08)', zIndex: -1 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                  style={{ zIndex: -1 }}
                 />
               )}
               {isActive && (
                 <motion.div
                   layoutId="activeBottomTabLine"
-                  className="absolute -top-[1px] left-1/2 -translate-x-1/2 w-10 h-[3px] rounded-b-full bg-[#818CF8] shadow-[0_0_12px_rgba(129,140,248,0.8)]"
+                  className="absolute -top-[1px] left-1/2 -translate-x-1/2 w-10 h-[3px] rounded-b-full"
+                  style={{ background: 'var(--aqua-400)', boxShadow: '0 0 12px rgba(34,211,238,0.6)' }}
                   transition={{ type: 'spring', stiffness: 500, damping: 35 }}
                 />
               )}
-              <span className="nav-icon mb-1" style={{ color: isActive ? '#818CF8' : '#64748B', transition: 'color 0.3s' }}>
+              <span className="nav-icon mb-1" style={{ color: isActive ? 'var(--aqua-400)' : 'var(--text-muted)', transition: 'color 0.2s' }}>
                 {tab.icon}
               </span>
-              <span style={{ color: isActive ? '#F1F5F9' : '#64748B', fontWeight: isActive ? 700 : 500, transition: 'all 0.3s' }}>
+              <span style={{ color: isActive ? 'var(--text-primary)' : 'var(--text-muted)', fontWeight: isActive ? 700 : 500, transition: 'color 0.2s' }}>
                 {tab.label}
               </span>
             </>

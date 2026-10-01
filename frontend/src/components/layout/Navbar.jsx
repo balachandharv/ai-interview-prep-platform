@@ -38,13 +38,16 @@ export default function Navbar() {
     }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px', height: '72px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', flexShrink: 0 }}>
-          <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'linear-gradient(135deg, #3B82F6, #2563EB)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(59,130,246,0.2)' }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" />
-            </svg>
-          </div>
-          <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#F0F4F8' }}>
-            Interview<span style={{ color: '#3B82F6' }}>AI</span>
+          <motion.img 
+            src="/logo.png" 
+            alt="Logo" 
+            whileHover={{ scale: 1.05, rotate: 5 }} 
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            className="w-10 h-10 rounded-xl shadow-lg flex-shrink-0 object-cover border border-[rgba(255,255,255,0.1)]" 
+            style={{ boxShadow: '0 4px 12px rgba(6,182,212,0.3)' }} 
+          />
+          <span style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)' }}>
+            Interview<span style={{ color: 'var(--aqua-400)' }}>AI</span>
           </span>
         </Link>
 
@@ -59,16 +62,16 @@ export default function Navbar() {
             <motion.button whileTap={{ scale: 0.97 }} onClick={() => navigate('/dashboard')} className="btn btn-primary">Dashboard</motion.button>
           ) : (
             <>
-              <motion.button whileTap={{ scale: 0.97 }} onClick={() => navigate('/login')} className="btn btn-ghost" style={{ fontSize: '0.875rem', color: '#94A3B8' }}>Log In</motion.button>
+              <motion.button whileTap={{ scale: 0.97 }} onClick={() => navigate('/login')} className="btn btn-ghost" style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Log In</motion.button>
               <motion.button whileTap={{ scale: 0.97 }} onClick={() => navigate('/register')} className="btn btn-primary" style={{ fontSize: '0.875rem' }}>Get Started</motion.button>
             </>
           )}
         </div>
 
         <button className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
-          <motion.span animate={menuOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }} transition={{ duration: 0.3 }} style={{ display: 'block', width: '22px', height: '2px', background: '#F1F5F9', borderRadius: '9999px' }} />
-          <motion.span animate={menuOpen ? { opacity: 0 } : { opacity: 1 }} transition={{ duration: 0.3 }} style={{ display: 'block', width: '22px', height: '2px', background: '#F1F5F9', borderRadius: '9999px' }} />
-          <motion.span animate={menuOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }} transition={{ duration: 0.3 }} style={{ display: 'block', width: '22px', height: '2px', background: '#F1F5F9', borderRadius: '9999px' }} />
+          <motion.span animate={menuOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }} transition={{ duration: 0.3 }} style={{ display: 'block', width: '22px', height: '2px', background: 'var(--glass-bg-strong)', borderRadius: '9999px' }} />
+          <motion.span animate={menuOpen ? { opacity: 0 } : { opacity: 1 }} transition={{ duration: 0.3 }} style={{ display: 'block', width: '22px', height: '2px', background: 'var(--glass-bg-strong)', borderRadius: '9999px' }} />
+          <motion.span animate={menuOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }} transition={{ duration: 0.3 }} style={{ display: 'block', width: '22px', height: '2px', background: 'var(--glass-bg-strong)', borderRadius: '9999px' }} />
         </button>
       </div>
 
@@ -79,7 +82,7 @@ export default function Navbar() {
             <div style={{ padding: '16px' }}>
               {navLinks.map(link => (
                 <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)}
-                  style={{ display: 'block', padding: '12px 16px', color: '#94A3B8', borderRadius: '12px', fontSize: '1rem', fontWeight: 500, textDecoration: 'none' }}>{link.label}</a>
+                  style={{ display: 'block', padding: '12px 16px', color: 'var(--text-secondary)', borderRadius: '12px', fontSize: '1rem', fontWeight: 500, textDecoration: 'none' }}>{link.label}</a>
               ))}
               <hr style={{ border: 'none', borderTop: '1px solid rgba(148,163,184,0.08)', margin: '12px 0' }} />
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>

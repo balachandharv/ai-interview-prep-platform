@@ -31,4 +31,9 @@ public class QuestionController {
         
         return ResponseEntity.ok(ApiResponse.success("Questions generated", questions));
     }
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<Question>>> getAllQuestions() {
+        List<Question> questions = questionRepository.findAll();
+        return ResponseEntity.ok(ApiResponse.success("All questions retrieved", questions));
+    }
 }

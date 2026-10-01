@@ -51,19 +51,19 @@ export default function Leaderboard() {
   const top3 = leaderboard.slice(0, 3);
   const rest = leaderboard.slice(3);
   const medals = ['1st', '2nd', '3rd'];
-  const borderColors = ['#F59E0B', '#94A3B8', '#D97706'];
+  const borderColors = ['var(--amber-500)', 'var(--text-secondary)', '#D97706'];
 
   if (loading) {
     return (
       <div className="space-y-6">
-        <div className="skeleton h-10 w-48 mb-6 rounded-lg bg-[#F1F5F9]" />
+        <div className="skeleton h-10 w-48 mb-6 rounded-lg bg-[var(--text-primary)]" />
         <div className="flex gap-2 mb-8">
-          {[1, 2, 3].map(i => <div key={i} className="skeleton h-10 w-24 rounded-full bg-[#F1F5F9]" />)}
+          {[1, 2, 3].map(i => <div key={i} className="skeleton h-10 w-24 rounded-full bg-[var(--text-primary)]" />)}
         </div>
         <div className="flex items-end justify-center gap-4 mb-10">
-          {[1, 0, 2].map(idx => <div key={idx} className={`skeleton rounded-2xl bg-[#F1F5F9] ${idx === 0 ? 'w-36 h-48 -mt-6' : 'w-28 h-40'}`} />)}
+          {[1, 0, 2].map(idx => <div key={idx} className={`skeleton rounded-2xl bg-[var(--text-primary)] ${idx === 0 ? 'w-36 h-48 -mt-6' : 'w-28 h-40'}`} />)}
         </div>
-        <div className="skeleton h-[400px] w-full rounded-2xl bg-[#F1F5F9]" />
+        <div className="skeleton h-[400px] w-full rounded-2xl bg-[var(--text-primary)]" />
       </div>
     );
   }
@@ -71,8 +71,8 @@ export default function Leaderboard() {
   return (
     <div style={{ fontFamily: 'Inter, sans-serif' }}>
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-        <h1 className="text-3xl font-extrabold text-[#0F172A] mb-1">Leaderboard</h1>
-        <p className="text-[#475569] mb-6">See how you stack up against other candidates</p>
+        <h1 className="text-3xl font-extrabold text-[var(--text-primary)] mb-1">Leaderboard</h1>
+        <p className="text-[var(--text-secondary)] mb-6">See how you stack up against other candidates</p>
       </motion.div>
 
       {/* Tabs */}
@@ -94,17 +94,17 @@ export default function Leaderboard() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ type: 'spring', stiffness: 200, delay: idx * 0.15 }}
-            className={`text-center p-5 rounded-2xl border-2 bg-white ${idx === 0 ? 'w-36 -mt-6' : 'w-28'}`}
+            className={`text-center p-5 rounded-2xl border-2 bg-[var(--glass-bg)] ${idx === 0 ? 'w-36 -mt-6' : 'w-28'}`}
             style={{ borderColor: borderColors[idx] }}
           >
             <span className="text-3xl">{medals[idx]}</span>
             <div className="w-14 h-14 rounded-full mx-auto mt-2 mb-2 flex items-center justify-center font-bold text-lg"
-              style={{ background: '#EEF2FF', color: '#6366F1' }}>
+              style={{ background: 'rgba(6,182,212,0.10)', color: 'var(--aqua-500)' }}>
               {getInitials(top3[idx]?.name || '?')}
             </div>
-            <p className="text-sm font-bold text-[#0F172A]">{top3[idx]?.name}</p>
-            <p className="text-lg font-extrabold text-[#6366F1]"><CountUp end={parseFloat(top3[idx]?.averageScore || 0)} duration={1.5} decimals={1} /></p>
-            <p className="text-xs text-[#94A3B8]">avg score</p>
+            <p className="text-sm font-bold text-[var(--text-primary)]">{top3[idx]?.name}</p>
+            <p className="text-lg font-extrabold text-[var(--aqua-500)]"><CountUp end={parseFloat(top3[idx]?.averageScore || 0)} duration={1.5} decimals={1} /></p>
+            <p className="text-xs text-[var(--text-secondary)]">avg score</p>
           </motion.div>
         ))}
       </div>
@@ -128,21 +128,21 @@ export default function Leaderboard() {
               <tbody>
                 {rest.map((user) => (
                   <tr key={user.rank} className={user.rank === 5 ? 'bg-[#EEF2FF]' : ''}>
-                    <td className="font-bold text-[#0F172A]">#{user.rank}</td>
+                    <td className="font-bold text-[var(--text-primary)]">#{user.rank}</td>
                     <td>
                       <div className="flex items-center gap-2">
-                        <div className="avatar" style={{ width: 32, height: 32, fontSize: '0.75rem', background: '#EEF2FF', color: '#6366F1' }}>
+                        <div className="avatar" style={{ width: 32, height: 32, fontSize: '0.75rem', background: 'rgba(6,182,212,0.10)', color: 'var(--aqua-500)' }}>
                           {getInitials(user.name)}
                         </div>
-                        <span className="font-medium text-[#0F172A]">{user.name}</span>
+                        <span className="font-medium text-[var(--text-primary)]">{user.name}</span>
                       </div>
                     </td>
                     <td>{user.totalSessions}</td>
-                    <td className="font-semibold text-[#6366F1]">{user.averageScore}</td>
+                    <td className="font-semibold text-[var(--aqua-500)]">{user.averageScore}</td>
                     <td>{user.bestStreak}</td>
                     <td>{user.badges}</td>
                     <td>
-                      <span className={`text-sm font-semibold ${user.change > 0 ? 'text-[#10B981]' : user.change < 0 ? 'text-[#EF4444]' : 'text-[#94A3B8]'}`}>
+                      <span className={`text-sm font-semibold ${user.change > 0 ? 'text-[var(--emerald-500)]' : user.change < 0 ? 'text-[var(--danger-500)]' : 'text-[var(--text-secondary)]'}`}>
                         {user.change > 0 ? '▲' : user.change < 0 ? '▼' : '—'}
                       </span>
                     </td>

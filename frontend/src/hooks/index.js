@@ -18,21 +18,18 @@ export function useSpeechRecognition() {
 
     const recognition = new SpeechRecognition();
     recognition.continuous = true;
-    recognition.interimResults = true;
+    recognition.interimResults = false;
     recognition.lang = 'en-US';
 
     recognition.onresult = (event) => {
-      let finalTranscript = '';
-      let interimTranscript = '';
-      for (let i = event.resultIndex; i < event.results.length; i++) {
-        const result = event.results[i];
-        if (result.isFinal) {
-          finalTranscript += result[0].transcript;
-        } else {
-          interimTranscript += result[0].transcript;
+      let currentTranscript = '';
+      for (let i = 0; i < event.results.length; i++) {
+        currentTranscript += event.results[i][0].transcript;
+        if (event.results[i].isFinal && i < event.results.length - 1) {
+          currentTranscript += ' ';
         }
       }
-      setTranscript((prev) => prev + finalTranscript + interimTranscript);
+      setTranscript(currentTranscript);
     };
 
     recognition.onerror = (event) => {
@@ -241,3 +238,4 @@ export function useLocalStorage(key, initialValue) {
 
   return [storedValue, setValue];
 }
+export { useApi } from './useApi';

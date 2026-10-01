@@ -15,7 +15,7 @@ export default function SessionResults() {
 
   const overallScore = avgScore * 10;
   const grade = getGrade(avgScore);
-  const gradeStyle = { A: { bg: '#ECFDF5', text: '#10B981' }, B: { bg: '#EEF2FF', text: '#6366F1' }, C: { bg: '#FFFBEB', text: '#F59E0B' }, D: { bg: '#FEF2F2', text: '#EF4444' } }[grade];
+  const gradeStyle = { A: { bg: 'rgba(16,185,129,0.10)', text: 'var(--emerald-500)' }, B: { bg: 'rgba(6,182,212,0.10)', text: 'var(--aqua-500)' }, C: { bg: 'rgba(245,158,11,0.10)', text: 'var(--amber-500)' }, D: { bg: 'rgba(239,68,68,0.10)', text: '#EF4444' } }[grade];
 
   useEffect(() => {
     if (overallScore >= 80) { setShowConfetti(true); setTimeout(() => setShowConfetti(false), 3000); }
@@ -38,7 +38,7 @@ export default function SessionResults() {
       {/* Grade Banner */}
       <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ type: 'spring', stiffness: 200 }}
         className="text-center mb-8">
-        <h1 className="text-3xl font-extrabold text-[#0F172A] mb-6">Session Complete!</h1>
+        <h1 className="text-3xl font-extrabold text-[var(--text-primary)] mb-6">Session Complete!</h1>
         <motion.div
           initial={{ scale: 0 }} animate={{ scale: [0, 1.2, 1] }} transition={{ duration: 0.6, ease: 'easeOut' }}
           className="inline-flex items-center justify-center w-32 h-32 rounded-full text-5xl font-extrabold mx-auto"
@@ -46,19 +46,19 @@ export default function SessionResults() {
         >
           <CountUp end={avgScore} duration={2} decimals={1} />
         </motion.div>
-        <p className="text-lg font-semibold text-[#475569] mt-4">Grade: {grade} — {gradeStyle.text === '#10B981' ? 'Excellent!' : gradeStyle.text === '#6366F1' ? 'Good job!' : gradeStyle.text === '#F59E0B' ? 'Room to grow' : 'Keep practicing!'}</p>
+        <p className="text-lg font-semibold text-[var(--text-secondary)] mt-4">Grade: {grade} — {gradeStyle.text === 'var(--emerald-500)' ? 'Excellent!' : gradeStyle.text === 'var(--aqua-500)' ? 'Good job!' : gradeStyle.text === 'var(--amber-500)' ? 'Room to grow' : 'Keep practicing!'}</p>
       </motion.div>
 
       {/* Score Summary */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         {[
-          { label: 'Accuracy', value: 72 + Math.random() * 20, color: '#6366F1' },
-          { label: 'Speed', value: 65 + Math.random() * 25, color: '#8B5CF6' },
-          { label: 'Completeness', value: 60 + Math.random() * 30, color: '#10B981' },
+          { label: 'Accuracy', value: 72 + Math.random() * 20, color: 'var(--aqua-500)' },
+          { label: 'Speed', value: 65 + Math.random() * 25, color: 'var(--blue-500)' },
+          { label: 'Completeness', value: 60 + Math.random() * 30, color: 'var(--emerald-500)' },
         ].map(s => (
           <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="card-flat p-5">
-            <p className="text-sm text-[#94A3B8] mb-2">{s.label}</p>
-            <p className="text-2xl font-bold text-[#0F172A] mb-2"><CountUp end={Math.round(s.value)} duration={1.5} />%</p>
+            <p className="text-sm text-[var(--text-secondary)] mb-2">{s.label}</p>
+            <p className="text-2xl font-bold text-[var(--text-primary)] mb-2"><CountUp end={Math.round(s.value)} duration={1.5} />%</p>
             <div className="progress-bar">
               <motion.div initial={{ width: 0 }} animate={{ width: `${s.value}%` }} transition={{ type: 'spring', duration: 1, delay: 0.3 }}
                 className="progress-fill" style={{ background: s.color }} />
@@ -70,25 +70,25 @@ export default function SessionResults() {
       {/* Charts */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="card-flat p-6">
-          <h3 className="text-base font-bold text-[#0F172A] mb-4">Score Trend</h3>
+          <h3 className="text-base font-bold text-[var(--text-primary)] mb-4">Score Trend</h3>
           <ResponsiveContainer width="100%" height={200}>
             <LineChart data={trendData}>
-              <XAxis dataKey="name" tick={{ fontSize: 12, fill: '#94A3B8' }} />
-              <YAxis domain={[0, 10]} tick={{ fontSize: 12, fill: '#94A3B8' }} />
+              <XAxis dataKey="name" tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} />
+              <YAxis domain={[0, 10]} tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} />
               <Tooltip />
-              <Line type="monotone" dataKey="score" stroke="#6366F1" strokeWidth={2.5} dot={{ fill: '#6366F1', r: 4 }} animationDuration={1500} />
+              <Line type="monotone" dataKey="score" stroke="var(--aqua-500)" strokeWidth={2.5} dot={{ fill: 'var(--aqua-500)', r: 4 }} animationDuration={1500} />
             </LineChart>
           </ResponsiveContainer>
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="card-flat p-6">
-          <h3 className="text-base font-bold text-[#0F172A] mb-4">Skill Breakdown</h3>
+          <h3 className="text-base font-bold text-[var(--text-primary)] mb-4">Skill Breakdown</h3>
           <ResponsiveContainer width="100%" height={200}>
             <RadarChart data={radarData}>
-              <PolarGrid stroke="#E2E8F0" />
-              <PolarAngleAxis dataKey="cat" tick={{ fontSize: 10, fill: '#475569' }} />
+              <PolarGrid stroke="var(--glass-border)" />
+              <PolarAngleAxis dataKey="cat" tick={{ fontSize: 10, fill: 'var(--text-secondary)' }} />
               <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
-              <Radar dataKey="score" stroke="#6366F1" fill="#6366F1" fillOpacity={0.3} animationDuration={1500} />
+              <Radar dataKey="score" stroke="var(--aqua-500)" fill="var(--aqua-500)" fillOpacity={0.3} animationDuration={1500} />
             </RadarChart>
           </ResponsiveContainer>
         </motion.div>
@@ -96,23 +96,23 @@ export default function SessionResults() {
 
       {/* Per Question Details */}
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="card-flat p-6 mb-6">
-        <h3 className="text-base font-bold text-[#0F172A] mb-4">Question Details</h3>
+        <h3 className="text-base font-bold text-[var(--text-primary)] mb-4">Question Details</h3>
         <div className="space-y-3">
           {scores.map((score, i) => (
-            <div key={i} className={`p-4 rounded-xl border cursor-pointer transition-all ${score < 5 ? 'bg-[#FEF2F2] border-[#EF4444]/20' : 'bg-white border-[#E2E8F0]'}`}
+            <div key={i} className={`p-4 rounded-xl border cursor-pointer transition-all ${score < 5 ? 'bg-[#FEF2F2] border-[#EF4444]/20' : 'bg-[var(--glass-bg)] border-[var(--glass-border)]'}`}
               onClick={() => setExpandedQ(expandedQ === i ? null : i)}>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <span className="badge badge-primary">Q{i + 1}</span>
-                  <span className="text-sm text-[#0F172A] font-medium">Question {i + 1}</span>
+                  <span className="text-sm text-[var(--text-primary)] font-medium">Question {i + 1}</span>
                 </div>
-                <span className={`text-lg font-bold ${score >= 7 ? 'text-[#10B981]' : score >= 5 ? 'text-[#F59E0B]' : 'text-[#EF4444]'}`}>
+                <span className={`text-lg font-bold ${score >= 7 ? 'text-[var(--emerald-500)]' : score >= 5 ? 'text-[var(--amber-500)]' : 'text-[var(--danger-500)]'}`}>
                   {score.toFixed(1)}/10
                 </span>
               </div>
               {expandedQ === i && (
-                <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} className="mt-3 pt-3 border-t border-[#E2E8F0]">
-                  <p className="text-sm text-[#475569]">Detailed feedback for this question would appear here in production.</p>
+                <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} className="mt-3 pt-3 border-t border-[var(--glass-border)]">
+                  <p className="text-sm text-[var(--text-secondary)]">Detailed feedback for this question would appear here in production.</p>
                 </motion.div>
               )}
             </div>

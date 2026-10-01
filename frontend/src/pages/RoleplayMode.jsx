@@ -7,7 +7,7 @@ import { Loader, Clock } from 'lucide-react';
 
 const container = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.08 } } };
 const item = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } };
-const diffBadge = { Easy: '#10B981', Medium: '#F59E42', Hard: '#EF4444' };
+const diffBadge = { Easy: 'var(--emerald-500)', Medium: '#F59E42', Hard: '#EF4444' };
 
 // Styled initials for professional avatar rendering
 const AVATAR_MAP = {
@@ -25,7 +25,7 @@ const COLOR_MAP = {
   'Priya Sharma': '#4285F4',
   'David Chen': '#FF9900',
   'Sarah Johnson': '#00A4EF',
-  'Rahul Gupta': '#6366F1',
+  'Rahul Gupta': 'var(--aqua-500)',
   'Jennifer Lee': '#6D9EEB',
   'Michael Brown': '#0668E1',
   'Anjali Verma': '#F7CB0A',
@@ -53,7 +53,7 @@ export default function RoleplayMode() {
           difficulty: p.difficulty,
           duration: p.duration,
           avatar: AVATAR_MAP[p.name] || p.name.split(' ').map(w => w[0]).join(''),
-          color: COLOR_MAP[p.name] || '#6366F1',
+          color: COLOR_MAP[p.name] || 'var(--aqua-500)',
           description: `${p.style} interview at ${p.company}. Difficulty: ${p.difficulty}.`,
         }));
         setPersonas(backendPersonas);
@@ -73,8 +73,8 @@ export default function RoleplayMode() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader size={32} className="animate-spin text-[#3B82F6]" />
-        <span className="ml-3 text-[#475569] font-medium">Loading interviewers...</span>
+        <Loader size={32} className="animate-spin text-[var(--aqua-400)]" />
+        <span className="ml-3 text-[var(--text-secondary)] font-medium">Loading interviewers...</span>
       </div>
     );
   }
@@ -82,17 +82,17 @@ export default function RoleplayMode() {
   return (
     <div style={{ fontFamily: 'Inter, sans-serif' }}>
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-        <h1 className="text-3xl font-extrabold text-[#0F172A] mb-1">Roleplay Mode</h1>
-        <p className="text-[#475569] mb-8">Choose your AI interviewer and start a realistic interview experience</p>
+        <h1 className="text-3xl font-extrabold text-[var(--text-primary)] mb-1">Roleplay Mode</h1>
+        <p className="text-[var(--text-secondary)] mb-8">Choose your AI interviewer and start a realistic interview experience</p>
       </motion.div>
 
       {/* Company Mode Toggle */}
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}
-        className="flex items-center gap-3 mb-6 p-4 rounded-xl bg-[#F5F3FF] border border-[#8B5CF6]/20">
-        <div className={`toggle ${companyMode ? 'active' : ''}`} onClick={() => setCompanyMode(!companyMode)} style={{ '--toggle-color': '#8B5CF6' }} />
+        className="flex items-center gap-3 mb-6 p-4 rounded-xl bg-[#F5F3FF] border border-[var(--blue-500)]/20">
+        <div className={`toggle ${companyMode ? 'active' : ''}`} onClick={() => setCompanyMode(!companyMode)} style={{ '--toggle-color': 'var(--blue-500)' }} />
         <div>
-          <p className="text-sm font-semibold text-[#0F172A]">Company Mode</p>
-          <p className="text-xs text-[#94A3B8]">Simulate full multi-round interview process</p>
+          <p className="text-sm font-semibold text-[var(--text-primary)]">Company Mode</p>
+          <p className="text-xs text-[var(--text-secondary)]">Simulate full multi-round interview process</p>
         </div>
       </motion.div>
 
@@ -104,24 +104,24 @@ export default function RoleplayMode() {
             variants={item}
             whileHover={{ y: -4 }}
             onClick={() => setSelected(persona)}
-            className={`relative p-5 rounded-2xl cursor-pointer transition-all border-2 bg-white ${
+            className={`relative p-5 rounded-2xl cursor-pointer transition-all border-2 bg-[var(--glass-bg)] ${
               selected?.id === persona.id
                 ? 'border-[#3B82F6] shadow-lg shadow-[#3B82F6]/10'
-                : 'border-[#E2E8F0] hover:border-[#3B82F6]/50'
+                : 'border-[var(--glass-border)] hover:border-[#3B82F6]/50'
             }`}
           >
             {selected?.id === persona.id && (
               <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute -top-2 -right-2 w-6 h-6 bg-[#3B82F6] rounded-full flex items-center justify-center text-white text-xs">✓</motion.div>
             )}
             <div className="w-12 h-12 rounded-xl mb-3 flex items-center justify-center text-white font-bold text-sm" style={{ background: `linear-gradient(135deg, ${persona.color}, ${persona.color}CC)` }}>{persona.avatar}</div>
-            <h3 className="text-base font-bold text-[#0F172A]">{persona.name}</h3>
-            <p className="text-xs text-[#475569] mb-3">{persona.role} at {persona.company}</p>
+            <h3 className="text-base font-bold text-[var(--text-primary)]">{persona.name}</h3>
+            <p className="text-xs text-[var(--text-secondary)] mb-3">{persona.role} at {persona.company}</p>
             <div className="flex flex-wrap gap-1.5 mb-3">
               <span className="badge badge-primary text-[10px]">{persona.style}</span>
               <span className="badge text-[10px]" style={{ background: diffBadge[persona.difficulty] + '15', color: diffBadge[persona.difficulty] }}>{persona.difficulty}</span>
-              <span className="text-[10px] text-[#8B9DB8] flex items-center gap-1"><Clock size={10} /> {persona.duration}</span>
+              <span className="text-[10px] text-[var(--text-secondary)] flex items-center gap-1"><Clock size={10} /> {persona.duration}</span>
             </div>
-            <p className="text-xs text-[#8B9DB8] leading-relaxed">{persona.description}</p>
+            <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{persona.description}</p>
           </motion.div>
         ))}
       </motion.div>
